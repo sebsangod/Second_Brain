@@ -15,9 +15,17 @@ tags:
 
 ---
 
+## Links
+
+[Hugging Face](https://huggingface.co/)
+
+---
+
 ## Tables
 
-Write here...
+| **Header1** | **Header2** | **Header3** |
+| ----------- | ----------- | ----------- |
+| Text        | Text        | Text        |
 
 ---
 
@@ -25,7 +33,13 @@ Write here...
 
 > Write here...
 
-> Write here...
+> "Great phrase"
 > Author
 
 ---
+
+## Code
+
+```python
+print("Hello world!")
+```
