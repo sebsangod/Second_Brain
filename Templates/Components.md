@@ -49,3 +49,24 @@ print("Hello world!")
 FROM python:3.11
 ...
 ```
+
+---
+
+## Alerts
+
+> [!success] Success
+
+> [!warning] Warning
+
+> [!info] Info
+
+> [!error] Error
+
+---
+
+## Tasks
+
+- [ ] 📅 2026-03-21 🔺 🏁 keep
+- [x]  ✅ 2026-03-21
+
+___
