@@ -1,6 +1,6 @@
 ---
 aliases:
-  - Learning
+  - Coding Assistant
 tags:
   - learning
 ---
@@ -8,7 +8,7 @@ tags:
 **Update**: 19/mar/2026
 **Sources**: [Claude Code in Action](https://anthropic.skilljar.com/claude-code-in-action)
 
-**Tags:** #development #LLM #AI
+**Tags:** #LLM #AI #assistant #development
 
 **Related:** [[Artificial Intelligence]], [[Large Language Models]], [[Claude]], [[Claude Code]], [[Opus]], [[Sonnet]], [[Haiku]]
 

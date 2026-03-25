@@ -1,6 +1,6 @@
 ---
 aliases:
-  - Learning
+  - Claude Code
 tags:
   - learning
 ---
@@ -395,14 +395,14 @@ Open the _.claude/settings.local.json_ file and add the server to the allow ar
 
 ```json title:.claude/settings.local.json
 {
-	"other_stuff": {},
+    "other_stuff": {},
 
-	"permissions": {
-	    "allow": ["mcp__playwright"],
-	    "deny": []
-	},
-	
-	"other_stuff": {},
+    "permissions": {
+        "allow": ["mcp__playwright"],
+        "deny": []
+    },
+
+    "other_stuff": {},
 }
 ```
 
@@ -487,34 +487,34 @@ You can write _hooks_ by hand in these files or use the _/hooks_ command insid
 
 ```json title:.claude/settings.local.json
 {
-	"other_stuff": {},
+    "other_stuff": {},
 
-	"hooks": {
-	    "PreToolUse": [ // Runs before a tool is called
-		    {
-				"matcher": "Read|Grep",
-				"hooks": [
-					{
-						"type": "command",
-						"command": "node /home/hooks/read_hook.js"
-					}
-				]
-		    }
-	    ],
-	    "PostToolUse": [ // Runs after a tool is called
-		    {
-				"matcher": "Write|Edit|MultiEdit",
-				"hooks": [
-					{
-						"type": "command",
-						"command": "node /home/hooks/edit_hook.js"
-					}
-				]
-		    }
-	    ],
-	},
-	  
-	"other_stuff": {},
+    "hooks": {
+        "PreToolUse": [ // Runs before a tool is called
+            {
+                "matcher": "Read|Grep",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "node /home/hooks/read_hook.js"
+                    }
+                ]
+            }
+        ],
+        "PostToolUse": [ // Runs after a tool is called
+            {
+                "matcher": "Write|Edit|MultiEdit",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "node /home/hooks/edit_hook.js"
+                    }
+                ]
+            }
+        ],
+    },
+
+    "other_stuff": {},
 }
 ```
 
@@ -587,13 +587,13 @@ When your _hook_ command executes, `Claude` sends JSON data through standard inp
 
 ```json
 {
-  "session_id": "2d6a1e4d-6...",
-  "transcript_path": "/Users/sg/...",
-  "hook_event_name": "PreToolUse",
-  "tool_name": "Read",
-  "tool_input": {
-    "file_path": "/code/queries/.env"
-  }
+    "session_id": "2d6a1e4d-6...",
+    "transcript_path": "/Users/sg/...",
+    "hook_event_name": "PreToolUse",
+    "tool_name": "Read",
+    "tool_input": {
+        "file_path": "/code/queries/.env"
+    }
 }
 ```
 
@@ -667,22 +667,21 @@ The _hook_ script needs to read the tool call data from standard input and check
 
 ```javascript title:read_hook.js
 async function main() {
-  const chunks = [];
-  for await (const chunk of process.stdin) {
-    chunks.push(chunk);
-  }
-  
-  const toolArgs = JSON.parse(Buffer.concat(chunks).toString());
-  
-  // Extract the file path Claude is trying to read
-  const readPath = 
-    toolArgs.tool_input?.file_path || toolArgs.tool_input?.path || "";
-  
-  // Check if Claude is trying to read the .env file
-  if (readPath.includes('.env')) {
-    console.error("You cannot read the .env file");
-    process.exit(2);
-  }
+    const chunks = [];
+    for await (const chunk of process.stdin) {
+        chunks.push(chunk);
+    }
+
+    const toolArgs = JSON.parse(Buffer.concat(chunks).toString());
+
+    // Extract the file path Claude is trying to read
+    const readPath = toolArgs.tool_input?.file_path || toolArgs.tool_input?.path || "";
+
+    // Check if Claude is trying to read the .env file
+    if (readPath.includes('.env')) {
+        console.error("You cannot read the .env file");
+        process.exit(2);
+    }
 }
 ```
 
@@ -695,23 +694,23 @@ Claude Code's _hooks_ work with every executable script with access to _stdin_ v
 
 ```json title:.claude/settings.local.json
 {
-	"other_stuff": {},
+    "other_stuff": {},
 
-	"hooks": {
-	    "PreToolUse": [ // Runs before a tool is called
-		    {
-				"matcher": "Read|Grep",
-				"hooks": [
-					{
-						"type": "command",
-						"command": "python /home/hooks/read_hook.py"
-					}
-				]
-		    }
-	    ]
-	},
-	  
-	"other_stuff": {},
+    "hooks": {
+        "PreToolUse": [ // Runs before a tool is called
+            {
+                "matcher": "Read|Grep",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "python /home/hooks/read_hook.py"
+                    }
+                ]
+            }
+        ]
+    },
+
+    "other_stuff": {},
 }
 ```
 
@@ -723,14 +722,14 @@ from json import loads
 def main():
     raw = stdin.read()
     tool_args = loads(raw)
-    
+
     # Extract the file path Claude is trying to read
     read_path = (
         tool_args.get("tool_input", {}).get("file_path") or
         tool_args.get("tool_input", {}).get("path") or
         ""
     )
-    
+
     # Check if Claude is trying to read the .env file
     if ".env" in read_path:
         print(f"You cannot read the .env file: {stderr}")
@@ -819,7 +818,7 @@ import { query } from "@anthropic-ai/claude-code";
 const prompt = "Look for duplicate queries in the ./src/queries dir";
 
 for await (const message of query({ prompt, })) {
-  console.log(JSON.stringify(message, null, 2));
+    console.log(JSON.stringify(message, null, 2));
 }
 ```
 
@@ -832,13 +831,15 @@ When you run this code, you'll see the raw conversation between your local Claud
 To enable write permissions, you can add the _allowedTools_ option to your query:
 
 ```typescript title:integration.ts
-for await (const message of query({
-  prompt,
-  options: {
-    allowedTools: ["Edit"]
-  }
-})) {
-  console.log(JSON.stringify(message, null, 2));
+for await (
+    const message of query({
+        prompt,
+        options: {
+            allowedTools: ["Edit"]
+        }
+    })
+) {
+    console.log(JSON.stringify(message, null, 2));
 }
 ```
 

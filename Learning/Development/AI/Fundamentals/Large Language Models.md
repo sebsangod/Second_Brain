@@ -1,6 +1,6 @@
 ---
 aliases:
-  - Learning
+  - Large Language Models
 tags:
   - learning
 ---

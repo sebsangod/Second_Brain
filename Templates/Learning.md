@@ -39,8 +39,15 @@ Write here...
 
 ---
 
-## Questions
+## Utils
+
+### Use case
 
 Write here...
+
+```python title:main.py
+print("Hello world!")
+
+```
 
 ---
