@@ -10,7 +10,7 @@ tags:
 
 **Tags:** #development #data #datavalidation
 
-**Related:** [[Python]], [[ODM]], [[MongoDB]], [[Pydantic]], [[Database]], [[Collection]], [[Bunnet]], [[PyTest]]
+**Related:** [[Python]], [[ODM]], [[MongoDB]], [[Pydantic]], [[Database]], [[Collection]], [[Bunnet]], [[Pytest]]
 
 ---
 
@@ -123,7 +123,7 @@ class Token(Document):
 ```
 
 
-### Tests alongside `PyTest`
+### Tests alongside `pytest`
 
 ```python title:conftest.py
 """Root conftest — mock MongoDB initialization for all tests."""

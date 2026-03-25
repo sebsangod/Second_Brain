@@ -54,6 +54,8 @@ FROM python:3.11
 
 ## Alerts
 
+> [!tip] Tip
+
 > [!success] Success
 
 > [!warning] Warning
