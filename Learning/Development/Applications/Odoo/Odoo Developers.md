@@ -268,6 +268,44 @@ ___
 
 ## Utils
 
+### JSON Formatting in Form Views
+
+```python title:my_model.py
+from json import dumps
+
+from odoo import fields, models
+
+
+class TestModel(models.Model):
+	_name: str = "test_module.test.model"
+	
+	my_json = fields.Text(
+		"My JSON",
+		help="Field to show a JSON pretty formatted",
+		readonly=True,
+	)
+	
+	def my_func(self) -> None:
+		json: dict[str, Any] = {"hello": "world!"}
+		self.my_json = dumps(json, indent=4)
+
+```
+
+```xml title:my_model_view.xml
+<record id="test_module.test_model_view_form" model="ir.ui.view">
+	<field name="name">test_module.test_model_view_form</field>
+	<field name="model">test.model</field>
+	<field name="arch" type="xml">
+		<form string="Test Module">
+			 <!-- Important -->
+			<field name="my_json" widget="text" />
+			...
+		</form>
+	</field>
+</record>
+```
+
+
 ### API Connection and Handling
 
 ```bash title:.env
