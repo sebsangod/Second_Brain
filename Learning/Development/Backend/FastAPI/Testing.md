@@ -47,7 +47,7 @@ from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel
 
 
-fake_secret_token = "coneofsilence"
+fake_secret_token = "my_secret_token"
 
 fake_db = {
     "foo": {"id": "foo", "title": "Foo", "description": "There goes my hero"},

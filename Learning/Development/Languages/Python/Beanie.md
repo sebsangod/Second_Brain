@@ -16,11 +16,15 @@ tags:
 
 ## Description
 
-_Beanie_ - is an asynchronous `Python` object-document mapper (`ODM`) for `MongoDB`. Data models are based on `Pydantic`.
+_Beanie_ is an asynchronous `Python` `object-document mapper (ODM)` for `MongoDB`. Data models are based on `Pydantic`.
 
 When using _Beanie_ each `database` `collection` has a corresponding _Document_ that is used to interact with that `collection`. **In addition to retrieving data,** _Beanie_ **allows you to add, update, or delete documents from the collection as well.**
 
-Installing _Beanie_ is as simple as: _pip install beanie_
+Installing _Beanie_ is as simple as:
+
+```bash title:bash
+$ pip install beanie
+```
 
 ---
 
@@ -64,9 +68,9 @@ async def example():
 
     chocolate = Category(name="Chocolate", description="A preparation of roasted and ground cacao seeds.")
     # Beanie documents work just like pydantic models
-    tonybar = Product(name="Tony's", price=5.95, category=chocolate)
+    tony_bar = Product(name="Tony's", price=5.95, category=chocolate)
     # And can be inserted into the database
-    await tonybar.insert()
+    await tony_bar.insert()
 
     # You can find documents with pythonic syntax
     product = await Product.find_one(Product.price < 10)
@@ -119,6 +123,71 @@ class Token(Document):
             IndexModel([("expires_at", ASCENDING)], expireAfterSeconds=0),
             IndexModel([("token", ASCENDING)], unique=True),
         ]
+
+```
+
+
+### Connection class for `MongoDB` `database` using Beanie
+
+```python title:mongo_connection.py
+from logging import Logger, getLogger
+from os import getenv
+from os.path import join
+from urllib.parse import quote_plus
+
+from beanie import init_beanie
+from dotenv import load_dotenv
+from motor.motor_asyncio import AsyncIOMotorClient
+
+from v1.models import ToDo, User
+from v1.config import DOTENV_ABSPATH, LOGGING_PROJECT_NAME, V1_ABSPATH
+
+
+load_dotenv(DOTENV_ABSPATH)
+logger: Logger = getLogger(f"{LOGGING_PROJECT_NAME}.{__name__.split('.')[-1]}")
+
+
+class MongoConnection:
+    def __init__(self) -> None:
+        self._config = {
+            "host": getenv("MONGO_HOST"),
+            "port": getenv("MONGO_PORT"),
+            "user": quote_plus(getenv("MONGO_USER")),
+            "password": quote_plus(getenv("MONGO_PASSWORD")),
+            "db1": getenv("MONGO_DB1"),
+            "db2": getenv("MONGO_DB2"),
+        }
+        self._certificate_pem_path = join(
+            V1_ABSPATH, getenv("MONGO_PRODUCT_CERTIFICATE_PEM_FILE")
+        )
+        self._certificate_crt_path = join(
+            V1_ABSPATH, getenv("MONGO_PRODUCT_CERTIFICATE_CRT_FILE")
+        )
+        self._db_uri = self.format_uri(self._config["db"])
+
+    def format_uri(self, db: str) -> str:
+        return (
+            f"mongodb://{self._config['user']}:{self._config['password']}@"
+            f"{self._config['host']}:{self._config['port']}/"
+            f"{db}?"
+            f"authSource=admin&tls=true"
+        )
+
+    async def init_db(self) -> None:
+        client = AsyncIOMotorClient(
+            self._db_uri,
+            tls=True,
+            tlsCertificateKeyFile=self._certificate_pem_path,
+            tlsCAFile=self._certificate_crt_path,
+        )
+        db = client.get_default_database()
+        await init_beanie(
+            database=db,
+            document_models=[ToDo, User],
+        )
+
+
+mongo_conn = MongoConnection()
 
 ```
 
