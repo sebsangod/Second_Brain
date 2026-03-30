@@ -5,12 +5,12 @@ tags:
   - learning
 ---
 **Date**: 26/mar/2026
-**Update**: 26/mar/2026
+**Update**: 29/mar/2026
 **Sources**: [Odoo Developers](https://www.odoo.com/documentation/19.0/developer.html)
 
-**Tags:** #learning
+**Tags:** #development #backend
 
-**Related:** [[Odoo]], [[Multitier Architecture]], [[Database]], [[Python]]
+**Related:** [[Odoo]], [[Multitier Architecture]], [[Database]], [[Python]], [[XML]]
 
 ---
 
@@ -40,24 +40,65 @@ An _Odoo_ _module_ is declared by its `__manifest__.py`
 
 When an Odoo module includes business objects (i.e. `Python` files), they are organized as a `Python` with a `__init__.py` file. This file contains import instructions for various `Python` files in the module.
 
-Here is a simplified module directory:
+Here is a complete module directory example:
 
-```txt title:my_module/
-my_module
-├── controllers
-│   ├── *.py
-│   └── __init__.py
-├── models
-│   ├── *.py
-│   └── __init__.py
-├── data
-│   └── *.xml
-├── views
-│   └── *.xml
-├── security
-│   └── *.csv
-├── __init__.py
-└── __manifest__.py
+```txt title:plant_nursery/
+plant_nursery/
+|-- __init__.py
+|-- __manifest__.py
+|-- controllers/
+|   |-- __init__.py
+|   |-- plant_nursery.py
+|   |-- portal.py (inheriting portal/controllers/portal.py)
+|   |-- main.py (deprecated, replaced by plant_nursery.py)
+|-- data/
+|   |-- plant_nursery_data.xml
+|   |-- plant_nursery_demo.xml
+|   |-- mail_data.xml
+|-- demo/
+|   |-- plant_nursery_data.xml
+|-- models/
+|   |-- __init__.py
+|   |-- plant_nursery.py
+|   |-- plant_order.py
+|   |-- res_partner.py
+|-- report/
+|   |-- __init__.py
+|   |-- plant_order_report.py
+|   |-- plant_order_report_views.xml
+|   |-- plant_order_reports.xml (report actions, paperformat, ...)
+|   |-- plant_order_templates.xml (xml report templates)
+|-- security/
+|   |-- ir.model.access.csv
+|   |-- plant_nursery_groups.xml
+|   |-- plant_nursery_security.xml
+|   |-- plant_order_security.xml
+|-- static/
+|   |-- img/
+|   |   |-- my_little_kitten.png
+|   |   |-- troll.jpg
+|   |-- lib/
+|   |   |-- external_lib/
+|   |-- src/
+|   |   |-- js/
+|   |   |   |-- widget_a.js
+|   |   |   |-- widget_b.js
+|   |   |-- scss/
+|   |   |   |-- widget_a.scss
+|   |   |   |-- widget_b.scss
+|   |   |-- xml/
+|   |   |   |-- widget_a.xml
+|   |   |   |-- widget_a.xml
+|-- views/
+|   |-- plant_nursery_menus.xml (optional definition of main menus)
+|   |-- plant_nursery_views.xml (backend views)
+|   |-- plant_nursery_templates.xml (portal templates)
+|   |-- plant_order_views.xml
+|   |-- plant_order_templates.xml
+|   |-- res_partner_views.xml
+|-- wizard/
+|   |--make_plant_order.py
+|   |--make_plant_order_views.xml
 ```
 
 
@@ -147,12 +188,27 @@ This will give us the following result:
 
 >[!info] The related topic can be found [here](https://www.odoo.com/documentation/19.0/developer/tutorials/server_framework_101/08_compute_onchange.html)
 
+
+### The _self_ property
+
+The object _self.env_ gives access to request parameters and other useful things:
+- _self.env.cr_ or `self._cr` is the database _cursor_ object; it is used for querying the database
+- _self.env.uid_ or `self._uid` is the current user’s database id
+- _self.env.user_ is the current user’s record
+- _self.env.context_ or `self._context` is the context dictionary
+- _self.env.ref(xml_id)_ returns the record corresponding to an XML id
+- _self.env[model_name]_ returns an instance of the given model
+
+
+### Coding guidelines
+
+>[!info] The related topic can be found [here](https://www.odoo.com/documentation/19.0/contributing/development/coding_guidelines.html)
+
 ___
 
 ## Snippets
 
 ### Catalogue List View
-
 ```xml title:my_view.xml
 <record id="test_module.test_model_view_list" model="ir.ui.view">
 	<field name="name">test_module.test_model_view_list</field>
@@ -164,6 +220,95 @@ ___
 		</list>
 	</field>
 </record>
+```
+
+
+### List Views' Widgets
+
+#### Handling records
+```python title:estate_property_type.py
+from odoo import fields, models
+
+
+class EstatePropertyType(models.Model):
+	_name = "estate.property.type"
+	_description = "Estate Property Type Model"
+	_order = "sequence, name"
+	
+	name = fields.Char("Name", required=True)
+	sequence = fields.Integer("Sequence", default=1)
+
+```
+
+```xml title:estate_property_type_views.xml
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="real_estate_tutorial.estate_property_type_view_tree" model="ir.ui.view">
+		<field name="name">estate.property.type.view.tree</field>
+		<field name="model">estate.property.type</field>
+		<field name="arch" type="xml">
+			<list string="Estate Property Types">
+				<field name="sequence" widget="handle" />  <!-- This attribute is the important -->
+				<field name="name" />
+			</list>
+		</field>
+	</record>
+```
+
+#### Optional shown fields
+```xml title:my_view.xml
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="real_estate_tutorial.estate_property_offer_view_tree" model="ir.ui.view">
+		<field name="name">estate.property.offer.view.tree</field>
+		<field name="model">estate.property.offer</field>
+		<field name="arch" type="xml">
+			<list string="Estate Property Offers" editable="bottom">
+				<field name="price" />
+				<field name="partner_id" />
+				<field name="validity" />
+				<field name="date_deadline" optional="hide" />  <!-- This attribute is the important -->
+		</form>
+	</field>
+</record>
+```
+
+#### Colored records
+```xml title:my_view.xml
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="real_estate_tutorial.estate_property_offer_view_tree" model="ir.ui.view">
+		<field name="name">estate.property.offer.view.tree</field>
+		<field name="model">estate.property.offer</field>
+		<field name="arch" type="xml">
+			<!-- This attributes are the important -->
+			<list
+				string="Estate Property Offers"
+				editable="bottom"
+				decoration-success="state == 'accepted'"
+				decoration-danger="state == 'refused'"
+			>
+				<field name="name" />
+				...
+		</form>
+	</field>
+</record>
+```
+
+#### Use Alerts in Fields
+```xml title:my_view.xml
+<field
+    name="my_field"
+    widget="label_selection"
+    options="{
+        'classes': {
+            'state.pending': 'info',
+            'state.running': 'success',
+            'state.eliminated': 'danger',
+            'state.unknown': 'danger'
+        }
+    }"
+/>
 ```
 
 
@@ -231,45 +376,7 @@ class EstatePropertyTag(models.Model):
 </record>
 ```
 
-
-### Add External Libraries
-```python title:__manifest__.py
-{
-    ...,
-
-    "assets": {
-        "web.assets_frontend": [
-            "my_module/static/src/components/**/*",
-            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css",
-        ]
-    }
-}
-
-```
-
-
-### Use Alerts in Fields on List Views
-```xml title:my_view.xml
-<field
-    name="my_field"
-    widget="label_selection"
-    options="{
-        'classes': {
-            'state.pending': 'info',
-            'state.running': 'success',
-            'state.eliminated': 'danger',
-            'state.unknown': 'danger'
-        }
-    }"
-/>
-```
-
-___
-
-## Utils
-
-### JSON Formatting in Form Views
-
+#### JSON Formatting
 ```python title:my_model.py
 from json import dumps
 
@@ -305,6 +412,92 @@ class TestModel(models.Model):
 </record>
 ```
 
+
+### Add External Libraries
+```python title:__manifest__.py
+{
+    ...,
+
+    "assets": {
+        "web.assets_frontend": [
+            "my_module/static/src/components/**/*",
+            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css",
+        ]
+    }
+}
+
+```
+
+
+### Build and Print PDF Reports
+
+```txt title:real_estate_tutorial/
+real_estate_tutorial/
+├── data
+│   └── paper_format.xml
+├── reports
+│   └── estate_property_offer_templates.xml
+├── views
+│   ├── actions.xml
+├── __init__.py
+└── __manifest__.py
+
+```
+
+```python title:__manifest__.py
+{
+	...
+	"data": [
+		# Dependencies data
+		"data/paper_format.xml",
+		# Views
+		"views/actions.xml",
+		...
+	],
+	...
+}
+
+```
+
+```xml title:paper_format.xml
+<record id="real_estate_tutorial.paperformat_a4_lowmargin" model="report.paperformat">
+	<field name="name">Real Estate A4 Low Margin</field>
+	<field name="default" eval="True"/>
+	<field name="format">A4</field>
+	<field name="orientation">Portrait</field> <!-- Or Landscape -->
+	<field name="margin_top">10</field>
+	<field name="margin_bottom">10</field>
+	<field name="margin_left">7</field>
+	<field name="margin_right">7</field>
+	<field name="header_line" eval="False"/>
+	<field name="header_spacing">35</field>
+	<field name="dpi">90</field>
+</record>
+```
+
+```xml title:actions.xml
+<record id="real_estate_tutorial.estate_property_offer_report" model="ir.actions.report">
+	<field name="name">Property Offers Report</field>
+	<field name="model">estate.property</field>
+	<field name="report_type">qweb-pdf</field>
+	<field name="report_name">real_estate_tutorial.estate_property_offer_template</field>
+	<field name="report_file">real_estate_tutorial.estate_property_offer_template</field>
+	<field name="print_report_name">
+		'Property Offers Report - %s' % (object.name or 'Property').replace('/','')
+	</field>
+	<field name="paperformat_id" ref="real_estate_tutorial.paperformat_a4_lowmargin" />
+	<field name="binding_model_id" ref="model_estate_property"/>
+	<field name="binding_type">report</field>
+</record>
+```
+
+#### Result
+
+![[odoo_print_report_result.png]]
+
+___
+
+## Utils
 
 ### API Connection and Handling
 

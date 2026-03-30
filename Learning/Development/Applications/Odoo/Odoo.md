@@ -42,9 +42,3 @@ _Odoo_ is a suite of _open-source_ enterprise applications (`ERP`) designed to *
 * E-commerce.
 
 ---
-
-## Details
-
-Write here...
-
----
