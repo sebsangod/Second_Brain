@@ -6,11 +6,11 @@ tags:
 ---
 **Date**: 26/mar/2026
 **Update**: 29/mar/2026
-**Sources**: [Odoo Developers](https://www.odoo.com/documentation/19.0/developer.html)
+**Sources**: [Odoo Developers](https://www.odoo.com/documentation/19.0/developer.html), [Odoo Coding Guidelines](https://www.odoo.com/documentation/19.0/contributing/development/coding_guidelines.html)
 
 **Tags:** #development #backend
 
-**Related:** [[Odoo]], [[Multitier Architecture]], [[Database]], [[Python]], [[XML]]
+**Related:** [[Odoo]], [[Multi-tier Architecture]], [[Database]], [[Python]], [[XML]]
 
 ---
 
