@@ -1,6 +1,6 @@
 ---
 aliases:
-  - Templates
+  - Journals
 tags:
   - template
   - journals

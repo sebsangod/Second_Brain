@@ -93,4 +93,9 @@ docker run --name redis -p 6379:6379 --network redis-network -d redis:latest
 docker run --name redis-insight -p 5540:5540 --network redis-network -d redis/redisinsight:latest
 ```
 
+## Claude Sessions
+
+- [[2026-04-13 - Qué Es Python Explicamelo Para Entenderlo Como Fuera La]] — 13/abr/2026
+- [[2026-04-14 - Qué Es Python Explicamelo Para Entenderlo Como Fuera La]] — 14/abr/2026
+
 ___

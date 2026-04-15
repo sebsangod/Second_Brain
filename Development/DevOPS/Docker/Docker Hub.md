@@ -79,3 +79,9 @@ docker run node:18
 - **Google Artifact Registry** — Google Cloud's registry
 - **GitHub Container Registry** — store images alongside your `GitHub` repos
 - **self-hosted** — run your own private registry
+
+## Claude Sessions
+
+- [[2026-04-13 - Qué Es Python Explicamelo Para Entenderlo Como Fuera La]] — 13/abr/2026
+
+---

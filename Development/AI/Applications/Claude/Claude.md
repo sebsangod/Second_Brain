@@ -417,4 +417,8 @@ The two features complement each other. A _skill_ can reference knowledge stored
 | Example     | Customer hub, research buddy, feedback generator           | Brand guidelines, Blog drafting, PDF creation                  |
 | Persistence | Knowledge available across all chats in the project        | Instructions applied when the skill is invoked                 |
 
+## Claude Sessions
+
+- [[2026-04-13 - Qué Es Python Explicamelo Para Entenderlo Como Fuera La]] — 13/abr/2026
+
 ---

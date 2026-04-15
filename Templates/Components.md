@@ -54,13 +54,15 @@ FROM python:3.11
 
 ## Alerts
 
+> [!Note] Note
+
 > [!tip] Tip
+
+> [!info] Info
 
 > [!success] Success
 
 > [!warning] Warning
-
-> [!info] Info
 
 > [!error] Error
 

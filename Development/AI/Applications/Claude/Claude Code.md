@@ -554,7 +554,7 @@ Here are some common ways to use _hooks_:
 
 ___
 
-## Building a _Hook_
+### Building a _Hook_
 
 Creating a _hook_ involves four main steps:
 
@@ -566,7 +566,7 @@ Creating a _hook_ involves four main steps:
 4. **If needed, command should provide feedback to `Claude`**: Your command's exit code tells `Claude` whether to allow or block the operation
 
 
-### Available Tools
+#### Available Tools
 
 Claude Code provides several built-in tools that you can monitor with _hooks_:
 
@@ -579,7 +579,7 @@ To see exactly which tools are available in your current setup, you can ask `Cla
 ```
 
 
-### Tool Call Data Structure
+#### Tool Call Data Structure
 
 When your _hook_ command executes, `Claude` sends JSON data through standard input containing details about the proposed tool call:
 
@@ -600,7 +600,7 @@ When your _hook_ command executes, `Claude` sends JSON data through standard inp
 Your command reads this JSON from standard input, parses it, and then decides whether to allow or block the operation based on the tool name and input parameters
 
 
-### Exit Codes and Control Flow
+#### Exit Codes and Control Flow
 
 Your _hook_ command communicates back to `Claude` through exit codes:
 
@@ -612,7 +612,7 @@ Your _hook_ command communicates back to `Claude` through exit codes:
 When you exit with code 2 in a _PreToolUse hook_, any error messages you write to standard error will be sent to `Claude` as feedback, explaining why the operation was blocked.
 
 
-### Example Use Case
+#### Example Use Case
 
 A common use case is preventing `Claude` from reading sensitive files like _.env_ files. Since both the _Read_ and _Grep_ tools can access file contents, you'd want to monitor both tool types and check if they're trying to access restricted file paths.
 
@@ -620,12 +620,12 @@ This approach gives you complete control over `Claude's` file system access whil
 
 ___
 
-## Implementing a _hook_
+### Implementing a _hook_
 
 Let's build a custom _hook_ to prevent `Claude` from reading sensitive files like _.env_. This is a practical example of how _hooks_ can protect your environment variables and other confidential data during development sessions.
 
 
-### Setting Up the _Hook_ Configuration
+#### Setting Up the _Hook_ Configuration
 
 First, we need to configure our hook in the settings file. Open your _.claude/settings.local.json_ file and locate the hooks section. We'll create a _PreToolUse hook_ since we want to intercept tool calls before they execute.
 
@@ -647,7 +647,7 @@ The pipe symbol (_|_) acts as an _OR_ operator, so this will trigger on either t
 ```
 
 
-### Understanding Tool Call Data
+#### Understanding Tool Call Data
 
 **When** `Claude` **attempts to use a tool, your** _hook_ **receives detailed information about that call through standard input as JSON.** This data includes:
 
@@ -659,9 +659,9 @@ The pipe symbol (_|_) acts as an _OR_ operator, so this will trigger on either t
 Your _hook_ script processes this data and can either allow the operation to continue or block it by exiting with a specific code.
 
 
-### Implementing the _Hook_ Script
+#### Implementing the _Hook_ Script
 
-#### Using `NodeJS`
+##### Using `NodeJS`
 
 The _hook_ script needs to read the tool call data from standard input and check if `Claude` is trying to access the _.env_ file. Here's the core logic:
 
@@ -688,7 +688,7 @@ async function main() {
 The script checks for _.env_ in the file path and blocks the operation if found. When you exit with _code 2_, `Claude` receives an error message and understands the operation was blocked by a _hook_.
 
 
-#### Using `Python`
+##### Using `Python`
 
 Claude Code's _hooks_ work with every executable script with access to _stdin_ values and returns _stdout_ / _stderr_ values too. So the `Python` equivalent to the previous `NodeJS` _hook_ script is:
 
@@ -716,27 +716,30 @@ Claude Code's _hooks_ work with every executable script with access to _stdin_ v
 
 ```python title:read_hook.py
 #!/usr/bin/env python3
-from sys import stdin, stderr
+
 from json import loads
+from sys import exit, stdin, stderr
+
 
 def main():
-    raw = stdin.read()
-    tool_args = loads(raw)
+    raw = stdin.read()
+    tool_args = loads(raw)
 
-    # Extract the file path Claude is trying to read
-    read_path = (
-        tool_args.get("tool_input", {}).get("file_path") or
-        tool_args.get("tool_input", {}).get("path") or
-        ""
-    )
+    # Extract the file path Claude is trying to read
+    read_path = (
+        tool_args.get("tool_input", {}).get("file_path")
+        or tool_args.get("tool_input", {}).get("path")
+        or ""
+    )
 
-    # Check if Claude is trying to read the .env file
-    if ".env" in read_path:
-        print(f"You cannot read the .env file: {stderr}")
-        sys.exit(2)
+    # Check if Claude is trying to read the .env file
+    if ".env" in read_path:
+        print(f"You cannot read the .env file: {stderr}")
+        exit(2)
+
 
 if __name__ == "__main__":
-    main()
+    main()
 ```
 
 **You must give execution permissions to the script:**
@@ -746,7 +749,7 @@ chmod +x /home/hooks/read_hook.py
 ```
 
 
-#### Using Another
+##### Using Another
 
 Claude Code simply passes the tool's context through _stdin_ by a JSON and reads the result, so the important thing for **any language** are the exit codes:
 
@@ -768,7 +771,7 @@ fi
 ```
 
 
-### Testing Your Hook
+#### Testing Your Hook
 
 **After saving your configuration and** _hook_ **script, restart Claude Code for the changes to take effect.** Then test it by asking `Claude` to read your _.env_ file.
 
@@ -777,7 +780,7 @@ When `Claude` attempts the read operation, your hook will intercept it and retur
 The same protection works for _grep_ operations - if `Claude` tries to search within the _.env_ file, the hook will block that as well.
 
 
-### Key Benefits
+#### Key Benefits
 
 This approach provides several advantages:
 
@@ -856,5 +859,9 @@ The Claude Code _SDK_ shines when integrated into larger development workflows. 
 - Code quality checks in `CI/CD` pipelines
 
 The _SDK_ essentially lets you add `AI-powered` intelligence to any part of your development process where programmatic access would be valuable.
+
+## Claude Sessions
+
+- [[2026-04-13 - Qué Es Python Explicamelo Para Entenderlo Como Fuera La]] — 13/abr/2026
 
 ___
