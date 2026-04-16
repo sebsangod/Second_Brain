@@ -3,9 +3,8 @@ aliases:
   - Coding Assistant
 tags:
   - learning
+date: 2026-03-19
 ---
-**Date**: 19/mar/2026
-**Update**: 19/mar/2026
 **Sources**: [Claude Code in Action](https://anthropic.skilljar.com/claude-code-in-action)
 
 **Tags:** #LLM #AI #assistant #development
@@ -83,4 +82,6 @@ Not all `LLMs` are equally good at using tools. The Claude series of models (`Op
 
 This tool-use capability is what transforms a simple text-generating model into a powerful coding assistant that can read your files, understand your codebase, and make meaningful changes to your projects.
 
----
+___
+
+## Claude Sessions

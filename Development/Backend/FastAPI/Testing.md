@@ -3,9 +3,8 @@ aliases:
   - Testing
 tags:
   - learning
+date: 2026-03-25
 ---
-**Date**: 25/mar/2026
-**Update**: 25/mar/2026
 **Sources**: [FastAPI Testing](https://fastapi.tiangolo.com/tutorial/testing/#using-testclient) [FastAPI Async Testing](https://fastapi.tiangolo.com/advanced/async-tests/#other-asynchronous-function-calls)
 
 **Tags:** #development #testing
@@ -179,15 +178,15 @@ def test_create_existing_item():
 ```bash title:/home/user/my_api/app
 $ pytest
 
-================ test session starts ================  
-platform linux -- Python 3.6.9, pytest-5.3.5, py-1.8.1, pluggy-0.13.1  
-rootdir: /home/user/code/superawesome-cli/app  
-plugins: forked-1.1.3, xdist-1.31.0, cov-2.8.1  
-collected 6 items  
-  
-████████████████████████████████████████ 100%  
-test_main.py ...... [100%]  
-  
+================ test session starts ================
+platform linux -- Python 3.6.9, pytest-5.3.5, py-1.8.1, pluggy-0.13.1
+rootdir: /home/user/code/superawesome-cli/app
+plugins: forked-1.1.3, xdist-1.31.0, cov-2.8.1
+collected 6 items
+
+████████████████████████████████████████ 100%
+test_main.py ...... [100%]
+
 ================= 1 passed in 0.03s =================
 
 ```
@@ -268,9 +267,6 @@ print("Hello world!")
 
 ```
 
-## Claude Sessions
-
-- [[2026-04-13 - Qué Es Python Explicamelo Para Entenderlo Como Fuera La]] — 13/abr/2026
-- [[2026-04-14 - Qué Es Python Explicamelo Para Entenderlo Como Fuera La]] — 14/abr/2026
-
 ---
+
+## Claude Sessions

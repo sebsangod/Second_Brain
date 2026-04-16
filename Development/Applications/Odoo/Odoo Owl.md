@@ -3,9 +3,8 @@ aliases:
   - Odoo Owl
 tags:
   - learning
+date: 2026-03-28
 ---
-**Date**: 28/mar/2026
-**Update**: 28/mar/2026
 **Sources**: [Discover the web framework](https://www.odoo.com/documentation/19.0/developer/tutorials/discover_js_framework/01_owl_components.html)
 
 **Tags:** #development #frontend
@@ -225,4 +224,6 @@ registry.category("actions").add(
 #### Result
 ![[owl_view_form.png]]
 
----
+___
+
+## Claude Sessions

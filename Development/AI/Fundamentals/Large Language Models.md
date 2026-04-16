@@ -3,9 +3,8 @@ aliases:
   - Large Language Models
 tags:
   - learning
+date: 2026-03-19
 ---
-**Date**: 19/mar/2026
-**Update**: 19/mar/2026
 **Sources**: [Cloudflare](https://www.cloudflare.com/learning/ai/what-is-large-language-model/)
 
 **Tags:** #AI #LLM #model
@@ -67,4 +66,6 @@ To build LLM applications, developers need easy access to multiple `data sets`, 
 * `Llama` (from `Meta`)
 * `Copilot` (from `GitHub`) is another example, but for coding instead of natural human language.
 
----
+___
+
+## Claude Sessions

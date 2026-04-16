@@ -4,9 +4,8 @@ aliases:
 tags:
   - template
   - claude-session
+date: 2026-04-14
 ---
-**Date**: {{date}}
-**Update**: {{date}}
 **Sources**: Claude Code Session
 
 **Tags:** #claude-session

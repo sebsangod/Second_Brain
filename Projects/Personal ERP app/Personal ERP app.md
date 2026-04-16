@@ -1,12 +1,11 @@
 ---
 aliases:
-  - Personal ERP
+  - Personal ERP app
 tags:
   - projects
+date: 2026-04-12
 ---
-**Date**: 12/abril/2026
-**Update**: 12/abril/2026
-**Sources**: 
+**Sources**:
 
 **Tags:** #projects #development #ERP
 

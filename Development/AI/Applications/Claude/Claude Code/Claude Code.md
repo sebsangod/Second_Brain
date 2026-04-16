@@ -3,20 +3,19 @@ aliases:
   - Claude Code
 tags:
   - learning
+date: 2026-04-14
 ---
-**Date**: 19/mar/2026
-**Update**: 22/mar/2026
-**Sources**: [Claude Code](https://claude.com/product/claude-code), [Claude Code in Action](https://anthropic.skilljar.com/claude-code-in-action)
+**Sources**: [Claude Code](https://claude.com/product/claude-code), [Claude Code in Action](https://anthropic.skilljar.com/claude-code-in-action), [Exploring the .claude directory](https://code.claude.com/docs/en/claude-directory)
 
 **Tags:** #development #LLM #AI
 
-**Related:** [[Artificial Intelligence]], [[Large Language Models]], [[Claude]], [[MCP servers]], [[Playwright]], [[NodeJS]], [[Python]], [[Bash]], [[TypeScript]], [[CI-CD]]
+**Related:** [[Artificial Intelligence]], [[Large Language Models]], [[Claude]], [[Anthropic]], [[MCP servers]], [[Playwright]], [[NodeJS]], [[Python]], [[Bash]], [[TypeScript]], [[CI-CD]]
 
 ---
 
 ## Description
 
-Claude Code is a **command-line AI assistant that uses`LLMs` to perform development tasks.**
+*Claude Code* is a **command-line AI assistant that uses** `LLMs` **to perform development tasks.**
 
 ---
 
@@ -860,8 +859,6 @@ The Claude Code _SDK_ shines when integrated into larger development workflows. 
 
 The _SDK_ essentially lets you add `AI-powered` intelligence to any part of your development process where programmatic access would be valuable.
 
-## Claude Sessions
-
-- [[2026-04-13 - Qué Es Python Explicamelo Para Entenderlo Como Fuera La]] — 13/abr/2026
-
 ___
+
+## Claude Sessions

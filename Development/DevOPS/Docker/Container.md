@@ -3,9 +3,8 @@ aliases:
   - Learning
 tags:
   - learning
+date: 2026-03-15
 ---
-**Date**: 16/mar/2026
-**Update**: 16/mar/2026
 **Sources**: 
 
 **Tags:** #devops #infrastructure #deployment 
@@ -63,8 +62,6 @@ You can run multiple containers from the same `image` simultaneously, each isola
 
 Instead of installing `PostgreSQL` directly on your machine, you can run it in a container using a `Docker` command.
 
+___
+
 ## Claude Sessions
-
-- [[2026-04-13 - Qué Es Python Explicamelo Para Entenderlo Como Fuera La]] — 13/abr/2026
-
----

@@ -3,9 +3,8 @@ aliases:
   - Redis
 tags:
   - learning
+date: 2026-03-24
 ---
-**Date**: 24/mar/2026
-**Update**: 24/mar/2026
 **Sources**: [Source]()
 
 **Tags:** #database #nosql
@@ -226,4 +225,6 @@ redis_conn = RedisConnection()
 
 ```
 
----
+___
+
+## Claude Sessions

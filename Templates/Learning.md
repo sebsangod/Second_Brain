@@ -4,9 +4,8 @@ aliases:
 tags:
   - template
   - learning
+date: 2026-03-15
 ---
-**Date**: 15/mar/2026
-**Update**: 15/mar/2026
 **Sources**: [Source]()
 
 **Tags:** #learning
@@ -51,3 +50,5 @@ print("Hello world!")
 ```
 
 ---
+
+## Claude Sessions

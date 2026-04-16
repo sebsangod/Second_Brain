@@ -3,9 +3,8 @@ aliases:
   - Learning
 tags:
   - learning
+date: 2026-03-18
 ---
-**Date**: 16/mar/2026
-**Update**: 18/mar/2026
 **Sources**: [Docker Hub](https://docs.docker.com/)
 
 **Tags:** #devops #infrastructure #deployment
@@ -80,8 +79,6 @@ docker run node:18
 - **GitHub Container Registry** — store images alongside your `GitHub` repos
 - **self-hosted** — run your own private registry
 
+___
+
 ## Claude Sessions
-
-- [[2026-04-13 - Qué Es Python Explicamelo Para Entenderlo Como Fuera La]] — 13/abr/2026
-
----

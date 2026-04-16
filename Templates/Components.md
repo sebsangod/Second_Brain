@@ -4,9 +4,8 @@ aliases:
 tags:
   - template
   - components
+date: 2026-03-15
 ---
-**Date**: 15/mar/2026
-**Update**: 15/mar/2026
 **Sources**: [Source]()
 
 **Tags:** #components
@@ -72,5 +71,25 @@ FROM python:3.11
 
 - [ ] 📅 2026-03-21 🔺 🏁 keep
 - [x]  ✅ 2026-03-21
+
+___
+
+## Mermaid Diagrams
+
+```mermaid
+flowchart TD
+A[Start] --> B{Decision}
+B -- Yes --> C[Result 1]
+B -- No --> D[Result 2]
+```
+
+
+```mermaid
+flowchart LR
+    A[Start] --> B(Process)
+    B --> C{Decision}
+    C -->|Yes| D[Success]
+    C -->|No| E[Retry]
+```
 
 ___

@@ -6,8 +6,6 @@ tags:
   - claude-generated
 date: 2026-04-13
 ---
-**Date**: 13/abr/2026
-**Update**: 13/abr/2026
 **Sources**: Claude Code Session
 
 **Tags:** #learning #claude-generated
@@ -111,8 +109,3 @@ Validación        → Pydantic
 ---
 
 ## Claude Sessions
-
-- [[2026-04-13 - Qué Es Python Explicamelo Para Entenderlo Como Fuera La]] — 13/abr/2026
-- [[2026-04-14 - Qué Es Python Explicamelo Para Entenderlo Como Fuera La]] — 14/abr/2026
-
----

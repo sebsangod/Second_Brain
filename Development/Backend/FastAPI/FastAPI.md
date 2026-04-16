@@ -3,9 +3,8 @@ aliases:
   - FastAPI
 tags:
   - learning
+date: 2026-03-24
 ---
-**Date**: 24/mar/2026
-**Update**: 24/mar/2026
 **Sources**: [FastAPI](https://fastapi.tiangolo.com/) [FastAPI Docs](https://fastapi.tiangolo.com/tutorial/)
 
 
@@ -624,9 +623,6 @@ class UserRepositoryInterface(ABC):
 
 ```
 
-## Claude Sessions
-
-- [[2026-04-13 - Qué Es Python Explicamelo Para Entenderlo Como Fuera La]] — 13/abr/2026
-- [[2026-04-14 - Qué Es Python Explicamelo Para Entenderlo Como Fuera La]] — 14/abr/2026
-
 ___
+
+## Claude Sessions

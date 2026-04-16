@@ -3,9 +3,8 @@ aliases:
   - Learning
 tags:
   - learning
+date: 2026-03-18
 ---
-**Date**: 16/mar/2026
-**Update**: 18/mar/2026
 **Sources**: [Docker](https://www.docker.com/), [Docker Docs](https://docs.docker.com/)
 
 **Tags:** #devops #infrastructure #deployment
@@ -93,9 +92,6 @@ docker run --name redis -p 6379:6379 --network redis-network -d redis:latest
 docker run --name redis-insight -p 5540:5540 --network redis-network -d redis/redisinsight:latest
 ```
 
-## Claude Sessions
-
-- [[2026-04-13 - Qué Es Python Explicamelo Para Entenderlo Como Fuera La]] — 13/abr/2026
-- [[2026-04-14 - Qué Es Python Explicamelo Para Entenderlo Como Fuera La]] — 14/abr/2026
-
 ___
+
+## Claude Sessions

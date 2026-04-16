@@ -3,9 +3,8 @@ aliases:
   - Beanie
 tags:
   - learning
+date: 2026-03-15
 ---
-**Date**: 15/mar/2026
-**Update**: 15/mar/2026
 **Sources**: [Beanie]([https://beanie-odm.dev/](https://github.com/BeanieODM/beanie))
 
 **Tags:** #development #data #datavalidation
@@ -1036,3 +1035,5 @@ class TestUseCasePlatformDispatch:
 ```
 
 ---
+
+## Claude Sessions

@@ -3,9 +3,8 @@ aliases:
   - Master Config API
 tags:
   - projects
+date: 2026-03-21
 ---
-**Date**: 21/mar/2026
-**Update**: 21/mar/2026
 **Sources**:
 
 **Tags:** #projects #business #idea #development #security #microservices
@@ -42,7 +41,7 @@ Write here...
 
 ## Tasks
 
-- [ ] 🔺  Implement strong authentication methods
+- [ ] 🔺 Implement strong authentication methods
 - [ ] 🔺 Compare development stacks: `API Rest` service (`FastAPI`, `NodeJS`, etc. HTTP clients) vs `WebSockets` efficiency.
 
 ___

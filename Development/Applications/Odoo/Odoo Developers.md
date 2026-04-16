@@ -3,9 +3,8 @@ aliases:
   - Odoo Developers
 tags:
   - learning
+date: 2026-03-29
 ---
-**Date**: 26/mar/2026
-**Update**: 29/mar/2026
 **Sources**: [Odoo Developers](https://www.odoo.com/documentation/19.0/developer.html), [Odoo Coding Guidelines](https://www.odoo.com/documentation/19.0/contributing/development/coding_guidelines.html)
 
 **Tags:** #development #backend
@@ -583,4 +582,6 @@ odoo_conn: OdooConnection = OdooConnection()
 
 ```
 
----
+___
+
+## Claude Sessions

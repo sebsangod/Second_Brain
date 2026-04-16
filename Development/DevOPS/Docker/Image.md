@@ -3,9 +3,8 @@ aliases:
   - Learning
 tags:
   - learning
+date: 2026-03-18
 ---
-**Date**: 18/mar/2026
-**Update**: 18/mar/2026
 **Sources**: 
 
 **Tags:** #devops #infrastructure #deployment
@@ -96,8 +95,6 @@ RUN pip install -r requirements.txt
 CMD ["python", "app.py"]
 ```
 
+___
+
 ## Claude Sessions
-
-- [[2026-04-13 - Qué Es Python Explicamelo Para Entenderlo Como Fuera La]] — 13/abr/2026
-
----

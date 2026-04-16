@@ -3,9 +3,8 @@ aliases:
   - Odoo
 tags:
   - learning
+date: 2026-03-24
 ---
-**Date**: 24/mar/2026
-**Update**: 24/mar/2026
 **Sources**: [Odoo](https://www.odoo.com/es), [Odoo Developers Guide](https://www.odoo.com/documentation/19.0/developer.html)
 
 **Tags:** #ERP #CRM #opensource
@@ -41,4 +40,6 @@ _Odoo_ is a suite of _open-source_ enterprise applications (`ERP`) designed to *
 * Website
 * E-commerce.
 
----
+___
+
+## Claude Sessions

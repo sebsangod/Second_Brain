@@ -3,9 +3,8 @@ aliases:
   - Ruff
 tags:
   - learning
+date: 2026-03-25
 ---
-**Date**: 24/mar/2026
-**Update**: 25/mar/2026
 **Sources**: [Ruff](https://docs.astral.sh/ruff/)
 
 **Tags:** #learning
@@ -80,3 +79,5 @@ print("Hello world!")
 ```
 
 ---
+
+## Claude Sessions

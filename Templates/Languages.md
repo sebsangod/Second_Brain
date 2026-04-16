@@ -4,9 +4,8 @@ aliases:
 tags:
   - template
   - languages
+date: 2026-03-15
 ---
-**Date**: 15/mar/2026
-**Update**: 15/mar/2026
 **Sources**: [Source]()
 
 **Tags:** #languages
@@ -17,7 +16,11 @@ tags:
 
 ## Structure
 
-Write here...
+```mermaid
+flowchart LR
+    A(Subject) --> B(Verb)
+    B --> C(Predicate)
+```
 
 ---
 
@@ -27,7 +30,19 @@ Write here...
 
 ---
 
-## Use cases
+## Usage
+
+### First usage
+
+Description...
+
+> Example 1
+> Example 2
+> Example 3
+
+___
+
+## Related vocabulary
 
 Write here...
 

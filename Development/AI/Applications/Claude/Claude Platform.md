@@ -3,14 +3,13 @@ aliases:
   - Claude Platform
 tags:
   - learning
+date: 2026-04-14
 ---
-**Date**: 20/mar/2026
-**Update**: 20/mar/2026
 **Sources**: [Source]()
 
 **Tags:** #development #AI
 
-**Related:** [[Claude]]
+**Related:** [[Claude]], [[Claude Code]], [[Anthropic]]
 
 ---
 

@@ -4,9 +4,8 @@ aliases:
 tags:
   - template
   - projects
+date: 2026-03-15
 ---
-**Date**: 15/mar/2026
-**Update**: 15/mar/2026
 **Sources**: [Source]()
 
 **Tags:** #projects
@@ -38,3 +37,5 @@ Write here...
 Write here...
 
 ---
+
+## Claude Sessions

@@ -4,6 +4,7 @@ aliases:
 tags:
   - template
   - journals
+date: 2026-03-15
 ---
 ---
 
@@ -11,7 +12,6 @@ tags:
 
 ---
 
-**Date**: 15/mar/2026
 **Sources**: [Source]()
 
 **Tags:** #journals
@@ -20,14 +20,14 @@ tags:
 
 ---
 
-## Thoughts
-
-* Write your thoughts here...
-
----
-
 ## Main feeling
 
 Write the main feeling you felt most of the day here...
+
+---
+
+## Thoughts
+
+* Write your thoughts here...
 
 ---
