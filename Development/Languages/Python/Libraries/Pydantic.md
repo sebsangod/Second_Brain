@@ -1,13 +1,13 @@
----
+﻿---
 aliases:
   - Pydantic
 tags:
   - learning
+  - dev/lang/python
+  - dev/data/validation
 date: 2026-03-15
 ---
 **Sources**: [Pydantic](https://pydantic.dev/), [Pydantic Docs](https://docs.pydantic.dev/latest/)
-
-**Tags:** #development #data #datavalidation
 
 **Related:** [[Python]], [[Rust]], [[Huggingface]], [[LangChain]]
 

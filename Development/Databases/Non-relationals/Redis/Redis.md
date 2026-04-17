@@ -1,15 +1,14 @@
----
+﻿---
 aliases:
   - Redis
 tags:
   - learning
+  - dev/database/nosql
 date: 2026-03-24
 ---
 **Sources**: [Source]()
 
-**Tags:** #database #nosql
-
-**Related:** [[Python]]
+**Related:** [[Database]], [[Python]]
 
 ---
 

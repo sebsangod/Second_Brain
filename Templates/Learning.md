@@ -2,13 +2,11 @@
 aliases:
   - Learning
 tags:
-  - template
   - learning
+  - dev/
 date: 2026-03-15
 ---
 **Sources**: [Source]()
-
-**Tags:** #learning
 
 **Related:** [[Templates]]
 

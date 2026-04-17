@@ -1,13 +1,12 @@
----
+﻿---
 aliases:
   - Claude Code
 tags:
   - learning
+  - dev/ai/llm
 date: 2026-04-14
 ---
 **Sources**: [Claude Code](https://claude.com/product/claude-code), [Claude Code in Action](https://anthropic.skilljar.com/claude-code-in-action), [Exploring the .claude directory](https://code.claude.com/docs/en/claude-directory)
-
-**Tags:** #development #LLM #AI
 
 **Related:** [[Artificial Intelligence]], [[Large Language Models]], [[Claude]], [[Anthropic]], [[MCP servers]], [[Playwright]], [[NodeJS]], [[Python]], [[Bash]], [[TypeScript]], [[CI-CD]]
 

@@ -1,13 +1,12 @@
----
+﻿---
 aliases:
   - Learning
 tags:
   - learning
+  - dev/devops
 date: 2026-03-18
 ---
 **Sources**: [Docker](https://www.docker.com/), [Docker Docs](https://docs.docker.com/)
-
-**Tags:** #devops #infrastructure #deployment
 
 **Related:** [[Container]], [[Image]], [[Dockerfile]], [[Docker Hub]], [[PostgreSQL]], [[Redis]], [[MongoDB]], [[Virtual Machine]], [[Microservices]], [[CI-CD]], [[Database]]
 

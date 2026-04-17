@@ -2,12 +2,11 @@
 aliases:
   - Personal ERP app
 tags:
-  - projects
+  - project/idea
+  - dev/erp
 date: 2026-04-12
 ---
 **Sources**:
-
-**Tags:** #projects #development #ERP
 
 **Related:** [[Odoo]]
 
@@ -21,7 +20,12 @@ Create an app that allows a regular person track **everything** about its life: 
 
 ## Goal
 
-Write here...
+Ease any user life-aspect tracking through one app that contains everything important:
+- Project tracking
+- Todo list
+- Weight loss progress
+- Expense control - money saving
+- Investment
 
 ---
 

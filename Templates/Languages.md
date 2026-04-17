@@ -2,13 +2,10 @@
 aliases:
   - Languages
 tags:
-  - template
-  - languages
+  - lang
 date: 2026-03-15
 ---
 **Sources**: [Source]()
-
-**Tags:** #languages
 
 **Related:** [[Templates]]
 

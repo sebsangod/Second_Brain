@@ -1,13 +1,12 @@
----
+﻿---
 aliases:
   - Skills
 tags:
   - learning
+  - dev/ai/llm
 date: 2026-04-14
 ---
 **Sources**: [Claude Code Skills](https://code.claude.com/docs/en/skills)
-
-**Tags:** #development #LLM #AI
 
 **Related:** [[Claude]], [[Claude Code]], [[Anthropic]]
 

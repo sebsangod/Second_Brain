@@ -1,13 +1,12 @@
----
+﻿---
 aliases:
   - Dockerfiles
 tags:
   - learning
+  - dev/devops
 date: 2026-03-18
 ---
 **Sources**:
-
-**Tags:** #devops #infrastructure #deployment
 
 **Related:** [[Docker]], [[Image]], [[Container]], [[NodeJS]], [[Python]]
 

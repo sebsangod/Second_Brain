@@ -1,13 +1,13 @@
----
+﻿---
 aliases:
   - Odoo Owl
 tags:
   - learning
+  - dev/erp
+  - dev/frontend
 date: 2026-03-28
 ---
 **Sources**: [Discover the web framework](https://www.odoo.com/documentation/19.0/developer/tutorials/discover_js_framework/01_owl_components.html)
-
-**Tags:** #development #frontend
 
 **Related:** [[Odoo]], [[JavaScript]], [[XML]]
 

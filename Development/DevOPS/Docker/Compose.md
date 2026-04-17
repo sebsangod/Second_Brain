@@ -1,13 +1,12 @@
----
+﻿---
 aliases:
   - Learning
 tags:
   - learning
+  - dev/devops
 date: 2026-03-15
 ---
 **Sources**: 
-
-**Tags:** #devops #infrastructure #deployment
 
 **Related:** [[Docker]], [[Container]], [[Dockerfile]], [[Image]], [[Kubernetes]], [[Python]], [[NodeJS]], [[PostgreSQL]], [[MySQL]], [[Redis]], [[RabbitMQ]]
 

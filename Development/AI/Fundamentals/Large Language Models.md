@@ -1,13 +1,12 @@
----
+﻿---
 aliases:
   - Large Language Models
 tags:
   - learning
+  - dev/ai/llm
 date: 2026-03-19
 ---
 **Sources**: [Cloudflare](https://www.cloudflare.com/learning/ai/what-is-large-language-model/)
-
-**Tags:** #AI #LLM #model
 
 **Related:** [[Artificial Intelligence]], [[Dataset]], [[Machine Learning]], [[Transformer]], [[Deep Learning]], [[Neural Networks]], [[Fine-tunning]], [[Claude]], [[Claude Code]], [[OpenAI]], [[ChatGPT]], [[GitHub Copilot]], [[Qwen]], [[Alibaba]], [[Llama]], [[Meta]]
 

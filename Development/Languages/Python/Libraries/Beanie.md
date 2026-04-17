@@ -1,13 +1,13 @@
----
+﻿---
 aliases:
   - Beanie
 tags:
   - learning
+  - dev/lang/python
+  - dev/database/nosql
 date: 2026-03-15
 ---
 **Sources**: [Beanie]([https://beanie-odm.dev/](https://github.com/BeanieODM/beanie))
-
-**Tags:** #development #data #datavalidation
 
 **Related:** [[Python]], [[ODM]], [[MongoDB]], [[Pydantic]], [[Database]], [[Collection]], [[Bunnet]], [[Pytest]]
 

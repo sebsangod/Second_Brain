@@ -1,14 +1,12 @@
----
+﻿---
 aliases:
   - Python
 tags:
   - learning
-  - claude-generated
+  - dev/lang/python
 date: 2026-04-13
 ---
 **Sources**: Claude Code Session
-
-**Tags:** #learning #claude-generated
 
 **Related:** [[Claude Code]]
 

@@ -2,13 +2,10 @@
 aliases:
   - Projects
 tags:
-  - template
-  - projects
+  - project/idea
 date: 2026-03-15
 ---
 **Sources**: [Source]()
-
-**Tags:** #projects
 
 **Related:** [[Templates]]
 

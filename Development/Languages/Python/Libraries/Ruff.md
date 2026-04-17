@@ -1,13 +1,12 @@
----
+﻿---
 aliases:
   - Ruff
 tags:
   - learning
+  - dev/lang/python
 date: 2026-03-25
 ---
 **Sources**: [Ruff](https://docs.astral.sh/ruff/)
-
-**Tags:** #learning
 
 **Related:** [[Python]], [[Rust]]
 

@@ -1,13 +1,13 @@
----
+﻿---
 aliases:
   - Master Config API
 tags:
-  - projects
+  - project/idea
+  - dev/backend
+  - dev/security
 date: 2026-03-21
 ---
 **Sources**:
-
-**Tags:** #projects #business #idea #development #security #microservices
 
 **Related:** [[Microservices]], [[API Rest]], [[WebSocket]], [[FastAPI]], [[Python]], [[NodeJS]]
 

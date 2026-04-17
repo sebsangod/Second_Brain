@@ -1,8 +1,9 @@
----
+﻿---
 aliases:
   - FastAPI
 tags:
   - learning
+  - dev/backend
 date: 2026-03-24
 ---
 **Sources**: [FastAPI](https://fastapi.tiangolo.com/) [FastAPI Docs](https://fastapi.tiangolo.com/tutorial/)

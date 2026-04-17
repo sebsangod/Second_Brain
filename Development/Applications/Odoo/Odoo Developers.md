@@ -1,13 +1,13 @@
----
+﻿---
 aliases:
   - Odoo Developers
 tags:
   - learning
+  - dev/erp
+  - dev/backend
 date: 2026-03-29
 ---
 **Sources**: [Odoo Developers](https://www.odoo.com/documentation/19.0/developer.html), [Odoo Coding Guidelines](https://www.odoo.com/documentation/19.0/contributing/development/coding_guidelines.html)
-
-**Tags:** #development #backend
 
 **Related:** [[Odoo]], [[Multi-tier Architecture]], [[Database]], [[Python]], [[XML]]
 

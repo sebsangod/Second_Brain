@@ -2,10 +2,8 @@
 aliases:
   - Journals
 tags:
-  - template
-  - journals
+  - journal
 date: 2026-03-15
----
 ---
 
 # Title
@@ -13,8 +11,6 @@ date: 2026-03-15
 ---
 
 **Sources**: [Source]()
-
-**Tags:** #journals
 
 **Related:** [[Templates]]
 

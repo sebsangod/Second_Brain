@@ -1,13 +1,12 @@
----
+﻿---
 aliases:
   - Odoo
 tags:
   - learning
+  - dev/erp
 date: 2026-03-24
 ---
 **Sources**: [Odoo](https://www.odoo.com/es), [Odoo Developers Guide](https://www.odoo.com/documentation/19.0/developer.html)
-
-**Tags:** #ERP #CRM #opensource
 
 **Related:** [[Python]], [[JavaScript]], [[XML]]
 

@@ -1,13 +1,12 @@
----
+﻿---
 aliases:
   - Testing
 tags:
   - learning
+  - dev/testing
 date: 2026-03-25
 ---
 **Sources**: [FastAPI Testing](https://fastapi.tiangolo.com/tutorial/testing/#using-testclient) [FastAPI Async Testing](https://fastapi.tiangolo.com/advanced/async-tests/#other-asynchronous-function-calls)
-
-**Tags:** #development #testing
 
 **Related:** [[FastAPI]], [[Python]], [[Starlette]], [[HTTPX]], [[Requests]], [[Pytest]], [[Database]], [[Backend]], [[Beanie]], [[MongoDB]]
 
