@@ -1,0 +1,57 @@
+---
+aliases:
+  - Claude Code
+tags:
+  - learning
+  - dev/ai/llm
+date: 2026-04-26
+---
+**Sources**: [Claude Code 101](https://anthropic.skilljar.com/claude-code-101)
+
+**Related:** [[Claude]], [[Claude Code]], [[Context Window]]
+
+---
+
+## Description
+
+``Claude`` **can delegate tasks to subagents that break them down and run component tasks in parallel, improving your** ``context management``. Each _subagent_ operates in its own isolated context window.
+
+---
+
+## Key concepts
+
+Write here...
+
+---
+
+## Details
+
+``Managing context`` in ``Claude Code`` is important. A lot of the ``context window`` gets consumed by things like tool calls exploring your codebase or running web searches for research. What ``Claude`` discovers during that exploration isn't always relevant to the main feature you're developing.
+
+This is where _subagents_ come in. ``Claude`` spawns a subagent to handle a task like "explore this codebase for me." The _subagent_ runs in parallel with its own ``context window``, does all the exploration work, and once finished, summarizes its findings and returns that summary back to ``Claude``.
+
+The result: **you get the answer you were looking for, without the entire journey it took to get there cluttering your main context**.
+
+
+### Creating Your Own Subagent
+
+Subagents are defined in Markdown files with YAML frontmatter. The easiest way to get started is to let Claude generate one for you. Run:
+
+```bash title:bash
+$ /agents
+```
+
+Then select "Create new agent." You'll walk through steps including choosing the scope of the agent, defining its purpose, selecting the tools it has access to, and even picking a color for it.
+
+Claude will generate a name, description, and prompt for the subagent. This also tells Claude when to call the subagent based on the prompts you give it.
+
+## Further Customization
+
+Subagents can be customized further. Here are some highlights:
+
+- **Persistent memory** lets your subagent retain memory across conversations. This is great if you're using it consistently on the same projects.
+- **Preload skills** into subagents by adding the `skill` key and listing skills by name. Note that unlike skills in your main conversation, the entire skill is loaded into context here.
+
+---
+
+## Claude Sessions
