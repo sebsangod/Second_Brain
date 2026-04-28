@@ -8,7 +8,7 @@ date: 2026-05-26
 ---
 **Sources**: [Claude Code](https://claude.com/product/claude-code), [Claude Code 101](https://anthropic.skilljar.com/claude-code-101), [Claude Code in Action](https://anthropic.skilljar.com/claude-code-in-action), [Exploring the .claude directory](https://code.claude.com/docs/en/claude-directory)
 
-**Related:** [[Artificial Intelligence]], [[Large Language Models]], [[Claude]], [[Anthropic]], [[Context Window]], [[MCP servers]], [[Playwright]], [[NodeJS]], [[Python]], [[Bash]], [[TypeScript]], [[CI-CD]]
+**Related:** [[Artificial Intelligence]], [[Large Language Models]], [[Claude]], [[Anthropic]], [[Context Window]], [[MCP servers]], [[NodeJS]], [[Python]], [[Bash]], [[TypeScript]], [[CI-CD]]
 
 ---
 
@@ -46,15 +46,15 @@ In short, you'll need to do the following:
 
 1. Install Claude Code:
 
-```bash title:MacOS_Homebrew
+```bash title:"MacOS Homebrew"
 $ _brew install --cask claude-code_
 ```
 
-```bash title:MacOS,Linux,WSL
+```bash title:"MacOS, Linux and WSL"
 $ _curl -fsSL https://claude.ai/install.sh | bash_
 ```
 
-```bash title:Windows_CMD
+```bash title:"Windows CMD"
 $ _curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd_
 ```
 

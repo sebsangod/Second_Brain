@@ -1,4 +1,4 @@
-﻿---
+---
 aliases:
   - Python
 tags:
@@ -8,7 +8,7 @@ date: 2026-04-13
 ---
 **Sources**: Claude Code Session
 
-**Related:** [[Claude Code]]
+**Related:** [[Claude Code]], [[pyenv]]
 
 ---
 
