@@ -64,7 +64,7 @@ date: 2026-04-15
 
 ---
 
-## 📚 [[Resources]]
+## 📚 [[Resources/Resources]]
 
 - Build Your AI Brain Guide (PDF)
 - Docker Cheatsheet (PDF)
