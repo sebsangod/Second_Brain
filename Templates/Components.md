@@ -38,6 +38,38 @@ ___
 
 ---
 
+## Alerts
+
+> [!Note] Note
+
+> [!tip] Tip
+
+> [!info] Info
+
+> [!success] Success
+
+> [!warning] Warning
+
+> [!error] Error
+
+___
+
+## Workdir trees
+
+```
+automatizaciones/
+├── README.md
+├── scraping/
+│   ├── leads_linkedin/
+│   │   ├── TASK.md
+│   │   └──requirements.txt
+│   └── ...
+│
+└── logs/
+```
+
+___
+
 ## Citations
 
 > Write here...
@@ -62,22 +94,6 @@ print("Hello world!")
 FROM python:3.11
 ...
 ```
-
----
-
-## Alerts
-
-> [!Note] Note
-
-> [!tip] Tip
-
-> [!info] Info
-
-> [!success] Success
-
-> [!warning] Warning
-
-> [!error] Error
 
 ---
 

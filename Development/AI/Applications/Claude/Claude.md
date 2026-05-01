@@ -1,6 +1,6 @@
-﻿---
+---
 aliases:
-  - _Claude_
+  - Claude
 tags:
   - learning
   - dev/ai/llm

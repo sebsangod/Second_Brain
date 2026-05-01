@@ -8,7 +8,7 @@ date: 2026-04-28
 ---
 **Sources**: [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk), [Introduction to Model Context Protocol](https://anthropic.skilljar.com/introduction-to-model-context-protocol/)
 
-**Related:** [[Development/AI/Applications/MCP/MCP|MCP]], [[Python|Python]], [[uv]], [[Large Language Models|Large Language Models]], [[Decorators]], [[Claude]], [[Pydantic|Pydantic]]
+**Related:** [[Development/AI/Applications/MCP/MCP|MCP]], [[Python|Python]], [[uv]], [[Large Language Models|Large Language Models]], [[Decorators]], [[Claude]], [[Tools]], [[Development/Languages/Python/Libraries/MCP/Resources|Resources]], [[Prompts]]
 
 ---
 
@@ -61,248 +61,48 @@ if __name__ == "__main__":
 ```
 
 
-### Server Side
+### MCP Server Primitives
 
-#### Tool Definition with Decorators
+![[mcp_server_primitives.png]]
 
-The _SDK_ uses `decorators` to define tools. Instead of writing JSON schemas manually, you can use `Python` type hints and field descriptions. The _SDK_ automatically generates the proper schema that `Claude` can understand.
 
+#### Tools: Model-Controlled
 
-#### Creating a Document Reader Tool
+_Tools_ **are controlled entirely by** ``Claude``. The AI model decides when to call these functions, and the results are used directly by ``Claude`` to accomplish tasks.
 
-The first tool reads document contents by ID. Here's the complete implementation:
+_Tools_ **are perfect for giving** ``Claude`` **additional capabilities it can use autonomously.** When you ask ``Claude`` to "calculate the square root of 3 using JavaScript," it's ``Claude`` that decides to use a JavaScript execution tool to run the calculation.
 
-```python title:mcp_server.py
-from pydantic import Field
 
-docs = {
-	"deposition.md": "This deposition covers...",
-	"report.pdf": "The report details the...",
-	"financials.docx": "These financials outline...",
-	"outlook.pdf": "This document presents the...",
-	"plan.md": "The plan outlines the steps for...",
-	"spec.txt": "These specifications define the...",
-}
+#### Resources: App-Controlled
 
-@mcp.tool(
-	name="read_doc_contents",
-	description="Read the contents of a document and return it as a string."
-)
-def read_document(
-	doc_id: str = Field(description="Id of the document to read")
-):
-	if doc_id not in docs:
-		raise ValueError(f"Doc with id {doc_id} not found")
+_Resources_ **are controlled by your application code**. Your app decides when to fetch resource data and how to use it - typically for UI elements or to add context to conversations.
 
-	return docs[doc_id]
+In our project, we used resources in two ways:
 
-```
+- Fetching data to populate autocomplete options in the UI
+- Retrieving content to augment prompts with additional context
 
-The `decorator` specifies the tool name and description, while the function parameters define the required arguments. The _Field_ class from `Pydantic` provides argument descriptions that help `Claude` understand what each parameter expects.
+Think of the "Add from Google Drive" feature in ``Claude's`` interface, the application code determines which documents to show and handles injecting their content into the chat context.
 
 
-#### Building a Document Editor Tool
+#### Prompts: User-Controlled
 
-The second tool performs simple find-and-replace operations on documents:
+_Prompts_ **are triggered by user actions**. Users decide when to run these predefined workflows through UI interactions like button clicks, menu selections, or slash commands.
 
-```python title:mcp_server.py
-@mcp.tool(
-	name="edit_document",
-	description="Edit a document by replacing a string in the documents content with a new string."
-)
-def edit_document(
-	doc_id: str = Field(description="Id of the document that will be edited"),
-	old_str: str = Field(description="The text to replace. Must match exactly, including whitespace."),
-	new_str: str = Field(description="The new text to insert in place of the old text.")
-):
-	if doc_id not in docs:
-		raise ValueError(f"Doc with id {doc_id} not found")
+Prompts are ideal for implementing workflows that users can trigger on demand. In ``Claude's`` interface, those workflow buttons below the chat input are examples of _prompts_ - predefined, optimized workflows that users can start with a single click.
 
-	docs[doc_id] = docs[doc_id].replace(old_str, new_str)
 
-```
+#### Choosing the Right Primitive
 
-This tool takes three parameters: the document ID, the text to find, and the replacement text. The implementation includes error handling for missing documents and performs a straightforward string replacement.
+Here's a quick decision guide:
 
+- **Need to give Claude new capabilities?** Use _tools_
+- **Need to get data into your app for UI or context?** Use _resources_
+- **Want to create predefined workflows for users?** Use _prompts_
 
-#### Server _Inspector_
+You can see all three primitives in action in ``Claude's`` official interface. The workflow buttons demonstrate _prompts_, the Google Drive integration shows _resources_ in action, and when ``Claude`` executes code or performs calculations, it's using _tools_ behind the scenes.
 
-When building _MCP servers_, you need a way to **test your functionality without connecting to a full application.** The _Python MCP SDK_ includes a built-in browser-based _inspector_ that lets you **debug and test your server in real-time.**
-
-To run the _inspector_ you must run:
-
-```bash title:command
-$ mcp dev mcp_server.py
-```
-
-Or
-
-```bash title:command
-$ uv run mcp dev mcp_server.py
-```
-
-##### Testing Your Tools
-
-Once the _inspector_ is successfully connected to the target _MCP_, navigate to the _Tools section_ and click _List Tools_ to see all available tools from your server. When you select a tool, **the right panel shows its details and input fields.**
-
-![[mcp_inspector_interface.png]]
-
-
-##### Development Workflow
-
-The _MCP Inspector_ becomes an essential part of your development process. Instead of writing separate test scripts or connecting to full applications, you can:
-
-- Quickly iterate on tool implementations
-- Test edge cases and error conditions
-- Verify tool interactions and state management
-- Debug issues in real-time
-
-**This immediate feedback loop makes** _MCP server_ **development much more efficient and helps catch issues early in the development process.**
-
-
-### Client Side
-
-The _client_ is what allows our application code to communicate with the _MCP server_ and access its functionality.
-
-The _MCP client_ consists of two main components:
-- **MCP Client** - A **custom class** we create to make using the session easier
-- **Client Session** - The actual **connection to the server** (part of the _MCP Python SDK_)
-
-
-![[mcp_client_architecture.png]]
-
-> [!warning] Warning
-> The _client session_ **requires careful resource management. We need to properly clean up connections when we're done.** That's why we wrap it in our own class that handles all the cleanup automatically.
-
-
-#### Custom Class to Manage Sessions
-
-```python title:mcp_client.py
-from contextlib import AsyncExitStack
-from typing import Any
-
-from mcp import ClientSession, StdioServerParameters, types
-from mcp.client.stdio import stdio_client
-
-
-class MCPClient:
-	def __init__(
-		self,
-		command: str,
-		args: list[str],
-		env: dict | None = None,
-	):
-		self._command = command
-		self._args = args
-		self._env = env
-		self._session: ClientSession | None = None
-		self._exit_stack: AsyncExitStack = AsyncExitStack()
-
-	async def connect(self):
-		server_params = StdioServerParameters(
-			command=self._command,
-			args=self._args,
-			env=self._env,
-		)
-		stdio_transport = await self._exit_stack.enter_async_context(
-			stdio_client(server_params)
-		)
-		_stdio, _write = stdio_transport
-		self._session = await self._exit_stack.enter_async_context(
-			ClientSession(_stdio, _write)
-		)
-		await self._session.initialize()
-
-	def session(self) -> ClientSession:
-		if self._session is None:
-			raise ConnectionError(
-				"Client session not initialized or cache not populated. "
-				"Call connect_to_server first."
-			)
-		return self._session
-
-	###############################################################################
-	################################ Set of Tools #################################
-	###############################################################################
-
-	async def cleanup(self):
-		await self._exit_stack.aclose()
-		self._session = None
-
-	async def __aenter__(self):
-		await self.connect()
-		return self
-
-	async def __aexit__(self, exc_type, exc_val, exc_tb):
-		await self.cleanup()
-
-```
-
-
-#### Core Client Functions
-
-##### List Tools Function
-
-This function gets all available tools from the MCP server:
-
-```python title:mcp_client.py
-async def list_tools(self) -> list[types.Tool]:
-    result = await self.session().list_tools()
-    return result.tools
-
-```
-
-It's straightforward - we access our session (the connection to the server), call the built-in _list_tools()_ method, and return the tools from the result.
-
-
-##### Call Tool Function
-
-This function executes a specific tool on the server:
-
-```python title:mcp_client.py
-async def call_tool(
-    self, tool_name: str, tool_input: dict
-) -> types.CallToolResult | None:
-    return await self.session().call_tool(tool_name, tool_input)
-
-```
-
-We pass the tool name and input parameters (provided by `Claude`) to the _server_ and return the result.
-
-
-#### Testing the Client
-
-To test the previous custom session class, we must add the following snippet at the bottom of our file:
-
-```python title:mcp_client.py
-from asyncio import run, set_event_loop_policy, WindowsProactorEventLoopPolicy
-from contextlib import AsyncExitStack
-from sys import platform
-
-async def main():
-	async with MCPClient(
-		# If using Python without UV, update command to 'python' and remove "run" from args.
-		command="uv",
-		args=["run", "mcp_server.py"],
-	) as _client:
-		result = await _client.list_tools()
-		print(result)
-
-
-if __name__ == "__main__":
-	if platform == "win32":
-		set_event_loop_policy(WindowsProactorEventLoopPolicy())
-	run(main())
-
-```
-
-And run it directly to verify everything works:
-
-```bash title:bash
-$ uv run mcp_client.py
-```
-
-This will connect to your _MCP server_ and print out the available tools. You should see output showing your tool definitions, including descriptions and input schemas.
+These are high-level guidelines to help you choose the right primitive for your specific use case. Each serves a different part of your application stack: **tools serve the model, resources serve your app, and prompts serve your users.**
 
 ---
 

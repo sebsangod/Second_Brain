@@ -1,13 +1,14 @@
 ---
 aliases:
+  - MCP
 tags:
   - learning
   - dev/backend
 date: 2026-04-29
 ---
-**Sources**: [Source]()
+**Sources**: [Introduction to Model Context Protocol](https://anthropic.skilljar.com/introduction-to-model-context-protocol/)
 
-**Related:** [[Templates]]
+**Related:** [[Development/Languages/Python/Libraries/MCP/MCP|MCP]], [[Development/AI/Applications/MCP/MCP|MCP]]
 
 ---
 
