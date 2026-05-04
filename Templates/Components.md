@@ -5,8 +5,6 @@ tags:
   - template/components
 date: 2026-03-15
 ---
-**Sources**: [Source]()
-
 **Related:** [[Templates]]
 
 ---
