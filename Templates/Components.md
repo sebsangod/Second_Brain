@@ -93,6 +93,17 @@ FROM python:3.11
 ...
 ```
 
+
+### Diff
+
+```diff
+- if not 16.0 < float(server_serie) <= 17.0:
+- raise UserError(f'Module support Odoo series 17.0 but found {server_serie}.')
+...
++ if not 18.0 < float(server_serie) <= 19.0:
++ raise UserError(f'Module support Odoo series 19.0 but found {server_serie}.')
+```
+
 ---
 
 ## Tasks

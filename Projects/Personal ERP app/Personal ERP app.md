@@ -6,8 +6,6 @@ tags:
   - dev/erp
 date: 2026-04-12
 ---
-**Sources**:
-
 **Related:** [[Odoo]]
 
 ---

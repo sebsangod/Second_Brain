@@ -37,6 +37,7 @@ Avoid ``Claude Code`` to read the secret keys of any project within _.env_ files
                     {
                         "type": "command",
                         "command": "py C:/Users/USER/.claude/hooks/dont_read_dotenv.py",
+                        "command": "python3 ~/.claude/hooks/dont_read_dotenv.py"
                     }
                 ]
             }

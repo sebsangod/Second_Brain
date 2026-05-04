@@ -17,9 +17,6 @@ Get the latest documentation and code into Cursor, Claude, or other LLMs
 ### [Everything Claude Code](https://github.com/affaan-m/everything-claude-code)
 The performance optimization system for AI agent harnesses. From an Anthropic hackathon winner.
 
-### [Resource]()
-Description...
-
 ---
 
 ## Development

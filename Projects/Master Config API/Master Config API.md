@@ -1,4 +1,4 @@
-﻿---
+---
 aliases:
   - Master Config API
 tags:
@@ -7,8 +7,6 @@ tags:
   - dev/security
 date: 2026-03-21
 ---
-**Sources**:
-
 **Related:** [[Microservices]], [[API Rest]], [[WebSocket]], [[FastAPI]], [[Python]], [[NodeJS]]
 
 ---

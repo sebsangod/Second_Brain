@@ -47,7 +47,7 @@ module_name/
 │   └── report_templates.xml
 ├── security/
 │   ├── ir.model.access.csv
-│   └── module_security.xml    # record rules, groups
+│   └── security.xml    # record rules, groups
 ├── static/
 │   └── src/
 │       ├── js/
