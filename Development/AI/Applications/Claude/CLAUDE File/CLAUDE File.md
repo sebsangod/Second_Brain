@@ -1,8 +1,7 @@
 ---
 aliases:
-  - Claude Code
+  - CLAUDE File
 tags:
-  - learning
   - dev/ai/llm
 date: 2026-04-26
 ---

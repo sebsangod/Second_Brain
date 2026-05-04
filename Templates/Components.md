@@ -40,17 +40,17 @@ ___
 
 ## Alerts
 
-> [!Note] Note
+> [!NOTE]
 
-> [!tip] Tip
+> [!TIP]
 
-> [!info] Info
+> [!INFO]
 
-> [!success] Success
+> [!SUCCESS]
 
-> [!warning] Warning
+> [!WARNING]
 
-> [!error] Error
+> [!ERROR]
 
 ___
 

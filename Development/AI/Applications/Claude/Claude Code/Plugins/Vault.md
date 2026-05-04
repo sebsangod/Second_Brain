@@ -5,7 +5,7 @@ tags:
   - vault
 date: 2026-05-02
 ---
-**Related:** [[Plugins]]
+**Related:** [[Claude Code]], [[Claude]], [[Plugins]]
 
 ___
 

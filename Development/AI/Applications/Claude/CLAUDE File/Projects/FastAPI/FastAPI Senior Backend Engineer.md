@@ -8,7 +8,7 @@ date: 2026-05-02
 ---
 **Sources**: [FastAPI Docs](https://fastapi.tiangolo.com/), [Pydantic v2](https://docs.pydantic.dev/latest/), [Beanie ODM](https://beanie-odm.dev/)
 
-**Related:** [[CLAUDE.md File]], [[FastAPI]], [[Pydantic]], [[Beanie]], [[Testing]]
+**Related:** [[CLAUDE File]], [[FastAPI]], [[Pydantic]], [[Beanie]], [[Testing]]
 
 ---
 

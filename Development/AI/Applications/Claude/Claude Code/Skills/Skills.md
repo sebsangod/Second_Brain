@@ -8,7 +8,7 @@ date: 2026-04-14
 ---
 **Sources**: [Claude Code Skills](https://code.claude.com/docs/en/skills)
 
-**Related:** [[Claude]], [[Claude Code]], [[CLAUDE.md File]], [[Context Window]]
+**Related:** [[Claude]], [[Claude Code]], [[Development/AI/Applications/Claude/CLAUDE/CLAUDE.md]], [[Context Window]]
 
 ---
 

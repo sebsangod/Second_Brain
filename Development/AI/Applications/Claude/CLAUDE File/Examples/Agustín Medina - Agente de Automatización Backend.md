@@ -8,7 +8,7 @@ date: 2026-04-30
 ---
 **Sources**: [Claude Code en 50 Minutos. Curso Completo](https://www.youtube.com/watch?v=Wb_Vp96tmnk)
 
-**Related:** [[Claude Code|Claude Code]], [[CLAUDE.md File|CLAUDE.md File]]
+**Related:** [[Claude Code|Claude Code]], [[Development/AI/Applications/Claude/CLAUDE/CLAUDE.md|CLAUDE.md File]]
 
 ---
 

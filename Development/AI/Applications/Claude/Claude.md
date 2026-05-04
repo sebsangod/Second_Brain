@@ -6,9 +6,9 @@ tags:
   - dev/ai/llm
 date: 2026-03-22
 ---
-**Sources**: [Claude](https://claude.com/product/overview), [Claude 101](https://anthropic.skilljar.com/claude-101), [_Claude_ AI Chat](https://_Claude_.ai/), [Claude and Slack](https://claude.com/claude-and-slack), [_Claude_ for Excel](https://claude.com/claude-for-excel)
+**Sources**: [Claude](https://claude.com/product/overview), [Claude 101](https://anthropic.skilljar.com/claude-101), [Claude AI Chat](https://claude.ai/), [Claude and Slack](https://claude.com/claude-and-slack), [Claude for Excel](https://claude.com/claude-for-excel)
 
-**Related:** [[Artificial Intelligence]], [[Large Language Models]], [[Opus]], [[Sonnet]], [[Claude Code]], [[Anthropic]], [[Slack]], [[Excel]], [[RAG]], [[Python]], [[NodeJS]], [[HTML]], [[CSS]], [[JavaScript]], [[React]][[Skills]]]]
+**Related:** [[Artificial Intelligence]], [[Large Language Models]], [[Opus]], [[Sonnet]], [[Claude Code]], [[Anthropic]], [[Slack]], [[Excel]], [[RAG]], [[Python]], [[NodeJS]], [[HTML]], [[CSS]], [[JavaScript]], [[React]], [[Skills]]
 
 ---
 

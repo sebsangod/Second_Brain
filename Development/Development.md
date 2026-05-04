@@ -27,7 +27,7 @@ Artificial intelligence, language models, and AI-powered assistance tools.
 - [[Claude]] — Prompting, Projects, Artifacts, AI Fluency
 - [[Claude Code]] — Installation, context, hooks, MCP servers, SDK, custom commands
 - [[Skills]] — Skills system for Claude Code
-- [[Claude Platform]] — How to use Claude Code via API
+- [[Claude API]] — How to use Claude Code via API
 
 > **Concepts to be documented:** [[Artificial Intelligence]], [[Machine Learning]], [[Deep Learning]], [[Neural Networks]], [[Transformer]], [[Fine-tunning]], [[RAG]], [[Dataset]]
 

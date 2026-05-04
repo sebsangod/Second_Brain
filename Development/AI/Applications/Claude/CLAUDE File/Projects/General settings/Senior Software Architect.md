@@ -8,7 +8,7 @@ date: 2026-05-02
 ---
 **Sources**: [CLAUDE.md](https://code.claude.com/docs/en/claude-md), [Best Practices](https://code.claude.com/docs/en/best-practices)
 
-**Related:** [[CLAUDE.md File]]
+**Related:** [[CLAUDE File]]
 
 ---
 

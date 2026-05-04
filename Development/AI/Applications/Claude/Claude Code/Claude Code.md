@@ -8,7 +8,7 @@ date: 2026-05-26
 ---
 **Sources**: [Claude Code](https://claude.com/product/claude-code), [Claude Code 101](https://anthropic.skilljar.com/claude-code-101), [Claude Code in Action](https://anthropic.skilljar.com/claude-code-in-action), [Exploring the .claude directory](https://code.claude.com/docs/en/claude-directory)
 
-**Related:** [[Artificial Intelligence]], [[Large Language Models]], [[Claude]], [[Anthropic]], [[Context Window]], [[MCP servers]], [[NodeJS]], [[Python]], [[Bash]], [[TypeScript]], [[CI-CD]]
+**Related:** [[Artificial Intelligence]], [[Large Language Models]], [[Claude]], [[Anthropic]], [[Context Window]], [[CLAUDE File]], [[MCP servers]], [[NodeJS]], [[Python]], [[Bash]], [[TypeScript]], [[CI-CD]]
 
 ---
 
@@ -17,12 +17,6 @@ date: 2026-05-26
 *Claude Code* is a **command-line AI assistant that uses** `LLMs` **to perform development tasks.**
 
 _Claude Code_ is an agentic coding tool that understands your codebase, edits your files, runs commands, and integrates with your existing developer tools to help you get things done faster. It's available in your terminal, Visual Studio Code, the Claude Desktop app, on the web, and in JetBrains IDEs.
-
----
-
-## Key commands
-
-Write here...
 
 ---
 

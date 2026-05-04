@@ -378,11 +378,3 @@ Si siempre le pides a Claude "crea un modelo Odoo con sus vistas y seguridad", e
 
 ### Paso 5: Itera con `#` (memory mode)
 Cada vez que corrijas a Claude, usa `#` para guardar la corrección en el CLAUDE.md automáticamente.
-
-> [!IMPORTANT]
-> **¿Quieres que genere los archivos CLAUDE.md específicos para tus proyectos Odoo y FastAPI?** Necesitaría conocer:
-> 1. ¿Qué versión exacta de Odoo usas? (¿19 CE, EE?)
-> 2. ¿Usas algún ORM adicional en FastAPI? (SQLAlchemy, Tortoise, etc.)
-> 3. ¿Qué herramientas de IA usas? (LangChain, LlamaIndex, transformers, etc.)
-> 4. ¿Trabajas en equipo o solo? (determina si necesitas CLAUDE.local.md)
-> 5. ¿Usas Docker para desarrollo?

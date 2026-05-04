@@ -51,6 +51,7 @@ for await (const message of query({ prompt, })) {
 
 When you run this code, you'll see the raw conversation between your local Claude Code and the `Claude` language model, message by message. The final message contains `Claude's` complete response.
 
+
 ### Permissions and Tools
 
 **By default, the** _SDK_ **only has read-only permissions.** It can read files, search directories, and perform grep operations, but **it cannot write, edit, or create files.**
@@ -71,6 +72,7 @@ for await (
 ```
 
 Alternatively, you can configure permissions in your settings file within the _.claude_ directory for project-wide access.
+
 
 ### Practical Applications
 

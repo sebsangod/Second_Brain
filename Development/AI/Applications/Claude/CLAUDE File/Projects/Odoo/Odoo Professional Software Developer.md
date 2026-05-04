@@ -8,7 +8,7 @@ date: 2026-05-02
 ---
 **Sources**: [Odoo Coding Guidelines](https://www.odoo.com/documentation/19.0/contributing/development/coding_guidelines.html), [Odoo Developers](https://www.odoo.com/documentation/19.0/developer.html), [Best Practices](https://code.claude.com/docs/en/best-practices)
 
-**Related:** [[CLAUDE.md File]], [[Odoo]], [[Odoo Developers]]
+**Related:** [[CLAUDE File]], [[Odoo]], [[Odoo Developers]], [[Odoo Owl|Odoo Owl]]
 
 ---
 
