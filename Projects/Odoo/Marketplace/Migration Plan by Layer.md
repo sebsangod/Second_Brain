@@ -1,12 +1,12 @@
 ---
 aliases:
-  - Odoo Marketplace
+  - Marketplace
 tags:
   - dev/erp
   - dev/backend
 date: 2026-05-04
 ---
-**Related:** [[Odoo Marketplace]]
+**Related:** [[Marketplace]]
 
 ---
 

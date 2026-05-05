@@ -1,6 +1,6 @@
 ---
 aliases:
-  - Odoo Marketplace
+  - Marketplace
 tags:
   - project/idea
   - dev/erp
