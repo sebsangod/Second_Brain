@@ -412,90 +412,7 @@ class TestModel(models.Model):
 ```
 
 
-### Add External Libraries
-```python title:__manifest__.py
-{
-    ...,
-
-    "assets": {
-        "web.assets_frontend": [
-            "my_module/static/src/components/**/*",
-            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css",
-        ]
-    }
-}
-
-```
-
-
-### Build and Print PDF Reports
-
-```txt title:real_estate_tutorial/
-real_estate_tutorial/
-├── data
-│   └── paper_format.xml
-├── reports
-│   └── estate_property_offer_templates.xml
-├── views
-│   ├── actions.xml
-├── __init__.py
-└── __manifest__.py
-
-```
-
-```python title:__manifest__.py
-{
-	...
-	"data": [
-		# Dependencies data
-		"data/paper_format.xml",
-		# Views
-		"views/actions.xml",
-		...
-	],
-	...
-}
-
-```
-
-```xml title:paper_format.xml
-<record id="real_estate_tutorial.paperformat_a4_lowmargin" model="report.paperformat">
-	<field name="name">Real Estate A4 Low Margin</field>
-	<field name="default" eval="True"/>
-	<field name="format">A4</field>
-	<field name="orientation">Portrait</field> <!-- Or Landscape -->
-	<field name="margin_top">10</field>
-	<field name="margin_bottom">10</field>
-	<field name="margin_left">7</field>
-	<field name="margin_right">7</field>
-	<field name="header_line" eval="False"/>
-	<field name="header_spacing">35</field>
-	<field name="dpi">90</field>
-</record>
-```
-
-```xml title:actions.xml
-<record id="real_estate_tutorial.estate_property_offer_report" model="ir.actions.report">
-	<field name="name">Property Offers Report</field>
-	<field name="model">estate.property</field>
-	<field name="report_type">qweb-pdf</field>
-	<field name="report_name">real_estate_tutorial.estate_property_offer_template</field>
-	<field name="report_file">real_estate_tutorial.estate_property_offer_template</field>
-	<field name="print_report_name">
-		'Property Offers Report - %s' % (object.name or 'Property').replace('/','')
-	</field>
-	<field name="paperformat_id" ref="real_estate_tutorial.paperformat_a4_lowmargin" />
-	<field name="binding_model_id" ref="model_estate_property"/>
-	<field name="binding_type">report</field>
-</record>
-```
-
-#### Result
-
-![[odoo_print_report_result.png]]
-
-
-### Track API Requests
+#### Track API Requests
 
 ```python title:api_request.py
 from odoo import fields, models
@@ -725,6 +642,120 @@ def _store_api_request(
         return response
 
 ```
+
+
+#### Odoo Message Tracker
+
+```xml title:my_model_view.xml
+<record id="my_module.model_view_form" model="ir.ui.view">
+	<field name="name">my_module.model_view_form</field>
+	<field name="model">model</field>
+	<field name="arch" type="xml">
+		<form>
+			<sheet></sheet>
+			<div class="oe_chatter">
+				<field name="message_follower_ids" />
+				<field name="message_ids" />
+			</div>
+		</form>
+	</field>
+</record>
+```
+
+```python title:my_model.py
+class ResPartner(models.Model):
+    _inherit = "res.partner"
+    
+    is_seller = fields.Boolean(
+		string="Is a seller?",
+		copy=False,
+		tracking=True, # This is the important parameter
+		help="Check this box if the contact is marketplace seller."
+	)
+
+```
+
+### Add External Libraries
+```python title:__manifest__.py
+{
+    ...,
+
+    "assets": {
+        "web.assets_frontend": [
+            "my_module/static/src/components/**/*",
+            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css",
+        ]
+    }
+}
+
+```
+
+
+### Build and Print PDF Reports
+
+```txt title:real_estate_tutorial/
+real_estate_tutorial/
+├── data
+│   └── paper_format.xml
+├── reports
+│   └── estate_property_offer_templates.xml
+├── views
+│   ├── actions.xml
+├── __init__.py
+└── __manifest__.py
+
+```
+
+```python title:__manifest__.py
+{
+	...
+	"data": [
+		# Dependencies data
+		"data/paper_format.xml",
+		# Views
+		"views/actions.xml",
+		...
+	],
+	...
+}
+
+```
+
+```xml title:paper_format.xml
+<record id="real_estate_tutorial.paperformat_a4_lowmargin" model="report.paperformat">
+	<field name="name">Real Estate A4 Low Margin</field>
+	<field name="default" eval="True"/>
+	<field name="format">A4</field>
+	<field name="orientation">Portrait</field> <!-- Or Landscape -->
+	<field name="margin_top">10</field>
+	<field name="margin_bottom">10</field>
+	<field name="margin_left">7</field>
+	<field name="margin_right">7</field>
+	<field name="header_line" eval="False"/>
+	<field name="header_spacing">35</field>
+	<field name="dpi">90</field>
+</record>
+```
+
+```xml title:actions.xml
+<record id="real_estate_tutorial.estate_property_offer_report" model="ir.actions.report">
+	<field name="name">Property Offers Report</field>
+	<field name="model">estate.property</field>
+	<field name="report_type">qweb-pdf</field>
+	<field name="report_name">real_estate_tutorial.estate_property_offer_template</field>
+	<field name="report_file">real_estate_tutorial.estate_property_offer_template</field>
+	<field name="print_report_name">
+		'Property Offers Report - %s' % (object.name or 'Property').replace('/','')
+	</field>
+	<field name="paperformat_id" ref="real_estate_tutorial.paperformat_a4_lowmargin" />
+	<field name="binding_model_id" ref="model_estate_property"/>
+	<field name="binding_type">report</field>
+</record>
+```
+
+#### Result
+
+![[odoo_print_report_result.png]]
 
 
 ### Open a Wizard
