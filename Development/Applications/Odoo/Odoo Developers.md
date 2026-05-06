@@ -1,4 +1,4 @@
-﻿---
+---
 aliases:
   - Odoo Developers
 tags:
@@ -493,6 +493,238 @@ real_estate_tutorial/
 #### Result
 
 ![[odoo_print_report_result.png]]
+
+
+### Track API Requests
+
+```python title:api_request.py
+from odoo import fields, models
+
+
+class APIRequest(models.AbstractModel):
+    _name: str = "api.request"
+    _description: str = "Abstract API request model"
+    _rec_name: str = "method"
+    _order: str = "write_date desc"
+
+    method = fields.Selection(
+        string="Método",
+        selection=[
+            ("GET", "GET"),
+            ("POST", "POST"),
+            ("PUT", "PUT"),
+            ("DELETE", "DELETE"),
+        ],
+        readonly=True,
+        required=True,
+    )
+    url = fields.Char(string="URL", readonly=True, required=True)
+    success = fields.Boolean(string="Éxito", readonly=True, required=True)
+    code = fields.Integer(string="Código", readonly=True, required=True)
+    message = fields.Char(string="Mensaje", readonly=True)
+    request = fields.Text(string="Request", readonly=True, required=True)
+    response = fields.Text(string="Response", readonly=True, required=True)
+
+    partner_id = fields.Many2one(
+        string="Pertenece a",
+        comodel_name="res.partner",
+        readonly=True,
+        required=True,
+        help="Colaborador que realizó la petición",
+    )
+
+
+class WorkloadAPIRequest(models.Model):
+    _name: str = "api.request.workload"
+    _inherit: list[str] = ["api.request"]
+    _description: str = "Workload API request model"
+
+    method = fields.Selection(
+        selection_add=[
+            ("PATCH", "PATCH"),
+        ],
+        ondelete={"PATCH": "cascade"},
+    )
+
+    workload_id = fields.Many2one(
+        comodel_name="workload",
+        string="Workload asociado",
+        required=True,
+        ondelete="cascade",
+    )
+
+
+class PodAPIRequest(models.Model):
+    _name: str = "api.request.pod"
+    _inherit: list[str] = ["api.request"]
+    _description: str = "Pod API request model"
+
+    method = fields.Selection(
+        selection_add=[
+            ("PATCH", "PATCH"),
+        ],
+        ondelete={"PATCH": "cascade"},
+    )
+
+    pod_id = fields.Many2one(
+        comodel_name="pod",
+        string="Pod asociado",
+        required=False,
+        ondelete="cascade",
+    )
+
+
+class ServiceAPIRequest(models.Model):
+    _name: str = "api.request.service"
+    _inherit: list[str] = ["api.request"]
+    _description: str = "Service API request model"
+
+    service_id = fields.Many2one(
+        comodel_name="service",
+        string="Servicio asociado",
+        readonly=True,
+        required=True,
+        ondelete="cascade",
+    )
+
+
+class IngressRuleAPIRequest(models.Model):
+    _name: str = "api.request.ingress.rule"
+    _inherit: list[str] = ["api.request"]
+    _description: str = "Ingress Rule API request model"
+
+    ingress_rule_id = fields.Many2one(
+        comodel_name="ingress.rule",
+        string="Regla de Ingress asociada",
+        readonly=True,
+        required=True,
+        ondelete="cascade",
+    )
+
+
+class DNSAPIRequest(models.Model):
+    _name: str = "api.request.dns"
+    _inherit: list[str] = ["api.request"]
+    _description: str = "DNS API request model"
+
+    dns_id = fields.Many2one(
+        comodel_name="dns",
+        string="DNS asociado",
+        readonly=True,
+        required=True,
+        ondelete="cascade",
+    )
+
+```
+
+```xml title:actions.xml
+<record id="vde_kubernetes.api_request_workload_view_form" model="ir.ui.view">
+		<field name="name">vde_kubernetes.api_request_workload_view_form</field>
+		<field name="model">api.request.workload</field>
+		<field name="arch" type="xml">
+			<form>
+				<sheet>
+					<div class="d-flex justify-content-between">
+						<div class="oe_title mb32">
+							<h1 class="d-flex align-items-center gap-3 mb16">
+								<field name="method" />
+								<field name="workload_id" class="font-weight-bold" />
+							</h1>
+							<group>
+								<field name="partner_id" />
+							</group>
+						</div>
+
+						<h3>
+							<field name="create_date" />
+						</h3>
+					</div>
+
+					<group class="mb32">
+						<group>
+							<field name="url" />
+							<field name="success" />
+							<field name="code" />
+							<field name="message" />
+						</group>
+					</group>
+
+					<notebook>
+						<page name="details" string="Detalles">
+							<group>
+								<group>
+									<field name="request" widget="text" />
+								</group>
+
+								<group>
+									<field name="response" widget="text" />
+								</group>
+							</group>
+						</page>
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+```
+
+```python title:my_model.py
+from json import dumps
+from requests import Response, delete, get, post, put
+
+def _store_api_request(
+        self, method: str, url: str, request: dict, response: Response
+    ) -> None:
+        _logger.info("Storing API request")
+
+        response_data: dict | str = (
+            dumps(response.json(), indent=4)
+            if response.status_code not in [204, 304]
+            else response.text
+        )
+        self.env["api.request.service"].create(
+            {
+                "method": method,
+                "url": url,
+                "success": response.ok,
+                "code": response.status_code,
+                "message": response.reason,
+                "request": dumps(request, indent=4),
+                "response": response_data,
+                "service_id": self.id,
+                "partner_id": self.env.user.partner_id.id,
+            }
+        )
+
+    def _make_api_request(self, method: str, request: dict) -> Response:
+        _logger.info(f"Making {method} request")
+
+        IrConfigParameter = self.env["ir.config_parameter"].sudo()
+        base_url: str = IrConfigParameter.get_param(
+            "vde_kubernetes.API_REQUEST_URL"
+        )
+        endpoint: str = IrConfigParameter.get_param(
+            "vde_kubernetes.API_REQUEST_ENDPOINT_SERVICE"
+        )
+        url: str = f"{base_url}{endpoint}"
+
+        match method.upper():
+            case "GET":
+                response: Response = get(url, json=request)
+            case "POST":
+                response: Response = post(url, json=request)
+            case "PUT":
+                response: Response = put(url, json=request)
+            case "DELETE":
+                response: Response = delete(url, json=request)
+            case _:
+                raise ValueError(f"Invalid method: {method}")
+
+        self._store_api_request(method, url, request, response)
+        return response
+
+```
 
 ___
 

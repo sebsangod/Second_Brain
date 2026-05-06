@@ -1,4 +1,4 @@
-﻿---
+---
 aliases:
   - FastAPI
 tags:
@@ -103,14 +103,20 @@ To control what an `API` should do at the startup and shutdown execution moments
 ```python title:main.py
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
+from httpx import AsyncClient
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     # ON STARTUP
+    app.httpx_client = AsyncClient()
+
     yield
+
     # ON SHUTDOWN
+    await app.httpx_client.aclose()
 
 app: FastAPI = FastAPI(
     title="My API",
@@ -125,6 +131,47 @@ app: FastAPI = FastAPI(
 ```
 
 As we can see in the example above, the _lifespan_ function uses a _yield_ instance, this helps separating the actions to declare to be executed at startup from the ones to be executed at shutdown.
+
+#### Access Lifespan Definitions
+
+```python title:router.py
+from fastapi import APIRouter, Request
+
+from backend.v2.application.use_cases import UseCase
+
+
+router = APIRouter()
+
+
+@router.post("/")
+async def endpoint(request: Request) -> JSONResponse:
+    logger.info("Received request")
+
+    result = await UseCase(request).execute()
+
+    return make_response(
+        logger=logger,
+        status=status.HTTP_201_CREATED,
+        message="Request completed successfully",
+    )
+
+```
+
+```python title:use_cases.py
+class UseCase:
+    def __init__(self, request: Request) -> None:
+        self._request: Request = request
+
+    async def execute(self, body: RequestChangePassword) -> str:
+        response = await self._request.app.httpx_client.post(
+            url="...",
+            headers={
+                "Content-Type": "application/json",
+            },
+        )
+        ...
+
+```
 
 
 ### Global absolute paths
@@ -209,27 +256,32 @@ async def get_todos(request: Request) -> JSONResponse:
 
 ### Error Handling
 
-```python title:exceptions.py
-###############################################################################
-##################################### JWT #####################################
-###############################################################################
-class InvalidUserOrPasswordError(Exception):
+```python title:backend/v2/core/domain/exceptions.py
+class CustomError(Exception):
     def __init__(self, msg: str) -> None:
         self.msg = msg
 
+class BadRequestError(CustomError): ...  # 400
 
-class WrongPasswordError(Exception):
-    def __init__(self, msg: str) -> None:
-        self.msg = msg
+class UnauthorizedError(CustomError): ...  # 401
 
+class ForbiddenError(CustomError): ...  # 403
 
-class InvalidTokenError(Exception):
-    def __init__(self, msg: str) -> None:
-        self.msg = msg
+class NotFoundError(CustomError): ...  # 404
+
+class ConflictError(CustomError): ...  # 409
+
+class UnprocessableEntityError(CustomError): ...  # 422
+
+class TooManyRequestsError(CustomError): ...  # 429
+
+class BadGatewayError(CustomError): ...  # 502
 
 ```
 
-```python title:error_handlers.py
+```python title:backend/v2/core/domain/error_handlers.py
+from logging import Logger, getLogger
+
 from fastapi import HTTPException, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
@@ -237,11 +289,23 @@ from jose.exceptions import JWTError
 from pydantic import ValidationError
 from pydantic_core import ValidationError as CoreValidationError
 
-from v1.config import LOGGING_PROJECT_NAME
-from v1.exceptions import InvalidUserOrPasswordError, WrongPasswordError, InvalidTokenError
+from backend.v2.core.config import LOGGING_PROJECT_NAME
+from backend.v2.core.domain.exceptions import (
+    BadGatewayError,
+    BadRequestError,
+    ConflictError,
+    ForbiddenError,
+    NotFoundError,
+    TooManyRequestsError,
+    UnauthorizedError,
+    UnprocessableEntityError,
+)
+from backend.v2.core.presentation.service import (
+    make_error_response,
+    make_response,
+)
 
-
-logger: Logger = getLogger(f"{LOGGING_PROJECT_NAME}.{__name__.split('.')[-1]}")
+logger: Logger = getLogger(f"{LOGGING_PROJECT_NAME}.core.error_handlers")
 
 
 ###############################################################################
@@ -294,7 +358,7 @@ async def http_exception_handler(
 ###############################################################################
 async def validation_exception_handler(
     request: Request,
-    exception: ValidationError | RequestValidationError | CoreValidationError
+    exception: CoreValidationError | ValidationError | RequestValidationError,
 ) -> JSONResponse:
 
     return JSONResponse(
@@ -321,44 +385,8 @@ async def validation_exception_handler(
 
 
 ###############################################################################
-##################################### JWT #####################################
+################################### JWT #######################################
 ###############################################################################
-async def invalid_user_or_password_error_handler(
-    request: Request, exception: InvalidUserOrPasswordError
-) -> JSONResponse:
-
-    return make_response(
-        logger=logger,
-        status=status.HTTP_400_BAD_REQUEST,
-        message=str(exception.msg),
-        success=False,
-    )
-
-
-async def wrong_password_error_handler(
-    request: Request, exception: WrongPasswordError
-) -> JSONResponse:
-
-    return make_response(
-        logger=logger,
-        status=status.HTTP_401_UNAUTHORIZED,
-        message=str(exception.msg),
-        success=False,
-    )
-
-
-async def invalid_token_error_handler(
-    request: Request, exception: InvalidTokenError
-) -> JSONResponse:
-
-    return make_response(
-        logger=logger,
-        status=status.HTTP_401_UNAUTHORIZED,
-        message=str(exception.msg),
-        success=False,
-    )
-
-
 async def invalid_jwt_error_handler(
     request: Request, exception: JWTError
 ) -> JSONResponse:
@@ -366,6 +394,105 @@ async def invalid_jwt_error_handler(
     return make_response(
         logger=logger,
         status=status.HTTP_401_UNAUTHORIZED,
+        message=getattr(exception, "msg", str(exception)),
+        success=False,
+    )
+
+
+###############################################################################
+################################## Domain #####################################
+###############################################################################
+async def bad_request_error_handler(
+    request: Request, exception: BadRequestError
+) -> JSONResponse:
+
+    return make_response(
+        logger=logger,
+        status=status.HTTP_400_BAD_REQUEST,
+        message=getattr(exception, "msg", str(exception)),
+        success=False,
+    )
+
+
+async def unauthorized_error_handler(
+    request: Request, exception: UnauthorizedError
+) -> JSONResponse:
+
+    return make_response(
+        logger=logger,
+        status=status.HTTP_401_UNAUTHORIZED,
+        message=getattr(exception, "msg", str(exception)),
+        success=False,
+    )
+
+
+async def forbidden_error_handler(
+    request: Request, exception: ForbiddenError
+) -> JSONResponse:
+
+    return make_response(
+        logger=logger,
+        status=status.HTTP_403_FORBIDDEN,
+        message=getattr(exception, "msg", str(exception)),
+        success=False,
+    )
+
+
+async def not_found_error_handler(
+    request: Request, exception: NotFoundError
+) -> JSONResponse:
+
+    return make_response(
+        logger=logger,
+        status=status.HTTP_404_NOT_FOUND,
+        message=getattr(exception, "msg", str(exception)),
+        success=False,
+    )
+
+
+async def conflict_error_handler(
+    request: Request, exception: ConflictError
+) -> JSONResponse:
+
+    return make_response(
+        logger=logger,
+        status=status.HTTP_409_CONFLICT,
+        message=getattr(exception, "msg", str(exception)),
+        success=False,
+    )
+
+
+async def unprocessable_entity_error_handler(
+    request: Request, exception: UnprocessableEntityError
+) -> JSONResponse:
+
+    return make_response(
+        logger=logger,
+        status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        message=getattr(exception, "msg", str(exception)),
+        success=False,
+    )
+
+
+async def too_many_requests_error_handler(
+    request: Request, exception: TooManyRequestsError
+) -> JSONResponse:
+
+    return make_response(
+        logger=logger,
+        status=status.HTTP_429_TOO_MANY_REQUESTS,
+        message=getattr(exception, "msg", str(exception)),
+        success=False,
+    )
+
+
+async def bad_gateway_error_handler(
+    request: Request, exception: BadGatewayError
+) -> JSONResponse:
+
+    return make_response(
+        logger=logger,
+        status=status.HTTP_502_BAD_GATEWAY,
         message=getattr(exception, "msg", str(exception)),
         success=False,
     )
@@ -380,19 +507,29 @@ from jose.exceptions import JWTError
 from pydantic import ValidationError
 from pydantic_core import ValidationError as CoreValidationError
 
-from v1.error_handlers import (
-	general_exception_handler,
-	http_exception_handler,
-	validation_exception_handler,
-	invalid_user_or_password_error_handler,
-	wrong_password_error_handler,
-	invalid_token_error_handler,
-	invalid_jwt_error_handler
+from backend.v2.core.domain.error_handlers import (
+    bad_gateway_error_handler,
+    bad_request_error_handler,
+    conflict_error_handler,
+    forbidden_error_handler,
+    general_exception_handler,
+    http_exception_handler,
+    invalid_jwt_error_handler,
+    not_found_error_handler,
+    too_many_requests_error_handler,
+    unauthorized_error_handler,
+    unprocessable_entity_error_handler,
+    validation_exception_handler,
 )
-from v1.exceptions import (
-	InvalidUserOrPasswordError,
-	WrongPasswordError,
-	InvalidTokenError
+from backend.v2.core.domain.exceptions import (
+    BadGatewayError,
+    BadRequestError,
+    ConflictError,
+    ForbiddenError,
+    NotFoundError,
+    TooManyRequestsError,
+    UnauthorizedError,
+    UnprocessableEntityError,
 )
 
 
@@ -401,20 +538,31 @@ app: FastAPI = FastAPI()
 ###############################################################################
 ############################### Error Handlers ################################
 ###############################################################################
+# Exception
 app.add_exception_handler(Exception, general_exception_handler)
+# HTTP
 app.add_exception_handler(HTTPException, http_exception_handler)
+# Pydantic
 app.add_exception_handler(ValidationError, validation_exception_handler)
 app.add_exception_handler(RequestValidationError, validation_exception_handler)
 app.add_exception_handler(CoreValidationError, validation_exception_handler)
-
-app.add_exception_handler(InvalidUserOrPasswordError, invalid_user_or_password_error_handler)
-app.add_exception_handler(WrongPasswordError, wrong_password_error_handler)
-app.add_exception_handler(InvalidTokenError, invalid_token_error_handler)
+# JWT
 app.add_exception_handler(JWTError, invalid_jwt_error_handler)
+# Domain
+app.add_exception_handler(BadRequestError, bad_request_error_handler)
+app.add_exception_handler(UnauthorizedError, unauthorized_error_handler)
+app.add_exception_handler(ForbiddenError, forbidden_error_handler)
+app.add_exception_handler(NotFoundError, not_found_error_handler)
+app.add_exception_handler(ConflictError, conflict_error_handler)
+app.add_exception_handler(
+    UnprocessableEntityError, unprocessable_entity_error_handler
+)
+app.add_exception_handler(
+    TooManyRequestsError, too_many_requests_error_handler
+)
+app.add_exception_handler(BadGatewayError, bad_gateway_error_handler)
 
 ```
-
-
 
 ___
 
@@ -621,6 +769,206 @@ class UserRepositoryInterface(ABC):
 
     @abstractmethod
     async def get_user_by_id(self, user_id: str) -> User | None: ...
+
+```
+
+
+### BaseResponse `Pydantic` Squemas
+
+```python title:backend/v2/core/presentation/schemas.py
+from typing import Any
+from uuid import uuid4
+
+from pydantic import BaseModel, Field
+
+
+class LokiLoggerResponse(BaseModel):
+    service: str = Field(
+        min_length=1,
+        max_length=64,
+        description="Service name that is writing to Loki.",
+    )
+    execution_id: str = Field(
+        default_factory=lambda: str(uuid4()),
+        description="Execution ID for the request.",
+    )
+
+
+class ExecutionError(BaseModel):
+    step: str = Field(
+        min_length=1,
+        max_length=64,
+        description="The step in the process where the error occurred.",
+    )
+    type: str = Field(
+        min_length=1,
+        max_length=64,
+        description="The type of error that occurred.",
+    )
+    message: str = Field(
+        min_length=1,
+        max_length=256,
+        description="A description of the error that occurred.",
+    )
+
+
+class BaseResponse(BaseModel):
+    success: bool = Field(
+        description="Indicates if the request was successful."
+    )
+    message: str = Field(
+        min_length=1,
+        max_length=256,
+        description="""
+		A message providing additional information about the request.
+		""",
+    )
+    data: dict[str, Any] | None = Field(
+        default=None,
+        description="""
+		Additional data returned by the API, if any.
+		""",
+    )
+    error: ExecutionError | None = Field(
+        default=None,
+        description="""
+		A dict of an error encountered during the process, represented with
+		"step" and "error" keys. False if no error occurred.
+		""",
+    )
+    logger: LokiLoggerResponse = Field(
+        default_factory=LokiLoggerResponse,
+        description="Loki logger information.",
+    )
+
+```
+
+```python title:backend/v2/core/presentation/service.py
+from base64 import b64encode
+from json import dumps
+from logging import Logger, getLogger
+from typing import Any
+
+from dotenv import load_dotenv
+from fastapi import status
+from fastapi.responses import JSONResponse, RedirectResponse
+from pydantic import BaseModel
+
+from backend.v2.core.config import DOTENV_ABSPATH, LOGGING_PROJECT_NAME
+from backend.v2.core.presentation.schemas import (
+    BaseResponse,
+    ExecutionError,
+    LokiLoggerResponse,
+)
+
+load_dotenv(DOTENV_ABSPATH)
+logger: Logger = getLogger(f"{LOGGING_PROJECT_NAME}.core.service")
+
+
+###############################################################################
+#################################### Docs #####################################
+###############################################################################
+def get_model_schema_for_docs(
+    model: BaseModel, responses: dict[int, str]
+) -> dict[int, dict[str, Any]]:
+    """
+    Utility function to get the JSON schema of a Pydantic response model for
+    documentation purposes.
+
+    Args:
+        model: The Pydantic model class.
+    Returns:
+        dict: The JSON schema of the model.
+    """
+    result: dict[int, dict[str, Any]] = {}
+    example: dict[str, Any] = model.model_json_schema().get("properties", {})
+
+    for status_code, description in responses.items():
+        if status_code in [204, 304]:
+            result[status_code] = {"description": description}
+            continue
+
+        result[status_code] = {
+            "description": description,
+            "model": model,
+            "content": {"application/json": {"example": example}},
+        }
+    return result
+
+
+###############################################################################
+################################## Responses ##################################
+###############################################################################
+def make_response(
+    logger: Logger,
+    status: str,
+    message: str,
+    success: bool = True,
+    data: dict[str, Any] | None = None,
+    error: dict[str, Any] | None = None,
+    show_logger: bool = True,
+) -> JSONResponse:
+
+    response: BaseResponse = BaseResponse(
+        success=success,
+        message=message,
+        data=data,
+        error=None if not error else ExecutionError(**error),
+        logger=LokiLoggerResponse(service=LOGGING_PROJECT_NAME),
+    )
+    response_message: str = (
+        f"Returning response: [{status}] {response.model_dump_json(indent=2)}"
+    )
+    if show_logger:
+        logger.info(response_message)
+    return JSONResponse(status_code=status, content=response.model_dump())
+
+
+def make_error_response(
+    logger: Logger,
+    type: str,
+    message: str,
+    endpoint: str | None = None,
+    method: str | None = None,
+    status: int = status.HTTP_500_INTERNAL_SERVER_ERROR,
+) -> JSONResponse:
+
+    if endpoint and method:
+        logger.error(f"{type} during {method} {endpoint}: {message}")
+    else:
+        logger.error(f"{type}: {message}")
+
+    response: BaseResponse = BaseResponse(
+        success=False,
+        message="An error occurred while processing the request",
+        error=(
+            None
+            if not type
+            else ExecutionError(
+                type=type,
+                message=message if message else "An unexpected error occurred",
+            )
+        ),
+        logger=LokiLoggerResponse(service=LOGGING_PROJECT_NAME),
+    )
+    logger.error(
+        f"Returning exception response: [{status}] {
+            response.model_dump_json(indent=2)
+        }"
+    )
+    return JSONResponse(status_code=status, content=response.model_dump())
+
+
+def make_redirection_response(
+    logger: Logger, data: dict[str, Any], base_url: str
+) -> RedirectResponse:
+
+    data: str = b64encode(dumps(data).encode("utf-8")).decode("utf-8")
+    redirect_url: str = f"{base_url}?data={data}"
+    logger.info(f"Redirecting to URL: {redirect_url}")
+    return RedirectResponse(
+        url=redirect_url, status_code=status.HTTP_302_FOUND
+    )
 
 ```
 
