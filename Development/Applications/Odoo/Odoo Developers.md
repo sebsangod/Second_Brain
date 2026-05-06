@@ -726,6 +726,69 @@ def _store_api_request(
 
 ```
 
+
+### Open a Wizard
+
+```xml title:views/actions.xml
+<record id="vde_kubernetes.create_workload_wizard_action" model="ir.actions.act_window">
+	<field name="name">Crear Workload</field>
+	<field name="res_model">create.workload.wizard</field>
+	<field name="view_mode">form</field>
+	<field name="target">new</field>
+</record>
+```
+
+```xml title:views/workload_views.xml
+<record id="vde_kubernetes.workload_view_tree" model="ir.ui.view">
+	<field name="name">vde_kubernetes.workload_view_tree</field>
+	<field name="model">workload</field>
+	<field name="arch" type="xml">
+		<tree create="0">
+			<header>
+				<button
+					name="%(vde_kubernetes.create_workload_wizard_action)d"
+					string="Nuevo"
+					type="action"
+					class="btn-primary"
+					display="always"
+				/>
+			</header>
+		</tree>
+	</field>
+</record>
+```
+
+```xml title:wizards/create_workload.xml
+<record id="create_workload_wizard" model="ir.ui.view">
+	<field name="name">create_workload_wizard</field>
+	<field name="model">create.workload.wizard</field>
+	<field name="arch" type="xml">
+		<form>
+			<sheet>
+				...
+			</sheet>
+
+			<footer>
+				<button name="create_workload" string="Crear" type="object" class="btn btn-success" invisible="is_name_duplicated" />
+				<button name="cancel" string="Cancelar" type="object" special="cancel" />
+			</footer>
+		</form>
+	</field>
+</record>
+```
+
+```python title:wizards/create_workload.py
+class CreateWorkloadWizard(models.TransientModel):
+    _name = "create.workload.wizard"
+    _description = "Create workload wizard model"
+
+    ...
+
+    def create_workload(self) -> None:
+		_logger.info("Creating workload")
+
+```
+
 ___
 
 ## Utils
