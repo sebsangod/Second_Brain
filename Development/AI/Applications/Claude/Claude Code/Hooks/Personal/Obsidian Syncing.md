@@ -38,6 +38,7 @@ This _hook_ is complemented by the ``/distribute`` ``command``
                     {
                         "type": "command",
                         "command": "py C:/Users/USER/.claude/hooks/sync_to_obsidian.py",
+                        "command": "python3 ~/.claude/hooks/sync_to_obsidian.py"
                     }
                 ]
             }
