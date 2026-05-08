@@ -16,6 +16,14 @@ date: 2026-03-15
 
 ___
 
+## Text Decorations
+
+Underlying ==text==
+
+Removed ~~text~~
+
+___
+
 ## Links
 
 [Hugging Face](https://huggingface.co/)

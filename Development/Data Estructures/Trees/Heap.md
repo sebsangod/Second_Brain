@@ -1,13 +1,14 @@
 ---
 aliases:
-  - Queue
+  - Heap
 tags:
+  - learning
   - dev/data
 date: 2026-05-07
 ---
-**Sources**: [Las 8 Estructuras de Datos que TODO Programador Usa (Pero Nadie Explica Bien)](https://www.youtube.com/watch?v=9ifwAPFxpu0)
+**Sources**: [IBM](https://www.ibm.com/think/topics/data-structure), [Las 8 Estructuras de Datos que TODO Programador Usa](https://www.youtube.com/watch?v=9ifwAPFxpu0)
 
-**Related:** [[Templates]]
+**Related:** [[Data Estructures]]
 
 ---
 

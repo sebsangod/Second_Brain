@@ -2,6 +2,7 @@
 aliases:
   - Data Structures
 tags:
+  - learning
   - dev/data
 date: 2026-05-07
 ---
@@ -68,6 +69,124 @@ Common use cases for _data structures_ in computer programs include:
 - Searching
 - Scalability
 
+___
+
+## Examples
+
+### Slows
+
+```python title:slow.py
+from time import time
+
+numbers: list = list(range(100_000)) + [99_999]
+start = time()
+
+has_duplicated: bool = False
+for i in range(len(numbers)):
+	for j in range(i + 1, len(numbers)):
+		if numbers[i] == numbers[j]:
+			has_duplicated = True
+			break
+	if has_duplicated:
+		break
+
+print(f"Has duplicated?: {has_duplicated}")
+print(f"Time: {time() - start:.2f}s")
+
+```
+
+```bash title:bash
+python slow.py
+# Duplicated: True
+# Time: 3.14s
+
+```
+
+```javascript title:slow.js
+const numbers = Array.from({length: 100000}, (_, i) => i);
+numbers.push(99999);
+
+const start = Date.now();
+
+let hasDuplicated = false;
+for (let i = 0; i < numbers.length; i++) {
+	for (let j = i + 1; j < numbers.length; j++) {
+		if (numbers[i] === numbers[j]) {
+			hasDuplicated = true;
+			break;
+		}
+	}
+	if (hasDuplicated) break;
+}
+
+console.log(`Duplicated: ${hasDuplicated}`);
+console.log(`Time: ${Date.now() - start}mss`);
+
+```
+
+```bash title:bash
+node slow.js
+# Duplicated: true
+# Time: 3140ms
+
+```
+
+
+### Fasts
+
+```python title:slow.py
+from time import time
+
+numbers: list = list(range(100_000)) + [99_999]
+start = time()
+
+seen = set()
+has_duplicated: bool = False
+for n in numbers:
+	if n in seen:
+		has_duplicated = True
+		break
+	seen.add(n)
+
+print(f"Has duplicated?: {has_duplicated}")
+print(f"Time: {(time() - start) * 1_000:.2f}ms")
+
+```
+
+```bash title:bash
+python slow.py
+# Duplicated: True
+# Time: 3.12ms
+
+```
+
+```javascript title:slow.js
+const numbers = Array.from({length: 100000}, (_, i) => i);
+numbers.push(99999);
+
+const start = Date.now();
+
+const seen = new Set();
+let hasDuplicated = false;
+for (const n of numbers) {
+	if (seen.has(n)) {
+		hasDuplicated = true;
+		break;
+	}
+	seen.add(n);
+}
+
+console.log(`Duplicated: ${hasDuplicated}`);
+console.log(`Time: ${Date.now() - start}mss`);
+
+```
+
+```bash title:bash
+node slow.js
+# Duplicated: true
+# Time: 3ms
+
+```
 ---
 
 ## Claude Sessions
