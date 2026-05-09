@@ -29,7 +29,6 @@ An extremely fast `Python` `linter` and code formatter, written in `Rust`.
 - ⌨️ First-party [editor integrations](https://docs.astral.sh/ruff/editors/) for [VS Code](https://github.com/astral-sh/ruff-vscode) and [more](https://docs.astral.sh/ruff/editors/setup/)
 - 🌎 Monorepo-friendly, with [hierarchical and cascading configuration](https://docs.astral.sh/ruff/configuration/#config-file-discovery)
 
-
 ---
 
 ## Examples

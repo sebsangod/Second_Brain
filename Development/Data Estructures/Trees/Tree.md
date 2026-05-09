@@ -14,7 +14,7 @@ date: 2026-05-07
 
 ## Description
 
-A _tree_ ``data structure``, sometimes called a _prefix tree_, **is useful for establishing hierarchical relationships among data elements.** A single parent node sits on the top of the _tree structure_, with child subnodes branching out on subsequent levels beneath it.
+A _tree_ ``data structure``, sometimes called a _prefix tree_, **is useful for establishing hierarchical relationships among data elements.**
 
 Different classes of _trees_, such as ``binary search trees``, ``AVL trees`` and ``b-trees``, have different properties and support different functions.
 
@@ -22,7 +22,7 @@ Different classes of _trees_, such as ``binary search trees``, ``AVL trees`` and
 
 ## Key concepts
 
-Write here...
+A single parent node sits on the top of the _tree structure_, with child subnodes branching out on subsequent levels beneath it.
 
 ---
 

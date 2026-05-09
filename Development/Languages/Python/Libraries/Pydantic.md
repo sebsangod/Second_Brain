@@ -1,4 +1,4 @@
-﻿---
+---
 aliases:
   - Pydantic
 tags:
@@ -145,5 +145,7 @@ class User(BaseModel):
     tastes: dict[str, PositiveInt]
 
 ```
+
+___
 
 ## Claude Sessions
