@@ -8,7 +8,7 @@ date: 2026-05-07
 ---
 **Sources**: [IBM](https://www.ibm.com/think/topics/data-structure)
 
-**Related:** [[Data Estructures]], [[Algorithm]], [[Time Complexity]], [[Space Complexity]]
+**Related:** [[Data Structures]], [[Algorithm]], [[Time Complexity]], [[Space Complexity]]
 
 ---
 

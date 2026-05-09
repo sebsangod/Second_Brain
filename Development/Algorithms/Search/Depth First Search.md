@@ -1,14 +1,14 @@
 ---
 aliases:
-  - Heap
+  - Depth First Search
 tags:
   - learning
   - dev/data
-date: 2026-05-07
+date: 2026-05-08
 ---
-**Sources**: [IBM](https://www.ibm.com/think/topics/data-structure), [Las 8 Estructuras de Datos que TODO Programador Usa](https://www.youtube.com/watch?v=9ifwAPFxpu0)
+**Sources**: [Geek for geeks](https://www.geeksforgeeks.org/dsa/depth-first-search-or-dfs-for-a-graph/)
 
-**Related:** [[Data Estructures]]
+**Related:** [[Search]], [[Tree]]
 
 ---
 

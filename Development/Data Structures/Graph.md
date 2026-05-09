@@ -8,7 +8,7 @@ date: 2026-05-07
 ---
 **Sources**: [IBM](https://www.ibm.com/think/topics/data-structure), [Las 8 Estructuras de Datos que TODO Programador Usa](https://www.youtube.com/watch?v=9ifwAPFxpu0)
 
-**Related:** [[Data Estructures]], [[Search]], [[Breadth-First Search]], [[Deep-First]]
+**Related:** [[Data Structures]], [[Search]], [[Breadth First Search]], [[Depth First Search]]
 
 ---
 
@@ -16,17 +16,12 @@ date: 2026-05-07
 
 A _graph_ ``data structure`` **organizes the relationships between different objects by using vertices and edges.** Vertices are data points "represented" by dots, and edges are lines that connect the vertices.
 
----
+![[graph.png]]
 
-## Key concepts
 
-Write here...
+### Types
 
----
-
-## Details
-
-Write here...
+![[graph_types.png]]
 
 ---
 
@@ -38,14 +33,17 @@ Write here...
 
 ---
 
-## Utils
-
-### Use case
-
-Write here...
+## Pure ``Python`` Representation
 
 ```python title:main.py
-print("Hello world!")
+graph: dict = {
+	"A": ["C", "B"],
+	"B": ["C", "E", "D"],
+	"C": ["E"],
+	"D": ["F"],
+	"E": ["D", "F"],
+	"F": [],
+}
 
 ```
 

@@ -8,7 +8,7 @@ date: 2026-05-07
 ---
 **Sources**: [IBM](https://www.ibm.com/think/topics/data-structure), [Las 8 Estructuras de Datos que TODO Programador Usa](https://www.youtube.com/watch?v=9ifwAPFxpu0)
 
-**Related:** [[Data Estructures]], [[Queue]]
+**Related:** [[Data Structures]], [[Queue]]
 
 ---
 
