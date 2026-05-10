@@ -1,14 +1,14 @@
 ---
 aliases:
-  - Learning
+  - Big Data
 tags:
   - learning
-  - dev/
+  - dev/data
 date: 2026-05-09
 ---
 **Sources**: [Source]()
 
-**Related:** [[Templates]]
+**Related:** [[Development]]
 
 ---
 

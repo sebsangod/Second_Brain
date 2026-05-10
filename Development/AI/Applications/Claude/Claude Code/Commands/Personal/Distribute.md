@@ -1,6 +1,6 @@
 ---
 aliases:
-  - Learning
+  - Distribute
 tags:
   - dev/ai/llm
 date: 2026-03-15

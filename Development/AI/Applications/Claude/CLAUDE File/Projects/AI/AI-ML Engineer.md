@@ -8,7 +8,7 @@ date: 2026-05-02
 ---
 **Sources**: [Anthropic SDK](https://docs.anthropic.com/en/api/), [OpenAI SDK](https://platform.openai.com/docs/api-reference), [LangChain](https://python.langchain.com/docs/), [MCP Spec](https://modelcontextprotocol.io/)
 
-**Related:** [[CLAUDE File]], [[Large Language Models]], [[AI Agent]], [[MCP]], [[FastAPI]], [[Pydantic]], [[Beanie]]
+**Related:** [[CLAUDE File]], [[Large Language Models]], [[AI Agent]], [[Development/AI/Applications/MCP/MCP]], [[FastAPI]], [[Pydantic]], [[Beanie]]
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 aliases:
-  - Learning
+  - Memory Reference
 tags:
   - learning
   - dev

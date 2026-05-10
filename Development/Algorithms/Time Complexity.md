@@ -1,14 +1,14 @@
 ---
 aliases:
-  - Learning
+  - Time Complexity
 tags:
   - learning
-  - dev/
+  - dev
 date: 2026-05-09
 ---
 **Sources**: [Source]()
 
-**Related:** [[Templates]]
+**Related:** [[Algorithm]]
 
 ---
 

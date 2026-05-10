@@ -1,6 +1,6 @@
 ---
 aliases:
-  - Learning
+  - SDKs
 tags:
   - learning
   - dev/ai/llm

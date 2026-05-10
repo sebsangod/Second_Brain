@@ -1,3 +1,15 @@
+---
+aliases:
+  - CLAUDE File
+tags:
+  - dev/ai/llm
+date: 2026-05-10
+---
+**Sources**: [Claude Code 101](https://anthropic.skilljar.com/claude-code-101)
+
+**Related:** [[Claude Code]], [[Claude]], [[CLAUDE File]]
+
+---
 # Análisis: Estructura Óptima de CLAUDE.md para Proyectos Odoo / FastAPI / IA
 
 ## Fuentes Analizadas

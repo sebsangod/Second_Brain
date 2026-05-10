@@ -1,14 +1,14 @@
 ---
 aliases:
-  - Learning
+  - Genetic Algorithms
 tags:
   - learning
-  - dev/
-date: 2026-05-09
+  - dev/ai
+date: 2026-05-10
 ---
 **Sources**: [Source]()
 
-**Related:** [[Templates]]
+**Related:** [[Artificial Intelligence]], [[Algorithm]]
 
 ---
 

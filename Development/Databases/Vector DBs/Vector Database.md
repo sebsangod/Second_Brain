@@ -1,14 +1,14 @@
 ---
 aliases:
-  - Learning
+  - Vector Database
 tags:
   - learning
-  - dev/
+  - dev/database/vectorial
 date: 2026-05-09
 ---
-**Sources**: [Source]()
+**Sources**: [AWS](https://aws.amazon.com/what-is/vector-databases/)
 
-**Related:** [[Templates]]
+**Related:** [[Database]], [[Artificial Intelligence]]
 
 ---
 

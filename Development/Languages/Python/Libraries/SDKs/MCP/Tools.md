@@ -8,7 +8,7 @@ date: 2026-05-01
 ---
 **Sources**: [Introduction to Model Context Protocol](https://anthropic.skilljar.com/introduction-to-model-context-protocol/)
 
-**Related:** [[Development/Languages/Python/Libraries/MCP/MCP|MCP]], [[Development/AI/Applications/MCP/MCP|MCP]], [[Pydantic|Pydantic]], [[Claude|Claude]]
+**Related:** [[Development/Languages/Python/Libraries/SDKs/MCP/MCP|MCP]], [[Development/AI/Applications/MCP/MCP|MCP]], [[Pydantic|Pydantic]], [[Claude|Claude]]
 
 ---
 

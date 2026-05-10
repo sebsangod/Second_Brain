@@ -1,13 +1,11 @@
 ﻿---
 aliases:
-  - Learning
+  - Image
 tags:
   - learning
   - dev/devops
 date: 2026-03-18
 ---
-**Sources**: 
-
 **Related:** [[Docker]], [[Container]], [[Dockerfile]], [[Docker Hub]] [[Python]], [[Rust]], [[NodeJS]]
 
 ---

@@ -1,6 +1,6 @@
 ﻿---
 aliases:
-  - Learning
+  - Docker Hub
 tags:
   - learning
   - dev/devops

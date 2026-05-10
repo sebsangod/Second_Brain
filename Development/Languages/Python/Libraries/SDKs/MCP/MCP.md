@@ -8,7 +8,7 @@ date: 2026-04-28
 ---
 **Sources**: [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk), [Introduction to Model Context Protocol](https://anthropic.skilljar.com/introduction-to-model-context-protocol/)
 
-**Related:** [[Development/AI/Applications/MCP/MCP|MCP]], [[Python|Python]], [[uv]], [[Large Language Models|Large Language Models]], [[Decorators]], [[Claude]], [[Tools]], [[Development/Languages/Python/Libraries/MCP/Resources|Resources]], [[Prompts]]
+**Related:** [[Development/AI/Applications/MCP/MCP|MCP]], [[Python|Python]], [[uv]], [[Large Language Models|Large Language Models]], [[Decorators]], [[Claude]], [[Tools]], [[Development/Languages/Python/Libraries/SDKs/MCP/Resources|Resources]], [[Prompts]]
 
 ---
 

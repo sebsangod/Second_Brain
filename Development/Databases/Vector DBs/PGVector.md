@@ -1,14 +1,14 @@
 ---
 aliases:
-  - Learning
+  - PGVector
 tags:
   - learning
-  - dev/
+  - dev/database/vectorial
 date: 2026-05-09
 ---
-**Sources**: [Source]()
+**Sources**: [Databricks](https://www.databricks.com/es/blog/what-is-pgvector), [Docker Hub Image](https://hub.docker.com/r/pgvector/pgvector)
 
-**Related:** [[Templates]]
+**Related:** [[Vector Database]], [[Docker]]
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 aliases:
-  - Learning
+  - OpenCV
 tags:
   - learning
   - dev/

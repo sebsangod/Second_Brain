@@ -1,14 +1,14 @@
 ---
 aliases:
-  - Learning
+  - Graph Database
 tags:
   - learning
-  - dev/
+  - dev/database/graph
 date: 2026-05-09
 ---
 **Sources**: [Source]()
 
-**Related:** [[Templates]]
+**Related:** [[Database]]
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 aliases:
-  - Learning
+  - Context Window
 tags:
   - learning
   - dev/ai/llm

@@ -1,14 +1,14 @@
 ---
 aliases:
-  - Learning
+  - Collection
 tags:
   - learning
-  - dev/
+  - dev/database/nosql
 date: 2026-05-09
 ---
-**Sources**: [Source]()
+**Sources**: [Collections](https://www.mongodb.com/docs/manual/reference/glossary/#std-term-collection)
 
-**Related:** [[Templates]]
+**Related:** [[MongoDB]], [[Document]]
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 aliases:
-  - Learning
+  - AI Agent
 tags:
   - learning
   - dev/ai/llm

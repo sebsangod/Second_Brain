@@ -1,14 +1,14 @@
 ---
 aliases:
-  - Learning
+  - Qdrant
 tags:
   - learning
-  - dev/
+  - dev/database/vectorial
 date: 2026-05-09
 ---
-**Sources**: [Source]()
+**Sources**: [Qdrant](https://qdrant.tech/), [docs](https://qdrant.tech/documentation/), [Docker Hub image](https://hub.docker.com/r/qdrant/qdrant)
 
-**Related:** [[Templates]]
+**Related:** [[Vector Database]], [[Docker]]
 
 ---
 

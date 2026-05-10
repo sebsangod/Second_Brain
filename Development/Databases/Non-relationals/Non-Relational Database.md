@@ -1,12 +1,12 @@
 ---
 aliases:
-  - DuckDB
+  - Non-Relational Database
 tags:
   - learning
-  - dev/database
-date: 2026-05-08
+  - dev/database/nosql
+date: 2026-05-09
 ---
-**Sources**: [duckdb](https://duckdb.org/), [docs](https://duckdb.org/docs/current/)
+**Sources**: [Source]()
 
 **Related:** [[Database]]
 
@@ -14,7 +14,7 @@ date: 2026-05-08
 
 ## Description
 
-This tool translates plain English questions into SQL queries, making data analysis accessible to everyone – no SQL expertise required.
+Write here...
 
 ---
 

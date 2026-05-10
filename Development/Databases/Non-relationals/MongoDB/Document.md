@@ -1,14 +1,14 @@
 ---
 aliases:
-  - Learning
+  - Document
 tags:
   - learning
-  - dev/
+  - dev/database/nosql
 date: 2026-05-09
 ---
-**Sources**: [Source]()
+**Sources**: [Documents](https://www.mongodb.com/docs/manual/reference/glossary/#std-term-document), [BSON documents](https://www.mongodb.com/docs/manual/core/document/#std-label-bson-document-format)
 
-**Related:** [[Templates]]
+**Related:** [[MongoDB]]
 
 ---
 
