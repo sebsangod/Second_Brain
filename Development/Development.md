@@ -6,34 +6,38 @@ tags:
   - MOC
 date: 2026-04-15
 ---
-
-# 💻 Development
-
-> Map of Content — Index of all development notes.
-
 **Related:** [[Home]]
+
+___
+
+>[!INFO]
+>Map of Content — Index of all development notes.
 
 ---
 
 ## 🤖 AI & LLMs
 
-Artificial intelligence, language models, and AI-powered assistance tools.
-
 ### Fundamentals
+- [[Artificial intelligence]] - What it is, how it works, types and categories
 - [[Large Language Models]] — What they are, how they work, advantages, and limitations
+
+
+### Sub areas
+- [[Machine Learning]]
+- [[Deep Learning]]
+- [[Genetic Algorithms]]
+
 
 ### Applications
 - [[Coding Assistant]] — How code assistants work with Tool Use
-- [[Claude]] — Prompting, Projects, Artifacts, AI Fluency
-- [[Claude Code]] — Installation, context, hooks, MCP servers, SDK, custom commands
-- [[Skills]] — Skills system for Claude Code
-- [[Claude API]] — How to use Claude Code via API
+- [[Claude]] and [[Claude Code]] — Prompting, projects, artifacts, AI fluency, installation, context, hooks, MCP servers, SDKs, custom commands
+- [[ComfyUI]] - Installation, guides and recipes for AI video generation
 
-> **Concepts to be documented:** [[Artificial Intelligence]], [[Machine Learning]], [[Deep Learning]], [[Neural Networks]], [[Transformer]], [[Fine-tunning]], [[RAG]], [[Dataset]]
+> **Concepts to be documented:** [[Machine Learning]], [[Deep Learning]], [[Neural Networks]], [[Transformer]], [[Fine-tunning]], [[RAG]], [[Genetic Algorithms]]
 
 ---
 
-## ⚙️ Backend
+## ⚙️ Algorithms
 
 Frameworks and patterns for developing APIs and services.
 
@@ -111,3 +115,7 @@ Full-stack application platforms and frameworks.
 | Languages    | 3      | Python (5.2 KB)         |
 | Applications | 3      | Odoo Developers (18 KB) |
 | **Total**    | **22** |                         |
+
+___
+
+## Claude Sessions

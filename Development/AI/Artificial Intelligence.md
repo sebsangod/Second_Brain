@@ -8,8 +8,6 @@ date: 2026-05-09
 ---
 **Sources**: [NASA](https://www.nasa.gov/what-is-artificial-intelligence/)
 
-**Related:** [[Development]]
-
 ---
 
 ## Description

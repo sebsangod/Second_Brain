@@ -6,12 +6,12 @@ tags:
   - MOC
 date: 2026-04-15
 ---
-
-# 📸 Photography
-
-> Map of Content — Index for photography techniques, gear, and projects.
-
 **Related:** [[Home]]
+
+___
+
+> [!INFO]
+> Map of Content — Index for photography techniques, gear, and projects.
 
 ---
 

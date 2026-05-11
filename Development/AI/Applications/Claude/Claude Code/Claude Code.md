@@ -8,7 +8,7 @@ date: 2026-05-26
 ---
 **Sources**: [Claude Code](https://claude.com/product/claude-code), [Claude Code 101](https://anthropic.skilljar.com/claude-code-101), [Claude Code in Action](https://anthropic.skilljar.com/claude-code-in-action), [Exploring the .claude directory](https://code.claude.com/docs/en/claude-directory)
 
-**Related:** [[Artificial Intelligence]], [[Large Language Models]], [[Claude]], [[Anthropic]], [[Context Window]], [[CLAUDE File]], [[MCP servers]], [[NodeJS]], [[Python]], [[Bash]], [[TypeScript]], [[CI-CD]]
+**Related:** [[Artificial Intelligence]], [[Large Language Models]], [[Claude]], [[Anthropic]], [[Context Window]], [[CLAUDE File]], [[Development/AI/Applications/MCP/MCP|MCP]], [[NodeJS]], [[Python]], [[Bash]], [[TypeScript]], [[CI-CD]]
 
 ---
 

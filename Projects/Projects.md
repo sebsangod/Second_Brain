@@ -54,10 +54,5 @@ flowchart LR
     F --> C
 ```
 
----
-
-## Concepts to be documented
-
-[[Microservices]], [[API Rest]], [[WebSocket]]
 
 ___

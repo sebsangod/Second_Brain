@@ -6,12 +6,12 @@ tags:
   - MOC
 date: 2026-04-15
 ---
-
-# 💰 Finance
-
-> Map of Content — Index of all financial tracking, business finances, and investment notes.
-
 **Related:** [[Home]]
+
+___
+
+> [!INFO]
+> Map of Content — Index of all financial tracking, business finances, and investment notes.
 
 ---
 

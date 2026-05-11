@@ -2,7 +2,7 @@
 aliases:
   - Docker Cheatsheet
 tags:
-  - learning
+  - resource
   - dev/devops
 date: 2026-04-15
 ---

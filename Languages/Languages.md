@@ -15,7 +15,7 @@ date: 2026-04-15
 
 ---
 
-## 🇨🇳 Chinese
+## Chinese
 
 > [!warning] *Working on it...*
 
@@ -28,7 +28,7 @@ Future topics:
 
 ---
 
-## 🇬🇧 English
+## English
 
 > [!warning] *Working on it...*
 

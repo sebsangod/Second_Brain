@@ -17,11 +17,11 @@ date: 2026-04-15
 
 ## PDFs & Guides
 
-| Resource | Topic | Related notes |
-|---|---|---|
-| Build-Your-AI-Brain-Guide.pdf | Obsidian Second Brain methodology | [[Home]] |
-| Docker Cheatsheet.pdf | Docker commands reference | [[Docker]], [[Container]], [[Image]] |
-| Guia markdown Mouredevpro.pdf | Markdown syntax guide | [[Components]] |
+| Resource                      | Topic                             | Related notes                        |
+| ----------------------------- | --------------------------------- | ------------------------------------ |
+| Build-Your-AI-Brain-Guide.pdf | Obsidian Second Brain methodology | [[Home]]                             |
+| Docker Cheatsheet.pdf         | Docker commands reference         | [[Docker]], [[Container]], [[Image]] |
+| Guia markdown Mouredevpro.pdf | Markdown syntax guide             | [[Components]]                       |
 
 ---
 
