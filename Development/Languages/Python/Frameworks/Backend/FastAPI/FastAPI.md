@@ -6,10 +6,10 @@ tags:
   - dev/backend
 date: 2026-03-24
 ---
-**Sources**: [FastAPI](https://fastapi.tiangolo.com/) [FastAPI Docs](https://fastapi.tiangolo.com/tutorial/)
+**Sources**: [FastAPI](https://fastapi.tiangolo.com/) [docs](https://fastapi.tiangolo.com/tutorial/), [FastAPI with layered architecture](https://dev.to/markoulis/layered-architecture-dependency-injection-a-recipe-for-clean-and-testable-fastapi-code-3ioo)
 
 
-**Related:** [[API Rest]], [[Python]], [[Pydantic]], [[Starlette]], [[OpenAPI]], [[NodeJS]], [[Go]], [[Beanie]], [[Database]], [[MongoDB]]
+**Related:** [[API Rest]], [[Python]], [[Pydantic]], [[Starlette]], [[OpenAPI]], [[NodeJS]], [[Go]], [[Beanie]], [[Database]], [[MongoDB]], [[Architecture]], [[DDD]], [[Layered]]
 
 ---
 
@@ -36,6 +36,100 @@ Installing _FastAPI_ is as simple as: _pip install "FastAPI[standard]"_
 
 ## Snippets
 
+### `DDD` and `Layer` `architecture`
+
+```
+my_api/
+├── v1/
+│   ├── core/
+│   │   ├── application/
+│   │   │   ├── __init__.py
+│   │   │   ├── emails.py
+│   │   │   ├── platforms.py
+│   │   │   └── security.py
+│   │   ├── domain/
+│   │   │   ├── __init__.py
+│   │   │   ├── error_handlers.py
+│   │   │   └── exceptions.py
+│   │   ├── infrastructure/
+│   │   │   ├── __init__.py
+│   │   │   ├── models.py
+│   │   │   ├── mongo_conn.py
+│   │   │   ├── odoo_conn.py
+│   │   │   └── redis_conn.py
+│   │   ├── presentation/
+│   │   │   ├── __init__.py
+│   │   │   ├── schemas.py
+│   │   │   └── service.py
+│   │   ├── __init__.py
+│   │   ├── config.py
+│   │   └── logging.py
+│   │
+│   └── jwt/
+│       ├── application/
+│       │   ├── __init__.py
+│       │   ├── dtos.py
+│       │   └── use_cases.py
+│       ├── infrastructure/
+│       │   ├── __init__.py
+│       │   ├── models.py
+│       │   └── repository.py
+│       ├── presentation/
+│       │   ├── __init__.py
+│       │   ├── router.py
+│       │   └── schemas.py
+│       ├── __init__.py
+│       └── config.py
+│
+├── .env
+├── main.py
+├── pyproject.toml
+├── README.md
+└── requirements.txt
+```
+
+
+### Global absolute paths
+
+```python title:config.py
+from os import getcwd
+from os.path import join
+
+###############################################################################
+################################ Project paths ################################
+###############################################################################
+PROJECT_DIR_ABSPATH: str = getcwd()
+DOTENV_ABSPATH: str = join(PROJECT_DIR_ABSPATH, ".env")
+V1_ABSPATH: str = join(PROJECT_DIR_ABSPATH, "v1")
+
+```
+
+
+#### Other settings inside _config.py_
+
+```python title:config.py
+from logging import INFO
+
+###############################################################################
+################################ Endpoints ####################################
+###############################################################################
+PROJECT_V1_PATHS_PREFIX: str = "my_service/v1"
+
+###############################################################################
+################################## Variables ##################################
+###############################################################################
+# Datetime
+DATETIME_FORMAT: str = "%Y-%m-%d %H:%M:%S"
+
+# Logging
+LOGGING_PROJECT_NAME: str = "MY_SERVICE_V1"
+LOGGING_LEVEL: int = INFO
+LOGGING_FORMAT: str = "[%(asctime)s] %(levelname)s in %(name)s: %(message)s"
+TIMEZONE: str = "America/Mexico_City"
+
+```
+
+
 ### Logging
 
 By default, _FastAPI_ blocks the simple usage of the _logging_ library because it has its own internal _Stream Handler_. So because of this, we need to create our own:
@@ -47,12 +141,13 @@ from typing import TextIO
 
 from pytz import timezone
 
-
-DATETIME_FORMAT: str = "%Y-%m-%d %H:%M:%S"
-LOGGING_PROJECT_NAME: str = "MY_SERVICE"
-LOGGING_LEVEL: int = INFO
-LOGGING_FORMAT: str = "[%(asctime)s] %(levelname)s in %(name)s: %(message)s"
-TIMEZONE: str = "America/Mexico_City"
+from .config import (
+    DATETIME_FORMAT,
+    LOGGING_FORMAT,
+    LOGGING_LEVEL,
+    LOGGING_PROJECT_NAME,
+    TIMEZONE,
+)
 
 
 class TZFormatter(Formatter):
@@ -76,7 +171,7 @@ def setup_logging() -> Logger:
     if not logger.hasHandlers():
         logger.addHandler(handler)
 
-    return logge
+    return logger
 
 ```
 
@@ -113,10 +208,14 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     # ON STARTUP
     app.httpx_client = AsyncClient()
 
-    yield
+    try:
+        yield
+    except Exception as exc:
+        logger.error(exc)
 
-    # ON SHUTDOWN
-    await app.httpx_client.aclose()
+    finally:
+        # ON SHUTDOWN
+        await app.httpx_client.aclose()
 
 app: FastAPI = FastAPI(
     title="My API",
@@ -137,7 +236,7 @@ As we can see in the example above, the _lifespan_ function uses a _yield_ insta
 ```python title:router.py
 from fastapi import APIRouter, Request
 
-from backend.v2.application.use_cases import UseCase
+from backend.v1.application.use_cases import UseCase
 
 
 router = APIRouter()
@@ -174,25 +273,9 @@ class UseCase:
 ```
 
 
-### Global absolute paths
-
-```python title:cofig.py
-from os import getcwd
-from os.path import join
-
-###############################################################################
-################################ Project paths ################################
-###############################################################################
-PROJECT_DIR_ABSPATH: str = getcwd()
-DOTENV_ABSPATH: str = join(PROJECT_DIR_ABSPATH, ".env")
-V1_ABSPATH: str = join(PROJECT_DIR_ABSPATH, "v1")
-
-```
-
-
 ### Routers Docs' schemas
 
-```python title:utils.py
+```python title:backend/v1/core/presentation/service.py
 from pydantic import BaseModel
 
 def get_model_schema_for_docs(
@@ -256,7 +339,7 @@ async def get_todos(request: Request) -> JSONResponse:
 
 ### Error Handling
 
-```python title:backend/v2/core/domain/exceptions.py
+```python title:backend/v1/core/domain/exceptions.py
 class CustomError(Exception):
     def __init__(self, msg: str) -> None:
         self.msg = msg
@@ -279,7 +362,7 @@ class BadGatewayError(CustomError): ...  # 502
 
 ```
 
-```python title:backend/v2/core/domain/error_handlers.py
+```python title:backend/v1/core/domain/error_handlers.py
 from logging import Logger, getLogger
 
 from fastapi import HTTPException, Request, status
@@ -289,8 +372,8 @@ from jose.exceptions import JWTError
 from pydantic import ValidationError
 from pydantic_core import ValidationError as CoreValidationError
 
-from backend.v2.core.config import LOGGING_PROJECT_NAME
-from backend.v2.core.domain.exceptions import (
+from backend.v1.core.config import LOGGING_PROJECT_NAME
+from backend.v1.core.domain.exceptions import (
     BadGatewayError,
     BadRequestError,
     ConflictError,
@@ -300,7 +383,7 @@ from backend.v2.core.domain.exceptions import (
     UnauthorizedError,
     UnprocessableEntityError,
 )
-from backend.v2.core.presentation.service import (
+from backend.v1.core.presentation.service import (
     make_error_response,
     make_response,
 )
@@ -568,6 +651,206 @@ ___
 
 ## Utils
 
+### BaseResponse `Pydantic` Squemas
+
+```python title:backend/v1/core/presentation/schemas.py
+from typing import Any
+from uuid import uuid4
+
+from pydantic import BaseModel, Field
+
+
+class LokiLoggerResponse(BaseModel):
+    service: str = Field(
+        min_length=1,
+        max_length=64,
+        description="Service name that is writing to Loki.",
+    )
+    execution_id: str = Field(
+        default_factory=lambda: str(uuid4()),
+        description="Execution ID for the request.",
+    )
+
+
+class ExecutionError(BaseModel):
+    step: str = Field(
+        min_length=1,
+        max_length=64,
+        description="The step in the process where the error occurred.",
+    )
+    type: str = Field(
+        min_length=1,
+        max_length=64,
+        description="The type of error that occurred.",
+    )
+    message: str = Field(
+        min_length=1,
+        max_length=256,
+        description="A description of the error that occurred.",
+    )
+
+
+class BaseResponse(BaseModel):
+    success: bool = Field(
+        description="Indicates if the request was successful."
+    )
+    message: str = Field(
+        min_length=1,
+        max_length=256,
+        description="""
+		A message providing additional information about the request.
+		""",
+    )
+    data: dict[str, Any] | None = Field(
+        default=None,
+        description="""
+		Additional data returned by the API, if any.
+		""",
+    )
+    error: ExecutionError | None = Field(
+        default=None,
+        description="""
+		A dict of an error encountered during the process, represented with
+		"step" and "error" keys. False if no error occurred.
+		""",
+    )
+    logger: LokiLoggerResponse = Field(
+        default_factory=LokiLoggerResponse,
+        description="Loki logger information.",
+    )
+
+```
+
+```python title:backend/v1/core/presentation/service.py
+from base64 import b64encode
+from json import dumps
+from logging import Logger, getLogger
+from typing import Any
+
+from dotenv import load_dotenv
+from fastapi import status
+from fastapi.responses import JSONResponse, RedirectResponse
+from pydantic import BaseModel
+
+from backend.v2.core.config import DOTENV_ABSPATH, LOGGING_PROJECT_NAME
+from backend.v2.core.presentation.schemas import (
+    BaseResponse,
+    ExecutionError,
+    LokiLoggerResponse,
+)
+
+load_dotenv(DOTENV_ABSPATH)
+logger: Logger = getLogger(f"{LOGGING_PROJECT_NAME}.core.service")
+
+
+###############################################################################
+#################################### Docs #####################################
+###############################################################################
+def get_model_schema_for_docs(
+    model: BaseModel, responses: dict[int, str]
+) -> dict[int, dict[str, Any]]:
+    """
+    Utility function to get the JSON schema of a Pydantic response model for
+    documentation purposes.
+
+    Args:
+        model: The Pydantic model class.
+    Returns:
+        dict: The JSON schema of the model.
+    """
+    result: dict[int, dict[str, Any]] = {}
+    example: dict[str, Any] = model.model_json_schema().get("properties", {})
+
+    for status_code, description in responses.items():
+        if status_code in [204, 304]:
+            result[status_code] = {"description": description}
+            continue
+
+        result[status_code] = {
+            "description": description,
+            "model": model,
+            "content": {"application/json": {"example": example}},
+        }
+    return result
+
+
+###############################################################################
+################################## Responses ##################################
+###############################################################################
+def make_response(
+    logger: Logger,
+    status: str,
+    message: str,
+    success: bool = True,
+    data: dict[str, Any] | None = None,
+    error: dict[str, Any] | None = None,
+    show_logger: bool = True,
+) -> JSONResponse:
+
+    response: BaseResponse = BaseResponse(
+        success=success,
+        message=message,
+        data=data,
+        error=None if not error else ExecutionError(**error),
+        logger=LokiLoggerResponse(service=LOGGING_PROJECT_NAME),
+    )
+    response_message: str = (
+        f"Returning response: [{status}] {response.model_dump_json(indent=2)}"
+    )
+    if show_logger:
+        logger.info(response_message)
+    return JSONResponse(status_code=status, content=response.model_dump())
+
+
+def make_error_response(
+    logger: Logger,
+    type: str,
+    message: str,
+    endpoint: str | None = None,
+    method: str | None = None,
+    status: int = status.HTTP_500_INTERNAL_SERVER_ERROR,
+) -> JSONResponse:
+
+    if endpoint and method:
+        logger.error(f"{type} during {method} {endpoint}: {message}")
+    else:
+        logger.error(f"{type}: {message}")
+
+    response: BaseResponse = BaseResponse(
+        success=False,
+        message="An error occurred while processing the request",
+        error=(
+            None
+            if not type
+            else ExecutionError(
+                type=type,
+                message=message if message else "An unexpected error occurred",
+            )
+        ),
+        logger=LokiLoggerResponse(service=LOGGING_PROJECT_NAME),
+    )
+    logger.error(
+        f"Returning exception response: [{status}] {
+            response.model_dump_json(indent=2)
+        }"
+    )
+    return JSONResponse(status_code=status, content=response.model_dump())
+
+
+def make_redirection_response(
+    logger: Logger, data: dict[str, Any], base_url: str
+) -> RedirectResponse:
+
+    data: str = b64encode(dumps(data).encode("utf-8")).decode("utf-8")
+    redirect_url: str = f"{base_url}?data={data}"
+    logger.info(f"Redirecting to URL: {redirect_url}")
+    return RedirectResponse(
+        url=redirect_url, status_code=status.HTTP_302_FOUND
+    )
+
+```
+
+
 ### Send emails
 
 ```bash title:.env
@@ -769,206 +1052,6 @@ class UserRepositoryInterface(ABC):
 
     @abstractmethod
     async def get_user_by_id(self, user_id: str) -> User | None: ...
-
-```
-
-
-### BaseResponse `Pydantic` Squemas
-
-```python title:backend/v2/core/presentation/schemas.py
-from typing import Any
-from uuid import uuid4
-
-from pydantic import BaseModel, Field
-
-
-class LokiLoggerResponse(BaseModel):
-    service: str = Field(
-        min_length=1,
-        max_length=64,
-        description="Service name that is writing to Loki.",
-    )
-    execution_id: str = Field(
-        default_factory=lambda: str(uuid4()),
-        description="Execution ID for the request.",
-    )
-
-
-class ExecutionError(BaseModel):
-    step: str = Field(
-        min_length=1,
-        max_length=64,
-        description="The step in the process where the error occurred.",
-    )
-    type: str = Field(
-        min_length=1,
-        max_length=64,
-        description="The type of error that occurred.",
-    )
-    message: str = Field(
-        min_length=1,
-        max_length=256,
-        description="A description of the error that occurred.",
-    )
-
-
-class BaseResponse(BaseModel):
-    success: bool = Field(
-        description="Indicates if the request was successful."
-    )
-    message: str = Field(
-        min_length=1,
-        max_length=256,
-        description="""
-		A message providing additional information about the request.
-		""",
-    )
-    data: dict[str, Any] | None = Field(
-        default=None,
-        description="""
-		Additional data returned by the API, if any.
-		""",
-    )
-    error: ExecutionError | None = Field(
-        default=None,
-        description="""
-		A dict of an error encountered during the process, represented with
-		"step" and "error" keys. False if no error occurred.
-		""",
-    )
-    logger: LokiLoggerResponse = Field(
-        default_factory=LokiLoggerResponse,
-        description="Loki logger information.",
-    )
-
-```
-
-```python title:backend/v2/core/presentation/service.py
-from base64 import b64encode
-from json import dumps
-from logging import Logger, getLogger
-from typing import Any
-
-from dotenv import load_dotenv
-from fastapi import status
-from fastapi.responses import JSONResponse, RedirectResponse
-from pydantic import BaseModel
-
-from backend.v2.core.config import DOTENV_ABSPATH, LOGGING_PROJECT_NAME
-from backend.v2.core.presentation.schemas import (
-    BaseResponse,
-    ExecutionError,
-    LokiLoggerResponse,
-)
-
-load_dotenv(DOTENV_ABSPATH)
-logger: Logger = getLogger(f"{LOGGING_PROJECT_NAME}.core.service")
-
-
-###############################################################################
-#################################### Docs #####################################
-###############################################################################
-def get_model_schema_for_docs(
-    model: BaseModel, responses: dict[int, str]
-) -> dict[int, dict[str, Any]]:
-    """
-    Utility function to get the JSON schema of a Pydantic response model for
-    documentation purposes.
-
-    Args:
-        model: The Pydantic model class.
-    Returns:
-        dict: The JSON schema of the model.
-    """
-    result: dict[int, dict[str, Any]] = {}
-    example: dict[str, Any] = model.model_json_schema().get("properties", {})
-
-    for status_code, description in responses.items():
-        if status_code in [204, 304]:
-            result[status_code] = {"description": description}
-            continue
-
-        result[status_code] = {
-            "description": description,
-            "model": model,
-            "content": {"application/json": {"example": example}},
-        }
-    return result
-
-
-###############################################################################
-################################## Responses ##################################
-###############################################################################
-def make_response(
-    logger: Logger,
-    status: str,
-    message: str,
-    success: bool = True,
-    data: dict[str, Any] | None = None,
-    error: dict[str, Any] | None = None,
-    show_logger: bool = True,
-) -> JSONResponse:
-
-    response: BaseResponse = BaseResponse(
-        success=success,
-        message=message,
-        data=data,
-        error=None if not error else ExecutionError(**error),
-        logger=LokiLoggerResponse(service=LOGGING_PROJECT_NAME),
-    )
-    response_message: str = (
-        f"Returning response: [{status}] {response.model_dump_json(indent=2)}"
-    )
-    if show_logger:
-        logger.info(response_message)
-    return JSONResponse(status_code=status, content=response.model_dump())
-
-
-def make_error_response(
-    logger: Logger,
-    type: str,
-    message: str,
-    endpoint: str | None = None,
-    method: str | None = None,
-    status: int = status.HTTP_500_INTERNAL_SERVER_ERROR,
-) -> JSONResponse:
-
-    if endpoint and method:
-        logger.error(f"{type} during {method} {endpoint}: {message}")
-    else:
-        logger.error(f"{type}: {message}")
-
-    response: BaseResponse = BaseResponse(
-        success=False,
-        message="An error occurred while processing the request",
-        error=(
-            None
-            if not type
-            else ExecutionError(
-                type=type,
-                message=message if message else "An unexpected error occurred",
-            )
-        ),
-        logger=LokiLoggerResponse(service=LOGGING_PROJECT_NAME),
-    )
-    logger.error(
-        f"Returning exception response: [{status}] {
-            response.model_dump_json(indent=2)
-        }"
-    )
-    return JSONResponse(status_code=status, content=response.model_dump())
-
-
-def make_redirection_response(
-    logger: Logger, data: dict[str, Any], base_url: str
-) -> RedirectResponse:
-
-    data: str = b64encode(dumps(data).encode("utf-8")).decode("utf-8")
-    redirect_url: str = f"{base_url}?data={data}"
-    logger.info(f"Redirecting to URL: {redirect_url}")
-    return RedirectResponse(
-        url=redirect_url, status_code=status.HTTP_302_FOUND
-    )
 
 ```
 

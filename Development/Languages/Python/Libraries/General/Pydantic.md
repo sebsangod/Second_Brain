@@ -9,7 +9,7 @@ date: 2026-03-15
 ---
 **Sources**: [Pydantic](https://pydantic.dev/), [Pydantic Docs](https://docs.pydantic.dev/latest/)
 
-**Related:** [[Python]], [[Rust]], [[Huggingface]], [[LangChain]]
+**Related:** [[Python]], [[Rust]], [[Huggingface]], [[LangChain]], [[Dependency Injection]]
 
 ---
 
@@ -67,18 +67,18 @@ external_data = {
 
 user = User(**external_data)
 
-print(user.id)
-#> 123
+print(user.id) # 123
 print(user.model_dump())
-"""
+
+```
+
+```bash title:output
 {
     "id": 123,
     "name": "John Doe",
     "signup_ts": datetime.datetime(2019, 6, 1, 12, 22),
     "tastes": {"wine": 9, "cheese": 7, "cabbage": 1},
 }
-"""
-
 ```
 
 If validation fails, _Pydantic_ will raise an error with a breakdown of what was wrong:
@@ -105,32 +105,102 @@ try:
     User(**external_data)
 except ValidationError as e:
     print(e.errors())
-    """
-    [
-        {
-            "type": "int_parsing",
-            "loc": ("id",),
-            "msg": "Input should be a valid integer, unable to parse string as an integer",
-            "input": "not an int",
-            "url": "https://errors.pydantic.dev/2/v/int_parsing",
-        },
-        {
-            "type": "missing",
-            "loc": ("signup_ts",),
-            "msg": "Field required",
-            "input": {"id": "not an int", "tastes": {}},
-            "url": "https://errors.pydantic.dev/2/v/missing",
-        },
-    ]
-    """
 
+```
+
+```bash title:output
+[
+	{
+		"type": "int_parsing",
+		"loc": ("id",),
+		"msg": "Input should be a valid integer, unable to parse string as an integer",
+		"input": "not an int",
+		"url": "https://errors.pydantic.dev/2/v/int_parsing",
+	},
+	{
+		"type": "missing",
+		"loc": ("signup_ts",),
+		"msg": "Field required",
+		"input": {"id": "not an int", "tastes": {}},
+		"url": "https://errors.pydantic.dev/2/v/missing",
+	},
+]
 ```
 
 ---
 
 ## Utils
 
-### Email validation
+### Pydantic Settings
+
+```bash title:bash
+pip install pydantic-settings
+```
+
+This is another `Python` library that extends _Pydantic_ functionality to read environment variables from _.env_ files, secrets, etc. and validate them using _type hints_ as _BaseModels_.
+
+```python title:config.py
+from functools import lru_cache
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+from v1.core.config import DOTENV_ABSPATH
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=DOTENV_ABSPATH,   # Reads .env file
+        env_file_encoding="utf-8",
+        case_sensitive=False,      # DATABASE_URL != database_url
+        extra="ignore",            # Ignore extra env vars not declared here
+    )
+
+    database_url: str
+    secret_key: str
+    debug: bool = False
+    port: int = 8000
+    
+@lru_cache # Instantiates only once in the hole app
+def get_settings() -> Settings:
+    return Settings()
+
+```
+
+
+#### Usage with `Dependency Injection`
+
+```python title:router.py
+from fastapi import FastAPI, Depends
+from config import Settings, get_settings
+
+app = FastAPI()
+
+@app.get("/info")
+def app_info(settings: Settings = Depends(get_settings)):
+    return {
+        "app": settings.app_name,
+        "debug": settings.debug,
+        "version": settings.api_version,
+    }
+
+```
+
+
+#### Why to use _lru_cache_?
+
+```python title:config.py
+# ❌ Without caching: reads and validates .env file in EVERY request
+@app.get("/")
+def route(settings: Settings = Depends(Settings)):
+    ...
+
+# ✅ With caching: reads .env only once, then re-uses the object
+@app.get("/")
+def route(settings: Settings = Depends(get_settings)):
+    ...
+
+```
+
+
+### Email Validation
 
 ```python title:models.py
 from datetime import datetime

@@ -34,11 +34,29 @@ Write here...
 
 ---
 
-## Commands
+## PSQL Commands
+
+### List all fields within a specific table
 
 ```bash title:bash
-\du
+\d+ table_name
+```
 
+---
+
+## Snippets
+
+### List all fields within a specific table
+
+```sql title:"Query console"
+SELECT 
+    column_name,
+    data_type,
+    is_nullable,
+    column_default
+FROM information_schema.columns
+WHERE table_schema = 'public'
+  AND table_name   = 'table';
 ```
 
 ---
