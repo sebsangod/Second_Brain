@@ -1,0 +1,523 @@
+{
+  "cascadeColors": false,
+  "colorBackground": false,
+  "palette": [
+    {
+      "id": "HO8Mh4AeFeZ1h0zyGq6-j",
+      "name": "Violet",
+      "value": "#70369d"
+    },
+    {
+      "id": "vDyO7yStYyZF4jxtYX8O9",
+      "name": "Purple",
+      "value": "#4b369d"
+    },
+    {
+      "id": "ppqyAJJe8rCE7D4rEwNGy",
+      "name": "Blue",
+      "value": "#487de7"
+    },
+    {
+      "id": "Te_SSLb51kT5jURBVM8Ra",
+      "name": "Green",
+      "value": "#79c314"
+    },
+    {
+      "id": "ljWJaKa6JJQDv3K8BNJbO",
+      "name": "Yellow",
+      "value": "#faeb36"
+    },
+    {
+      "id": "2Fh2JU9itChkhmJD4zrQu",
+      "name": "Orange",
+      "value": "#ffa500"
+    },
+    {
+      "id": "_bAuyzVumFiCgJOa0wY73",
+      "name": "Red",
+      "value": "#e81416"
+    },
+    {
+      "id": "vtynbs1pT6oB-52hk5mjm",
+      "name": "FastAPI",
+      "value": "#009485"
+    },
+    {
+      "id": "MTTwCDjQEweYxp6mpg4za",
+      "name": "React",
+      "value": "#58c4dc"
+    },
+    {
+      "id": "nPtyAMI6ts4prz7tjBASP",
+      "name": "Domestika",
+      "value": "#fd502a"
+    },
+    {
+      "id": "XBA2Z0gGdPCTwBbdFji_1",
+      "name": "NumPy",
+      "value": "#4dabcf"
+    },
+    {
+      "id": "QZL5I1zjlB5LYGUY5oBft",
+      "name": "Scikit-learn",
+      "value": "#ff9245"
+    },
+    {
+      "id": "EI7Qa1XTWfnkDfJuElnYg",
+      "name": "Matplotlib",
+      "value": "#65baea"
+    },
+    {
+      "id": "seTG-lWmVYB0tGfTgL2D9",
+      "name": "TensorFlow",
+      "value": "#fe9000"
+    },
+    {
+      "id": "RczZGfsNJg1vW0fZ0IfqT",
+      "name": "PyTorch",
+      "value": "#ed4c2c"
+    },
+    {
+      "id": "Pm5yfQGJCfVj202qi8yeu",
+      "name": "Pydantic",
+      "value": "#e92063"
+    },
+    {
+      "id": "DfeXUDnzlswx3eauD4wxW",
+      "name": "MongoDB",
+      "value": "#13aa52"
+    },
+    {
+      "id": "nHcKGvSzdrnMhwIvaSFpL",
+      "name": "Redis",
+      "value": "#d82f27"
+    },
+    {
+      "id": "LidmTgf__z4OQnNQAXqSa",
+      "name": "PostgreSQL",
+      "value": "#336791"
+    },
+    {
+      "id": "JkKdVJ-PKyBNw7PSx3xi5",
+      "name": "Python",
+      "value": "#3471a0"
+    },
+    {
+      "id": "5XD06Lc_nXaw8Vz906PsW",
+      "name": "Django",
+      "value": "#0c4b22"
+    },
+    {
+      "id": "5jOZ5Khvc1CfC7ZdcGO4u",
+      "name": "Flask",
+      "value": "#67b3d6"
+    },
+    {
+      "id": "AQm9k90Y7P0v9NjLynB2q",
+      "name": "GIT",
+      "value": "#f05133"
+    },
+    {
+      "id": "7hlC2usxSoebWybV1Uxof",
+      "name": "Docker",
+      "value": "#0d4df2"
+    },
+    {
+      "id": "iXQ7Jfnv61l_PNLJUuG5t",
+      "name": "Claude",
+      "value": "#d97757"
+    },
+    {
+      "id": "sNNlSfJuA4R7XHADLAs0k",
+      "name": "Odoo",
+      "value": "#604058"
+    },
+    {
+      "id": "BmAcU1JhT5_1FLJXRyJ73",
+      "name": "Ruff",
+      "value": "#d8ff69"
+    },
+    {
+      "id": "HKGG2sIYJubRCzBT2iTuq",
+      "name": "Logfire",
+      "value": "#e520e9"
+    },
+    {
+      "id": "uM3AMsnDqTYskf-ZyTZ4M",
+      "name": "Agno",
+      "value": "#ff4017"
+    },
+    {
+      "id": "5-f2CXYoMBvaV7-G_T5e2",
+      "name": "ComfyUI",
+      "value": "#f2ff59"
+    },
+    {
+      "id": "dHgxMchJcKsniIEkUln-s",
+      "name": "TypeScript",
+      "value": "#3168c6"
+    }
+  ],
+  "fileColors": [
+    {
+      "path": "Projects",
+      "color": "Te_SSLb51kT5jURBVM8Ra"
+    },
+    {
+      "path": "Journal",
+      "color": "2Fh2JU9itChkhmJD4zrQu"
+    },
+    {
+      "path": "Templates",
+      "color": "vDyO7yStYyZF4jxtYX8O9"
+    },
+    {
+      "path": "Resources",
+      "color": "ppqyAJJe8rCE7D4rEwNGy"
+    },
+    {
+      "path": "Photography",
+      "color": "ljWJaKa6JJQDv3K8BNJbO"
+    },
+    {
+      "path": "Languages",
+      "color": "_bAuyzVumFiCgJOa0wY73"
+    },
+    {
+      "path": "Development",
+      "color": "HO8Mh4AeFeZ1h0zyGq6-j"
+    },
+    {
+      "path": "Excalidraw",
+      "color": "vDyO7yStYyZF4jxtYX8O9"
+    },
+    {
+      "path": "Finance",
+      "color": "ppqyAJJe8rCE7D4rEwNGy"
+    },
+    {
+      "path": "Images",
+      "color": "ljWJaKa6JJQDv3K8BNJbO"
+    },
+    {
+      "path": "Development/AI/Applications/Claude",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/Applications/Odoo",
+      "color": "sNNlSfJuA4R7XHADLAs0k"
+    },
+    {
+      "path": "Development/Applications/Odoo/Odoo.md",
+      "color": "sNNlSfJuA4R7XHADLAs0k"
+    },
+    {
+      "path": "Development/Applications/Odoo/Odoo Developers.md",
+      "color": "sNNlSfJuA4R7XHADLAs0k"
+    },
+    {
+      "path": "Development/Applications/Odoo/Odoo Owl.md",
+      "color": "sNNlSfJuA4R7XHADLAs0k"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Claude Code.md",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Skills.md",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude.md",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude API.md",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/Databases/Non-relationals/MongoDB",
+      "color": "DfeXUDnzlswx3eauD4wxW"
+    },
+    {
+      "path": "Development/Databases/Non-relationals/Redis",
+      "color": "nHcKGvSzdrnMhwIvaSFpL"
+    },
+    {
+      "path": "Development/Databases/Non-relationals/Redis/Redis.md",
+      "color": "nHcKGvSzdrnMhwIvaSFpL"
+    },
+    {
+      "path": "Development/DevOPS/Docker",
+      "color": "7hlC2usxSoebWybV1Uxof"
+    },
+    {
+      "path": "Development/DevOPS/Docker/Compose.md",
+      "color": "7hlC2usxSoebWybV1Uxof"
+    },
+    {
+      "path": "Development/DevOPS/Docker/Container.md",
+      "color": "7hlC2usxSoebWybV1Uxof"
+    },
+    {
+      "path": "Development/DevOPS/Docker/Docker.md",
+      "color": "7hlC2usxSoebWybV1Uxof"
+    },
+    {
+      "path": "Development/DevOPS/Docker/Docker Hub.md",
+      "color": "7hlC2usxSoebWybV1Uxof"
+    },
+    {
+      "path": "Development/DevOPS/Docker/Image.md",
+      "color": "7hlC2usxSoebWybV1Uxof"
+    },
+    {
+      "path": "Development/Languages/Python",
+      "color": "JkKdVJ-PKyBNw7PSx3xi5"
+    },
+    {
+      "path": "Development/Languages/Python/Python.md",
+      "color": "JkKdVJ-PKyBNw7PSx3xi5"
+    },
+    {
+      "path": "Development/Languages/Python/Libraries/General/Beanie.md",
+      "color": "JkKdVJ-PKyBNw7PSx3xi5"
+    },
+    {
+      "path": "Development/Languages/Python/Libraries/General/Pydantic.md",
+      "color": "Pm5yfQGJCfVj202qi8yeu"
+    },
+    {
+      "path": "Development/Languages/Python/Libraries/Complements/Ruff.md",
+      "color": "BmAcU1JhT5_1FLJXRyJ73"
+    },
+    {
+      "path": "Development/DevOPS/Docker/Dockerfile.md",
+      "color": "7hlC2usxSoebWybV1Uxof"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/CLAUDE File",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Commands",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Commands/Commands.md",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Hooks",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Hooks/Hooks.md",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Plugins",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Plugins/Vault.md",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Skills",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Skills/Skills.md",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Skills/Vault.md",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Subagents",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Subagents/Subagents.md",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/SDKs.md",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/CLAUDE File/Projects",
+      "color": "ljWJaKa6JJQDv3K8BNJbO"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/CLAUDE File/Projects/FastAPI",
+      "color": "vtynbs1pT6oB-52hk5mjm"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/CLAUDE File/Projects/FastAPI/FastAPI Senior Backend Engineer.md",
+      "color": "vtynbs1pT6oB-52hk5mjm"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/CLAUDE File/Projects/Odoo",
+      "color": "sNNlSfJuA4R7XHADLAs0k"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/CLAUDE File/Projects/Odoo/Odoo Professional Software Developer.md",
+      "color": "sNNlSfJuA4R7XHADLAs0k"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/CLAUDE File/CLAUDE File.md",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Commands/Personal",
+      "color": "ljWJaKa6JJQDv3K8BNJbO"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Hooks/Personal",
+      "color": "ljWJaKa6JJQDv3K8BNJbO"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Hooks/Personal/Block env Files Access.md",
+      "color": "ljWJaKa6JJQDv3K8BNJbO"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Hooks/Personal/Obsidian Syncing.md",
+      "color": "ljWJaKa6JJQDv3K8BNJbO"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Commands/Personal/Distribute.md",
+      "color": "ljWJaKa6JJQDv3K8BNJbO"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/CLAUDE File/Analysis.md",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Projects/Odoo",
+      "color": "sNNlSfJuA4R7XHADLAs0k"
+    },
+    {
+      "path": "Development/Languages/Python/Frameworks/Backend/FastAPI",
+      "color": "vtynbs1pT6oB-52hk5mjm"
+    },
+    {
+      "path": "Development/Databases/Relationals/PostgreSQL.md",
+      "color": "LidmTgf__z4OQnNQAXqSa"
+    },
+    {
+      "path": "Development/Databases/Vector DBs/PGVector.md",
+      "color": "LidmTgf__z4OQnNQAXqSa"
+    },
+    {
+      "path": "Development/Languages/Python/Libraries/SDKs/Redis-py.md",
+      "color": "nHcKGvSzdrnMhwIvaSFpL"
+    },
+    {
+      "path": "Development/Databases/Non-relationals/MongoDB/MongoDB.md",
+      "color": "DfeXUDnzlswx3eauD4wxW"
+    },
+    {
+      "path": "Development/Databases/Non-relationals/MongoDB/Document.md",
+      "color": "DfeXUDnzlswx3eauD4wxW"
+    },
+    {
+      "path": "Development/Databases/Non-relationals/MongoDB/View.md",
+      "color": "DfeXUDnzlswx3eauD4wxW"
+    },
+    {
+      "path": "Development/Databases/Non-relationals/MongoDB/Collection.md",
+      "color": "DfeXUDnzlswx3eauD4wxW"
+    },
+    {
+      "path": "Development/Languages/Python/Libraries/SDKs/Pymongo.md",
+      "color": "DfeXUDnzlswx3eauD4wxW"
+    },
+    {
+      "path": "Development/Languages/Python/Pyproject.toml.md",
+      "color": "JkKdVJ-PKyBNw7PSx3xi5"
+    },
+    {
+      "path": "Development/Languages/Python/Libraries/Complements/uv.md",
+      "color": "BmAcU1JhT5_1FLJXRyJ73"
+    },
+    {
+      "path": "Development/Version Control/Git.md",
+      "color": "AQm9k90Y7P0v9NjLynB2q"
+    },
+    {
+      "path": "Development/Languages/Python/Libraries/General/Logfire.md",
+      "color": "HKGG2sIYJubRCzBT2iTuq"
+    },
+    {
+      "path": "Development/Languages/Python/Frameworks/AI/TensorFlow",
+      "color": "seTG-lWmVYB0tGfTgL2D9"
+    },
+    {
+      "path": "Development/Languages/Python/Frameworks/AI/Pytorch",
+      "color": "RczZGfsNJg1vW0fZ0IfqT"
+    },
+    {
+      "path": "Development/Languages/Python/Frameworks/AI/Agno",
+      "color": "uM3AMsnDqTYskf-ZyTZ4M"
+    },
+    {
+      "path": "Mathematics",
+      "color": "2Fh2JU9itChkhmJD4zrQu"
+    },
+    {
+      "path": "Development/AI/Applications/ComfyUI",
+      "color": "5-f2CXYoMBvaV7-G_T5e2"
+    },
+    {
+      "path": "Development/AI/Applications/ComfyUI/Alibaba Crash Course",
+      "color": "5-f2CXYoMBvaV7-G_T5e2"
+    },
+    {
+      "path": "Development/AI/Applications/ComfyUI/Alibaba Crash Course/01 Discover the Power of ComfyUI, Open Source AI Models + Wan.md",
+      "color": "5-f2CXYoMBvaV7-G_T5e2"
+    },
+    {
+      "path": "Development/AI/Applications/ComfyUI/Alibaba Crash Course/02 ComfyUI Basics, Text-to-Image Workflow with Effective Prompting.md",
+      "color": "5-f2CXYoMBvaV7-G_T5e2"
+    },
+    {
+      "path": "Development/AI/Applications/ComfyUI/Alibaba Crash Course/03 480p to 4k, Upscale Images in ComfyUI.md",
+      "color": "5-f2CXYoMBvaV7-G_T5e2"
+    },
+    {
+      "path": "Development/AI/Applications/ComfyUI/Alibaba Crash Course/04 ComfyUI Basics, Image-to-Image Workflow.md",
+      "color": "5-f2CXYoMBvaV7-G_T5e2"
+    },
+    {
+      "path": "Development/AI/Applications/ComfyUI/Alibaba Crash Course/05 WAN2.1 for Beginners, Bringing Stories to Life.md",
+      "color": "5-f2CXYoMBvaV7-G_T5e2"
+    },
+    {
+      "path": "Development/AI/Applications/ComfyUI/ComfyUI.md",
+      "color": "5-f2CXYoMBvaV7-G_T5e2"
+    },
+    {
+      "path": "Fitness",
+      "color": "Te_SSLb51kT5jURBVM8Ra"
+    },
+    {
+      "path": "Development/Languages/JavaScript",
+      "color": "ljWJaKa6JJQDv3K8BNJbO"
+    },
+    {
+      "path": "Development/Languages/TypeScript",
+      "color": "dHgxMchJcKsniIEkUln-s"
+    },
+    {
+      "path": "Development/AI/Applications/Claude/Claude Code/Plugins/Plugins.md",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    }
+  ]
+}
