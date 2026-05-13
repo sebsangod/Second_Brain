@@ -70,7 +70,7 @@ Containerization, CI/CD, and infrastructure.
 - [[Docker]] — Fundamentales, ecosystem
 - [[Container]] — What they are, differences with VMs
 - [[Image]] — Docker images, layers, blueprints
-- [[Dockerfiles]] — Syntax and good practices
+- [[Dockerfile]] — Syntax and good practices
 - [[Compose]] — Multi-container orchestration
 - [[Docker Hub]] — Image marketplace, publication
 

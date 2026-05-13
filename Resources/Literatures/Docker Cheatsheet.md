@@ -8,7 +8,7 @@ date: 2026-04-15
 ---
 **Sources**: Docker Cheatsheet.pdf (Resources folder)
 
-**Related:** [[Docker]], [[Container]], [[Image]], [[Dockerfiles]], [[Compose]], [[Docker Hub]]
+**Related:** [[Docker]], [[Container]], [[Image]], [[Dockerfile]], [[Compose]], [[Docker Hub]]
 
 ---
 
@@ -62,7 +62,7 @@ grouped by lifecycle stage (build → run → manage → cleanup).
 
 - Full Docker concepts → [[Docker]]
 - Container deep dive → [[Container]]
-- Dockerfile syntax → [[Dockerfiles]]
+- Dockerfile syntax → [[Dockerfile]]
 - Multi-container setup → [[Compose]]
 
 ___

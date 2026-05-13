@@ -1,14 +1,14 @@
 ---
 aliases:
-  - OpenCV
+  - Plugins
 tags:
   - learning
-  - dev/
-date: 2026-05-09
+  - dev/ai/llm
+date: 2026-05-12
 ---
 **Sources**: [Source]()
 
-**Related:** [[Python]], [[Artificial Intelligence]]
+**Related:** [[Claude Code]]
 
 ---
 

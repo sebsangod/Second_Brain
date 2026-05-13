@@ -1,4 +1,4 @@
-﻿---
+---
 aliases:
   - Testing
 tags:
@@ -8,7 +8,7 @@ date: 2026-03-25
 ---
 **Sources**: [FastAPI Testing](https://fastapi.tiangolo.com/tutorial/testing/#using-testclient) [FastAPI Async Testing](https://fastapi.tiangolo.com/advanced/async-tests/#other-asynchronous-function-calls)
 
-**Related:** [[FastAPI]], [[Python]], [[Starlette]], [[HTTPX]], [[Requests]], [[Pytest]], [[Database]], [[Backend]], [[Beanie]], [[MongoDB]]
+**Related:** [[FastAPI]], [[Python]], [[Starlette]], [[HTTPX]], [[Requests]], [[Pytest]], [[Database]], [[Beanie]], [[MongoDB]]
 
 ---
 
@@ -193,7 +193,7 @@ test_main.py ...... [100%]
 
 ### Async Tests
 
-Being able to use asynchronous functions in your tests could be useful, for example, when you're querying your `database` _asynchronously_. Imagine you want to test sending requests to your _FastAPI_ application and then verify that your `backend` successfully wrote the correct data in the `database`, while using an _async_ `database` library.
+Being able to use asynchronous functions in your tests could be useful, for example, when you're querying your `database` _asynchronously_. Imagine you want to test sending requests to your _FastAPI_ application and then verify that your backend successfully wrote the correct data in the `database`, while using an _async_ `database` library.
 
 
 #### pytest.mark.anyio
