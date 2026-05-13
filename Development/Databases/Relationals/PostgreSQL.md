@@ -36,9 +36,13 @@ Write here...
 
 ## PSQL Commands
 
-### List all fields within a specific table
-
 ```bash title:bash
+# List all tables within a database's public squema
+\dt
+# List all tables of all squemas within a database
+\dt *.*
+
+# List all fields within a specific table
 \d+ table_name
 ```
 
@@ -46,9 +50,15 @@ Write here...
 
 ## Snippets
 
-### List all fields within a specific table
+```sql title:"List all tables of a database"
+SELECT table_schema, table_name
+FROM information_schema.tables
+WHERE table_type = 'BASE TABLE'
+  AND table_schema NOT IN ('pg_catalog', 'information_schema')
+ORDER BY table_schema, table_name;
+```
 
-```sql title:"Query console"
+```sql title:"List all fields within a specific table"
 SELECT 
     column_name,
     data_type,

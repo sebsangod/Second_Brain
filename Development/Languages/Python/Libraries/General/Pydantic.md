@@ -149,7 +149,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=DOTENV_ABSPATH,   # Reads .env file
         env_file_encoding="utf-8",
-        case_sensitive=False,      # DATABASE_URL != database_url
+        case_sensitive=False,      # DATABASE_URL == database_url
         extra="ignore",            # Ignore extra env vars not declared here
     )
 

@@ -151,8 +151,8 @@ from .config import (
 
 
 class TZFormatter(Formatter):
-    def _init_(self, fmt: str | None = None, datefmt: str | None = None, tz: str = TIMEZONE) -> None:
-        super()._init_(fmt=fmt, datefmt=datefmt)
+    def __init__(self, fmt: str | None = None, datefmt: str | None = None, tz: str = TIMEZONE) -> None:
+        super().__init__(fmt=fmt, datefmt=datefmt)
         self.tz = timezone(tz)
 
     def format_time(self, record: LogRecord, datefmt: str | None = None) -> str:
