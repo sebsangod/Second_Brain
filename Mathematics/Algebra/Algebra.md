@@ -6,7 +6,7 @@ tags:
   - math/algebra
 date: 2026-05-11
 ---
-**Sources**: [wagner.nyu.edu](https://wagner.nyu.edu/files/students/Math_Review_-_Algebra_Operations.pdf), [exponents law](https://www.mathsisfun.com/algebra/exponent-laws.html)
+**Sources**: [wagner.nyu.edu](https://wagner.nyu.edu/files/students/Math_Review_-_Algebra_Operations.pdf), [exponents law](https://www.mathsisfun.com/algebra/exponent-laws.html), [curso de álgebra y funciones](https://platzi.com/cursos/algebra/partes-de-una-expresion-algebraica-varia/)
 
 **Related:** [[Mathematics]]
 
@@ -43,14 +43,11 @@ $$-3ax + 11wx^2y$$
 
 The signs of operation separate the expression into terms.
 
-
-### Algebraic Equations
-
-An _equation_ is a **mathematical statement that two expressions are equal**:
-
-$$4 + 5 = 9$$
-$$x -35 = 56k^2 + 3$$
-$$x + 3 = 15$$
+An _algebraic expression_ could be:
+- **Monomial:** an **expression with only one** _term_: 10, x, 2x, 3x^4
+- **Binomial:** an **expression with only two** _terms_: 2x+2, x+2, x^4+6
+- **Trinomial:** an **expression with only three** _terms_: x^2+x+1, 5x^4-2x+1
+- **Polynomial:** an **expression with one or more** _terms_: x^3 + 4x^2 + x + 1
 
 
 ### Signs law
@@ -63,6 +60,7 @@ With **different signs** the result is **negative**:****
 $$+ * - = -$$
 $$- * + = -$$
 
+This law could be applied the same for **both multiplication and division**.
 
 ### Exponents
 
@@ -91,38 +89,15 @@ $$\sqrt{4} = 2^2 = \pm 2$$
 
 #### Laws
 
+$$\sqrt[n]{a} = a^\frac{1}{n}$$
+$$\sqrt[n]{a^m} = (\sqrt[n]{a})^m = a^\frac{m}{n}$$
 $$\sqrt[n]{ab} = \sqrt[n]{a} * \sqrt[n]{b}$$
-$$\sqrt[n]{\frac{a}{b}} = \frac{\sqrt[n]{a}}{\sqrt[n]{b}}$$
-$$\sqrt[n]{a^m} = (\sqrt[n]{a})^m$$
-$$\sqrt[m]{\sqrt[n]{x}} = \sqrt[n * m]{a}$$
+$$\frac{\sqrt[n]{a}}{\sqrt[n]{b}} = \sqrt[n]{\frac{a}{b}} = \frac{a}{b}^\frac{1}{n}$$
+$$\sqrt[m]{\sqrt[n]{a}} = \sqrt[n * m]{a}$$
+$$p\sqrt[n]{a} \pm q\sqrt[n]{a} = (p \pm q)\sqrt[n]{a}$$
 $$\sqrt{a} * \sqrt{a} = (\sqrt{a})^2 = a$$
 
 
-### Functions
-
-A _function_ is just a **rule that assigns a single value y** or f(x) (read “f of x”) **to each value of x**.
-
-The rule links one number to a second number in an orderly and specific manner. All the points on the graph of a function are made up of two parts: a number, and the function value at that number.
-
-For example, the number of hours worked in a week could be the first number, and the salary for the week could be the function value. If an hourly salary is $7.00, then the rule would be 7 times the number of hours worked.
-
-![[function.png]]
-
-
-#### Function root
-
-The root of any function is nothing more than the value of the variable when the function equals to 0: 
-$$f(x) = y = -3x - 6$$
-$$0 = -3x - 6$$
-$$3x = -6$$
-$$x = \frac{-6}{3} = -\frac{6}{3} = -2$$
-
-
-#### Y-intercept
-
-Also known as _ordered pair_ or _order of a function_ is nothing more than the result of evaluating any function f(x) where x equals to 0:
-$$f(x) = y = -3x - 6$$
-$$f(0) = (-3 * 0) - 6 = 0 - 6 = -6$$
 ---
 
 ## Claude Sessions

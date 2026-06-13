@@ -6,11 +6,11 @@
     "emojiStyle": "native",
     "iconColor": null,
     "recentlyUsedIcons": [
-      "SiToml",
-      "SiDart",
-      "LiMonitorSmartphone",
-      "SiFlutter",
-      "SiFramework"
+      "SiMatrix",
+      "LiEqual",
+      "LiEqualNot",
+      "LiNetwork",
+      "LiChartLine"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -152,5 +152,14 @@
   "Development/Languages/Dart/Frameworks/UI/Flutter": "SiFlutter",
   "Development/Languages/Dart/Frameworks/UI": "LiMonitorSmartphone",
   "Development/Languages/Dart": "SiDart",
-  "Development/Languages/TOML": "SiToml"
+  "Development/Languages/TOML": "SiToml",
+  "Mathematics/Discretes": "LiNetwork",
+  "Mathematics/Algebra/Factorization.md": "LiParentheses",
+  "Mathematics/Algebra/Function.md": "LiChartLine",
+  "Mathematics/Algebra/Algebra.md": "LiSuperscript",
+  "Mathematics/Discretes/Set.md": "LiBraces",
+  "Mathematics/Discretes/Discrete Mathematics.md": "LiNetwork",
+  "Mathematics/Algebra/Inequation.md": "LiEqualNot",
+  "Mathematics/Algebra/Equation": "LiEqual",
+  "Mathematics/Algebra/Matrix": "SiMatrix"
 }

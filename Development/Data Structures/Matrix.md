@@ -26,7 +26,7 @@ ___
 
 As you can see from the below image, **the elements are organized in rows and columns**. As shown in the image, the cell _a\[0\]\[0\]_ is the first element of the first row and first column.
 
-![[matrix.png]]
+![[Images/Development/Data Structures/matrix.png]]
 
 ---
 

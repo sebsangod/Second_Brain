@@ -37,6 +37,7 @@
     "dev/version-control": 14,
     "journal/claude-session": 1,
     "math/algebra": 1,
+    "math/discretes": 2,
     "project/idea": 1,
     "template/components": 1,
     "dev/ai/llm": 1,

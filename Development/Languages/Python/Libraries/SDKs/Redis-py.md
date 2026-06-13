@@ -8,7 +8,7 @@ date: 2026-05-09
 ---
 **Sources**: [Datacamp](https://www.datacamp.com/tutorial/python-redis-beginner-guide), [Redis-py](https://github.com/redis/redis-py)
 
-**Related:** [[Redis]], [[Python]], [[Pub-Sub]], [[Hashed Table]], [[Set]], [[Queue]], [[API]]
+**Related:** [[Redis]], [[Python]], [[Pub-Sub]], [[Hashed Table]], [[Development/Data Structures/Set]], [[Queue]], [[API]]
 
 ---
 

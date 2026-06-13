@@ -3,8 +3,10 @@ aliases:
   - Components
 tags:
   - template/components
-date: 2026-03-15
+date: 2026-05-13
 ---
+**Sources:** [Math symbols](https://es.piliapp.com/symbol/math/), [LaTex symbols](https://gitmind.com/es/faq/formula-list.html)
+
 **Related:** [[Templates]]
 
 ---
@@ -150,3 +152,10 @@ ___
 ## LaTeX
 
 $$3^{4^5} + \frac{1}{2}$$ $$int_{0}^{\infty} e^{-x^2} \, dx = \frac{\sqrt{\pi}}{2}$$
+$$
+|a| =
+\begin{cases}
+a, & \text{if } a \ge 0 \\
+-a, & \text{if } a < 0
+\end{cases}
+$$

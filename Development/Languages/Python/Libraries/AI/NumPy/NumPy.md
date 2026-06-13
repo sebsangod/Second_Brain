@@ -8,7 +8,7 @@ date: 2026-05-09
 ---
 **Sources**: [Source]()
 
-**Related:** [[Python]], [[Array]], [[Matrix]], [[Linear Algebra]]
+**Related:** [[Python]], [[Array]], [[Development/Data Structures/Matrix]], [[Linear Algebra]]
 
 ---
 
