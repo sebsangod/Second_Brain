@@ -8,7 +8,7 @@ date: 2026-04-28
 ---
 **Sources**: [uv](https://docs.astral.sh/uv/)
 
-**Related:** [[Python|Python]], [[Rust]], [[pyenv]]
+**Related:** [[Python|Python]], [[Rust]], [[pyenv]], [[pip]]
 
 ---
 

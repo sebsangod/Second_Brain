@@ -34,15 +34,15 @@ An extremely fast `Python` `linter` and code formatter, written in `Rust`.
 ## Examples
 
 
-```toml title:pyproject.toml
-[project]
-...
-
-[tool.ruff]
-line-length = 79
+```toml title:ruff.toml
+line-length = 119
 target-version = "py312"
 
-[tool.ruff.lint]
+[format]
+quote-style = "double"
+indent-style = "space"
+
+[lint]
 select = [
 	"E",    # Basic errors
 	"F",    # Basic errors
@@ -59,11 +59,7 @@ ignore = [
 	"S311",  # Predictable random numbers
 ]
 
-[tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
-
-[tool.ruff.lint.isort]
+[lint.isort]
 known-first-party = [
 	"backend",
 	"my_addons",
@@ -71,13 +67,12 @@ known-first-party = [
 	"odoo19"
 ]
 
-[tool.ruff.lint.per-file-ignores]
+[lint.per-file-ignores]
 "**/__manifest__.py" = ["B018"]
 "**models/*.py" = ["N806"]
 "**controllers/*.py" = ["N806"]
 "**wizards/*.py" = ["N806"]
 "**/__init__.py" = ["F401"] # Imported but unused warning
-
 ```
 
 ---
