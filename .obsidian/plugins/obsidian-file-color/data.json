@@ -448,7 +448,7 @@
       "color": "BmAcU1JhT5_1FLJXRyJ73"
     },
     {
-      "path": "Development/Version Control/Git.md",
+      "path": "Development/Version Control/Git/Git.md",
       "color": "AQm9k90Y7P0v9NjLynB2q"
     },
     {
@@ -518,6 +518,18 @@
     {
       "path": "Development/AI/Applications/Claude/Claude Code/Plugins/Plugins.md",
       "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/Version Control/Git",
+      "color": "AQm9k90Y7P0v9NjLynB2q"
+    },
+    {
+      "path": "Development/Version Control/Git/Git Cheatsheet.pdf",
+      "color": "AQm9k90Y7P0v9NjLynB2q"
+    },
+    {
+      "path": "Development/DevOPS/Docker/Docker Cheatsheet.pdf",
+      "color": "7hlC2usxSoebWybV1Uxof"
     }
   ]
 }

@@ -6,11 +6,11 @@
     "emojiStyle": "native",
     "iconColor": null,
     "recentlyUsedIcons": [
-      "SiMatrix",
-      "LiEqual",
-      "LiEqualNot",
-      "LiNetwork",
-      "LiChartLine"
+      "SiGit",
+      "LiTriangleDashed",
+      "LiBrainCog",
+      "LiList",
+      "SiMatrix"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -108,7 +108,6 @@
   "Development/Databases/Graph DBs/Neo4j": "SiNeo4j",
   "Development/Architecture": "LiBlocks",
   "Development/Version Control": "LiHistory",
-  "Development/Version Control/Git.md": "SiGit",
   "Development/Languages/Python/Libraries/General": "LiTableOfContents",
   "Development/Languages/Python/Libraries/General/Beanie.md": "LiBean",
   "Development/Languages/Python/Libraries/General/Logfire.md": "SiPydantic",
@@ -161,5 +160,9 @@
   "Mathematics/Discretes/Discrete Mathematics.md": "LiNetwork",
   "Mathematics/Algebra/Inequation.md": "LiEqualNot",
   "Mathematics/Algebra/Equation": "LiEqual",
-  "Mathematics/Algebra/Matrix": "SiMatrix"
+  "Mathematics/Algebra/Matrix": "SiMatrix",
+  "Mathematics/Algebra/Linear Algebra": "LiList",
+  "Development/AI/Machine Learning": "LiBrainCog",
+  "Mathematics/Geometry": "LiTriangleDashed",
+  "Development/Version Control/Git": "SiGit"
 }

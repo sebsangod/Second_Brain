@@ -9,7 +9,7 @@ date: 2026-05-10
 **Related:** [[Home]]
 
 > [!INFO]
-> Map of Content — Index of all mathematics subareas.
+> Map of Content — Index of all mathematics notes.
 
 ___
 

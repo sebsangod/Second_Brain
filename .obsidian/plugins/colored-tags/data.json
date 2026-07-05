@@ -18,7 +18,6 @@
     "math": 45,
     "moc": 36,
     "project": 40,
-    "resource": 44,
     "template": 1,
     "vault": 43,
     "dev/ai": 1,
@@ -38,6 +37,7 @@
     "journal/claude-session": 1,
     "math/algebra": 1,
     "math/discretes": 2,
+    "math/geometry": 3,
     "project/idea": 1,
     "template/components": 1,
     "dev/ai/llm": 1,
@@ -51,7 +51,8 @@
     "dev/lang/python": 1,
     "dev/lang/rust": 2,
     "dev/lang/toml": 6,
-    "dev/lang/ts": 4
+    "dev/lang/ts": 4,
+    "math/algebra/linear": 1
   },
   "tagColors": {},
   "_version": 4

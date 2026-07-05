@@ -9,7 +9,7 @@ date: 2026-04-15
 
 # 📚 Resources
 
-> Map of Content — Index of reference materials, PDFs, cheatsheets, and guides.
+> Map of Content — Index of reference materials, PDFs, , and guides.
 
 **Related:** [[Home]]
 
@@ -17,11 +17,12 @@ date: 2026-04-15
 
 ## PDFs & Guides
 
-| Resource                      | Topic                             | Related notes                        |
-| ----------------------------- | --------------------------------- | ------------------------------------ |
-| Build-Your-AI-Brain-Guide.pdf | Obsidian Second Brain methodology | [[Home]]                             |
-| Docker Cheatsheet.pdf         | Docker commands reference         | [[Docker]], [[Container]], [[Image]] |
-| Guia markdown Mouredevpro.pdf | Markdown syntax guide             | [[Components]]                       |
+| Resource                  | Topic                                                                                              | Related notes                                                                       |
+| ------------------------- | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| AIML in BigTech Guide     | AI and ML integration                                                                              | [[Artificial Intelligence]], [[Machine Learning]]                                   |
+| Build Your AI Brain Guide | Obsidian Second Brain methodology                                                                  | [[Home]], [[Claude]]                                                                |
+| Essential GraphRAG        | How to create and implement ``RAG``-based ``AI`` applications using the ``Neo4J`` `Graph Database` | [[Artificial Intelligence]], [[RAG]], [[Graph Database\|Graph Database]], [[Neo4j]] |
+
 
 ---
 

@@ -3,7 +3,7 @@ aliases:
   - Components
 tags:
   - template/components
-date: 2026-05-13
+date: 2026-07-05
 ---
 **Sources:** [Math symbols](https://es.piliapp.com/symbol/math/), [LaTex symbols](https://gitmind.com/es/faq/formula-list.html)
 
@@ -20,7 +20,7 @@ ___
 
 ## Text Decorations
 
-Underlying ==text==
+Highlighted ==text==
 
 Removed ~~text~~
 
@@ -123,7 +123,7 @@ FROM python:3.11
 
 ___
 
-## Mermaid Diagrams
+## [Mermaid Diagrams](https://mermaid.live/edit)
 
 ```mermaid
 flowchart TD
@@ -141,6 +141,21 @@ flowchart LR
     C -->|No| E[Retry]
 ```
 
+```mermaid
+gitGraph
+    commit
+    commit
+    branch develop
+    checkout develop
+    commit
+    commit
+    checkout main
+    merge develop
+    commit
+    commit
+
+```
+
 ___
 
 ## HTML
@@ -151,7 +166,9 @@ ___
 
 ## LaTeX
 
-$$3^{4^5} + \frac{1}{2}$$ $$int_{0}^{\infty} e^{-x^2} \, dx = \frac{\sqrt{\pi}}{2}$$
+$$3^{4^5} + \frac{1}{2}$$
+$$x_{1}+x_{2}=0$$
+$$int_{0}^{\infty} e^{-x^2} \, dx = \frac{\sqrt{\pi}}{2}$$
 $$
 |a| =
 \begin{cases}
