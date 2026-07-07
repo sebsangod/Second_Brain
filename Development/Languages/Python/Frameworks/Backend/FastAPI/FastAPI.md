@@ -9,7 +9,7 @@ date: 2026-03-24
 **Sources**: [FastAPI](https://fastapi.tiangolo.com/) [docs](https://fastapi.tiangolo.com/tutorial/), [FastAPI with layered architecture](https://dev.to/markoulis/layered-architecture-dependency-injection-a-recipe-for-clean-and-testable-fastapi-code-3ioo)
 
 
-**Related:** [[API Rest]], [[Python]], [[Pydantic]], [[Starlette]], [[OpenAPI]], [[NodeJS]], [[Go]], [[Beanie]], [[Database]], [[MongoDB]], [[Architecture]], [[DDD]], [[Layered]]
+**Related:** [[API Rest]], [[Python]], [[Pydantic]], [[Starlette]], [[OpenAPI]], [[NodeJS]], [[Go]], [[Beanie]], [[Database]], [[MongoDB]], [[Architecture]], [[DDD]], [[Layer]]
 
 ---
 
@@ -45,6 +45,8 @@ my_api/
 │   │   ├── application/
 │   │   │   ├── __init__.py
 │   │   │   ├── emails.py
+│   │   │   ├── config.py
+│   │   │   ├── logging.py
 │   │   │   ├── platforms.py
 │   │   │   └── security.py
 │   │   ├── domain/
@@ -61,14 +63,13 @@ my_api/
 │   │   │   ├── __init__.py
 │   │   │   ├── schemas.py
 │   │   │   └── service.py
-│   │   ├── __init__.py
-│   │   ├── config.py
-│   │   └── logging.py
+│   │   └── __init__.py
 │   │
 │   └── jwt/
 │       ├── application/
 │       │   ├── __init__.py
 │       │   ├── dtos.py
+│   │   │   ├── config.py
 │       │   └── use_cases.py
 │       ├── infrastructure/
 │       │   ├── __init__.py
@@ -78,10 +79,11 @@ my_api/
 │       │   ├── __init__.py
 │       │   ├── router.py
 │       │   └── schemas.py
-│       ├── __init__.py
-│       └── config.py
+│       └── __init__.py
 │
 ├── .env
+├── .env.dev
+├── .env.main
 ├── main.py
 ├── pyproject.toml
 ├── README.md
@@ -200,6 +202,7 @@ from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from httpx import AsyncClient
 
 
@@ -225,6 +228,14 @@ app: FastAPI = FastAPI(
     redoc_url=None,
     openapi_url="/openapi.json",
     lifespan=lifespan,
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 ```
@@ -584,11 +595,13 @@ async def bad_gateway_error_handler(
 
 
 ```python title:main.py
+from cryptography.fernet import InvalidToken
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
 from jose.exceptions import JWTError
 from pydantic import ValidationError
 from pydantic_core import ValidationError as CoreValidationError
+from pymongo.errors import PyMongoError
 
 from backend.v2.core.domain.error_handlers import (
     bad_gateway_error_handler,
@@ -629,8 +642,11 @@ app.add_exception_handler(HTTPException, http_exception_handler)
 app.add_exception_handler(ValidationError, validation_exception_handler)
 app.add_exception_handler(RequestValidationError, validation_exception_handler)
 app.add_exception_handler(CoreValidationError, validation_exception_handler)
-# JWT
+# JWT / Crypto
 app.add_exception_handler(JWTError, invalid_jwt_error_handler)
+app.add_exception_handler(InvalidToken, invalid_fernet_token_handler)
+# Database (Beanie / Motor / PyMongo)
+app.add_exception_handler(PyMongoError, database_error_handler)
 # Domain
 app.add_exception_handler(BadRequestError, bad_request_error_handler)
 app.add_exception_handler(UnauthorizedError, unauthorized_error_handler)
