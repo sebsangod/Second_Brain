@@ -4,7 +4,7 @@ aliases:
 tags:
   - learning
   - dev/backend
-date: 2026-03-24
+date: 2026-07-08
 ---
 **Sources**: [FastAPI](https://fastapi.tiangolo.com/) [docs](https://fastapi.tiangolo.com/tutorial/), [FastAPI with layered architecture](https://dev.to/markoulis/layered-architecture-dependency-injection-a-recipe-for-clean-and-testable-fastapi-code-3ioo)
 
@@ -36,7 +36,7 @@ Installing _FastAPI_ is as simple as: _pip install "FastAPI[standard]"_
 
 ## Snippets
 
-### `DDD` and `Layer` `architecture`
+### `DDD` and `Layer` `architecture` file tree
 
 ```
 my_api/
@@ -46,9 +46,7 @@ my_api/
 │   │   │   ├── __init__.py
 │   │   │   ├── emails.py
 │   │   │   ├── config.py
-│   │   │   ├── logging.py
-│   │   │   ├── platforms.py
-│   │   │   └── security.py
+│   │   │   └── logging.py
 │   │   ├── domain/
 │   │   │   ├── __init__.py
 │   │   │   ├── error_handlers.py
@@ -65,11 +63,11 @@ my_api/
 │   │   │   └── service.py
 │   │   └── __init__.py
 │   │
-│   └── jwt/
+│   └── my_function/
 │       ├── application/
 │       │   ├── __init__.py
 │       │   ├── dtos.py
-│   │   │   ├── config.py
+│       │   ├── config.py
 │       │   └── use_cases.py
 │       ├── infrastructure/
 │       │   ├── __init__.py
@@ -97,9 +95,9 @@ my_api/
 from os import getcwd
 from os.path import join
 
-###############################################################################
-################################ Project paths ################################
-###############################################################################
+#######################################################################################################################
+################################# Project paths #######################################################################
+#######################################################################################################################
 PROJECT_DIR_ABSPATH: str = getcwd()
 DOTENV_ABSPATH: str = join(PROJECT_DIR_ABSPATH, ".env")
 V1_ABSPATH: str = join(PROJECT_DIR_ABSPATH, "v1")
@@ -112,14 +110,14 @@ V1_ABSPATH: str = join(PROJECT_DIR_ABSPATH, "v1")
 ```python title:config.py
 from logging import INFO
 
-###############################################################################
-################################ Endpoints ####################################
-###############################################################################
+#######################################################################################################################
+################################# Endpoints ###########################################################################
+#######################################################################################################################
 PROJECT_V1_PATHS_PREFIX: str = "my_service/v1"
 
-###############################################################################
-################################## Variables ##################################
-###############################################################################
+#######################################################################################################################
+################################# Variables ###########################################################################
+#######################################################################################################################
 # Datetime
 DATETIME_FORMAT: str = "%Y-%m-%d %H:%M:%S"
 
@@ -136,7 +134,7 @@ TIMEZONE: str = "America/Mexico_City"
 
 By default, _FastAPI_ blocks the simple usage of the _logging_ library because it has its own internal _Stream Handler_. So because of this, we need to create our own:
 
-```python title:logger.py
+```python title:logging.py
 from datetime import datetime
 from logging import Formatter, Logger, LogRecord, StreamHandler, getLogger
 from typing import TextIO
@@ -183,7 +181,7 @@ And connect it with our _FastAPI_ instance:
 from fastapi import FastAPI
 from logging import Logger
 
-from logger import setup_logging
+from logging import setup_logging
 
 
 logger: Logger = setup_logging()
@@ -202,14 +200,13 @@ from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from httpx import AsyncClient
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     # ON STARTUP
-    app.httpx_client = AsyncClient()
+    app.httpx = AsyncClient()
 
     try:
         yield
@@ -218,7 +215,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 
     finally:
         # ON SHUTDOWN
-        await app.httpx_client.aclose()
+        await app.httpx.aclose()
 
 app: FastAPI = FastAPI(
     title="My API",
@@ -230,14 +227,6 @@ app: FastAPI = FastAPI(
     lifespan=lifespan,
 )
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 ```
 
 As we can see in the example above, the _lifespan_ function uses a _yield_ instance, this helps separating the actions to declare to be executed at startup from the ones to be executed at shutdown.
@@ -247,7 +236,7 @@ As we can see in the example above, the _lifespan_ function uses a _yield_ insta
 ```python title:router.py
 from fastapi import APIRouter, Request
 
-from backend.v1.application.use_cases import UseCase
+from v1.application.use_cases import UseCase
 
 
 router = APIRouter()
@@ -284,9 +273,189 @@ class UseCase:
 ```
 
 
+### Middlewares
+
+#### CORS
+
+```python title:main.py
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+
+app: FastAPI = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+```
+
+
+### Main.py ensambling
+
+```python title:main.py
+from atexit import register
+from collections.abc import AsyncGenerator
+from contextlib import asynccontextmanager
+from logging import Logger
+
+from cryptography.fernet import InvalidToken
+from fastapi import FastAPI, HTTPException, status
+from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from httpx import AsyncClient
+from jose.exceptions import JWTError
+from pydantic import ValidationError
+from pydantic_core import ValidationError as CoreValidationError
+from pymongo.errors import PyMongoError
+from uvicorn import run
+
+from v1.core.application.config import PROJECT_V1_PATHS_PREFIX
+from v1.core.application.logging import setup_logging
+from v1.core.application.security import Security
+from v1.core.domain.error_handlers import (
+    bad_gateway_error_handler,
+    bad_request_error_handler,
+    conflict_error_handler,
+    database_error_handler,
+    forbidden_error_handler,
+    general_exception_handler,
+    http_exception_handler,
+    invalid_fernet_token_handler,
+    invalid_jwt_error_handler,
+    not_found_error_handler,
+    too_many_requests_error_handler,
+    unauthorized_error_handler,
+    unprocessable_entity_error_handler,
+    validation_exception_handler,
+)
+from v1.core.domain.exceptions import (
+    BadGatewayError,
+    BadRequestError,
+    ConflictError,
+    ForbiddenError,
+    NotFoundError,
+    TooManyRequestsError,
+    UnauthorizedError,
+    UnprocessableEntityError,
+)
+from v1.core.infrastructure.mongo_conn import Mongo
+from v1.my_service.presentation.router import router as my_service_router
+
+#######################################################################################################################
+################################# Instances ###########################################################################
+#######################################################################################################################
+logger: Logger = setup_logging()
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
+    # ON STARTUP
+    app.httpx = AsyncClient()
+    app.security = Security()
+    app.mongodb = Mongo()
+
+    await app.mongodb.init_db()
+
+    try:
+        yield
+    except Exception as exc:
+        logger.error(exc)
+
+    finally:
+        # ON SHUTDOWN
+        await app.httpx.aclose()
+
+
+app = FastAPI(
+    title="My API",
+    summary="""My service""",
+    version="1.0.0",
+    docs_url=f"/{PROJECT_V1_PATHS_PREFIX}/docs",
+    redoc_url=None,
+    openapi_url=f"/{PROJECT_V1_PATHS_PREFIX}/openapi.json",
+    lifespan=lifespan,
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+#######################################################################################################################
+################################# Route Handlers ######################################################################
+#######################################################################################################################
+app.include_router(
+    router=my_service_router,
+    prefix=f"/{PROJECT_V1_PATHS_PREFIX}",
+    tags=["My Service"],
+    include_in_schema=True,
+)
+
+
+#######################################################################################################################
+################################# Error Handlers ######################################################################
+#######################################################################################################################
+# Exception
+app.add_exception_handler(Exception, general_exception_handler)
+# HTTP
+app.add_exception_handler(HTTPException, http_exception_handler)
+# Pydantic
+app.add_exception_handler(ValidationError, validation_exception_handler)
+app.add_exception_handler(RequestValidationError, validation_exception_handler)
+app.add_exception_handler(CoreValidationError, validation_exception_handler)
+# JWT / Crypto
+app.add_exception_handler(JWTError, invalid_jwt_error_handler)
+app.add_exception_handler(InvalidToken, invalid_fernet_token_handler)
+# Database (Beanie / Motor / PyMongo)
+app.add_exception_handler(PyMongoError, database_error_handler)
+# Domain
+app.add_exception_handler(BadRequestError, bad_request_error_handler)
+app.add_exception_handler(UnauthorizedError, unauthorized_error_handler)
+app.add_exception_handler(ForbiddenError, forbidden_error_handler)
+app.add_exception_handler(NotFoundError, not_found_error_handler)
+app.add_exception_handler(ConflictError, conflict_error_handler)
+app.add_exception_handler(UnprocessableEntityError, unprocessable_entity_error_handler)
+app.add_exception_handler(TooManyRequestsError, too_many_requests_error_handler)
+app.add_exception_handler(BadGatewayError, bad_gateway_error_handler)
+
+
+#######################################################################################################################
+################################# Root ################################################################################
+#######################################################################################################################
+@app.get(path=f"/{PROJECT_V1_PATHS_PREFIX}")
+async def root() -> JSONResponse:
+    return JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content={
+            "status": "Success",
+            "message": """Welcome to My API!""",
+            "version": app.version,
+        },
+    )
+
+
+#######################################################################################################################
+################################# Run #################################################################################
+#######################################################################################################################
+if __name__ == "__main__":
+    run("main:app", host="0.0.0.0", port=8000, reload=True)
+
+```
+
+
 ### Routers Docs' schemas
 
-```python title:backend/v1/core/presentation/service.py
+```python title:v1/core/presentation/service.py
 from pydantic import BaseModel
 
 def get_model_schema_for_docs(
@@ -318,6 +487,7 @@ def get_model_schema_for_docs(
 
 ```
 
+#### Usage in _routers_
 ```python title:router.py
 from utils import get_model_schema_for_docs
 
@@ -350,7 +520,8 @@ async def get_todos(request: Request) -> JSONResponse:
 
 ### Error Handling
 
-```python title:backend/v1/core/domain/exceptions.py
+#### Custom Error Classes
+```python title:v1/core/domain/exceptions.py
 class CustomError(Exception):
     def __init__(self, msg: str) -> None:
         self.msg = msg
@@ -373,18 +544,21 @@ class BadGatewayError(CustomError): ...  # 502
 
 ```
 
-```python title:backend/v1/core/domain/error_handlers.py
+#### Error Handler Functions
+```python title:v1/core/domain/error_handlers.py
 from logging import Logger, getLogger
 
+from cryptography.fernet import InvalidToken
 from fastapi import HTTPException, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from jose.exceptions import JWTError
 from pydantic import ValidationError
 from pydantic_core import ValidationError as CoreValidationError
+from pymongo.errors import PyMongoError
 
-from backend.v1.core.config import LOGGING_PROJECT_NAME
-from backend.v1.core.domain.exceptions import (
+from v1.core.config import LOGGING_PROJECT_NAME
+from v1.core.domain.exceptions import (
     BadGatewayError,
     BadRequestError,
     ConflictError,
@@ -394,7 +568,7 @@ from backend.v1.core.domain.exceptions import (
     UnauthorizedError,
     UnprocessableEntityError,
 )
-from backend.v1.core.presentation.service import (
+from v1.core.presentation.service import (
     make_error_response,
     make_response,
 )
@@ -402,12 +576,12 @@ from backend.v1.core.presentation.service import (
 logger: Logger = getLogger(f"{LOGGING_PROJECT_NAME}.core.error_handlers")
 
 
-###############################################################################
-################################## Helpers ####################################
-###############################################################################
+#######################################################################################################################
+################################# Helpers #############################################################################
+#######################################################################################################################
 def _sanitize_input(value: object) -> object:
-    """Convert non-JSON-serializable inputs (e.g. bytes) to their string
-    representation so that the validation error response can be serialized."""
+    """Convert non-JSON-serializable inputs (e.g. bytes) to their string representation so that the validation error
+    response can be serialized."""
     if isinstance(value, (str, int, float, bool, type(None))):
         return value
     if isinstance(value, (list, tuple)):
@@ -417,27 +591,17 @@ def _sanitize_input(value: object) -> object:
     return repr(value)
 
 
-###############################################################################
-################################# Exception ###################################
-###############################################################################
-async def general_exception_handler(
-    request: Request, exception: Exception
-) -> JSONResponse:
-
-    return make_error_response(
-        logger=logger,
-        type=type(exception).__name__,
-        message=str(exception),
-    )
+#######################################################################################################################
+################################# Exceptions ##########################################################################
+#######################################################################################################################
+async def general_exception_handler(request: Request, exception: Exception) -> JSONResponse:
+    return make_error_response(logger=logger, type=type(exception).__name__, message=str(exception))
 
 
-###############################################################################
-#################################### HTTP #####################################
-###############################################################################
-async def http_exception_handler(
-    request: Request, exception: HTTPException
-) -> JSONResponse:
-
+#######################################################################################################################
+################################# HTTP ################################################################################
+#######################################################################################################################
+async def http_exception_handler(request: Request, exception: HTTPException) -> JSONResponse:
     return JSONResponse(
         status_code=exception.status_code,
         content={
@@ -447,14 +611,13 @@ async def http_exception_handler(
     )
 
 
-###############################################################################
-################################## Pydantic ###################################
-###############################################################################
+#######################################################################################################################
+################################# Pydantic ############################################################################
+#######################################################################################################################
 async def validation_exception_handler(
     request: Request,
     exception: CoreValidationError | ValidationError | RequestValidationError,
 ) -> JSONResponse:
-
     return JSONResponse(
         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
         content={
@@ -478,28 +641,41 @@ async def validation_exception_handler(
     )
 
 
-###############################################################################
-################################### JWT #######################################
-###############################################################################
-async def invalid_jwt_error_handler(
-    request: Request, exception: JWTError
-) -> JSONResponse:
+#######################################################################################################################
+################################# JWT #################################################################################
+#######################################################################################################################
+async def invalid_jwt_error_handler(request: Request, exception: JWTError) -> JSONResponse:
+    """Handles jose JWTError: expired, malformed or unverifiable JWT tokens."""
+    error_message = getattr(exception, "msg", str(exception)) or "Invalid JWT token"
+    logger.warning(f"[JWT] {type(exception).__name__}: {error_message}")
+    return make_response(logger=logger, status=status.HTTP_401_UNAUTHORIZED, message="Invalid token", success=False)
 
+
+async def invalid_fernet_token_handler(request: Request, exception: InvalidToken
+) -> JSONResponse:
+    """Handles cryptography.fernet.InvalidToken: wrong key or corrupted ciphertext."""
+    logger.error("[Fernet] InvalidToken:", exc_info=exception)
     return make_response(
         logger=logger,
         status=status.HTTP_401_UNAUTHORIZED,
-        message=getattr(exception, "msg", str(exception)),
+        message="Invalid token credentials",
         success=False,
     )
 
 
-###############################################################################
-################################## Domain #####################################
-###############################################################################
-async def bad_request_error_handler(
-    request: Request, exception: BadRequestError
-) -> JSONResponse:
+#######################################################################################################################
+################################# PyMongo #############################################################################
+#######################################################################################################################
+async def database_error_handler(request: Request, exception: PyMongoError) -> JSONResponse:
+    """Handles PyMongo/Motor/Beanie infrastructure errors (connection, query, TLS, etc.)."""
+    logger.error(f"[MongoDB] {type(exception).__name__}: {exception}", exc_info=exception)
+    return make_response(logger=logger, status=status.HTTP_502_BAD_GATEWAY, message="Database error", success=False)
 
+
+#######################################################################################################################
+################################# Domain ##############################################################################
+#######################################################################################################################
+async def bad_request_error_handler(request: Request, exception: BadRequestError) -> JSONResponse:
     return make_response(
         logger=logger,
         status=status.HTTP_400_BAD_REQUEST,
@@ -508,10 +684,7 @@ async def bad_request_error_handler(
     )
 
 
-async def unauthorized_error_handler(
-    request: Request, exception: UnauthorizedError
-) -> JSONResponse:
-
+async def unauthorized_error_handler(request: Request, exception: UnauthorizedError) -> JSONResponse:
     return make_response(
         logger=logger,
         status=status.HTTP_401_UNAUTHORIZED,
@@ -520,10 +693,7 @@ async def unauthorized_error_handler(
     )
 
 
-async def forbidden_error_handler(
-    request: Request, exception: ForbiddenError
-) -> JSONResponse:
-
+async def forbidden_error_handler(request: Request, exception: ForbiddenError) -> JSONResponse:
     return make_response(
         logger=logger,
         status=status.HTTP_403_FORBIDDEN,
@@ -532,10 +702,7 @@ async def forbidden_error_handler(
     )
 
 
-async def not_found_error_handler(
-    request: Request, exception: NotFoundError
-) -> JSONResponse:
-
+async def not_found_error_handler(request: Request, exception: NotFoundError) -> JSONResponse:
     return make_response(
         logger=logger,
         status=status.HTTP_404_NOT_FOUND,
@@ -544,10 +711,7 @@ async def not_found_error_handler(
     )
 
 
-async def conflict_error_handler(
-    request: Request, exception: ConflictError
-) -> JSONResponse:
-
+async def conflict_error_handler(request: Request, exception: ConflictError) -> JSONResponse:
     return make_response(
         logger=logger,
         status=status.HTTP_409_CONFLICT,
@@ -556,10 +720,7 @@ async def conflict_error_handler(
     )
 
 
-async def unprocessable_entity_error_handler(
-    request: Request, exception: UnprocessableEntityError
-) -> JSONResponse:
-
+async def unprocessable_entity_error_handler(request: Request, exception: UnprocessableEntityError) -> JSONResponse:
     return make_response(
         logger=logger,
         status=status.HTTP_422_UNPROCESSABLE_ENTITY,
@@ -568,10 +729,7 @@ async def unprocessable_entity_error_handler(
     )
 
 
-async def too_many_requests_error_handler(
-    request: Request, exception: TooManyRequestsError
-) -> JSONResponse:
-
+async def too_many_requests_error_handler(request: Request, exception: TooManyRequestsError) -> JSONResponse:
     return make_response(
         logger=logger,
         status=status.HTTP_429_TOO_MANY_REQUESTS,
@@ -580,10 +738,7 @@ async def too_many_requests_error_handler(
     )
 
 
-async def bad_gateway_error_handler(
-    request: Request, exception: BadGatewayError
-) -> JSONResponse:
-
+async def bad_gateway_error_handler(request: Request, exception: BadGatewayError) -> JSONResponse:
     return make_response(
         logger=logger,
         status=status.HTTP_502_BAD_GATEWAY,
@@ -593,7 +748,7 @@ async def bad_gateway_error_handler(
 
 ```
 
-
+#### Integration in _main.py_
 ```python title:main.py
 from cryptography.fernet import InvalidToken
 from fastapi import FastAPI
@@ -603,7 +758,7 @@ from pydantic import ValidationError
 from pydantic_core import ValidationError as CoreValidationError
 from pymongo.errors import PyMongoError
 
-from backend.v2.core.domain.error_handlers import (
+from v2.core.domain.error_handlers import (
     bad_gateway_error_handler,
     bad_request_error_handler,
     conflict_error_handler,
@@ -617,7 +772,7 @@ from backend.v2.core.domain.error_handlers import (
     unprocessable_entity_error_handler,
     validation_exception_handler,
 )
-from backend.v2.core.domain.exceptions import (
+from v2.core.domain.exceptions import (
     BadGatewayError,
     BadRequestError,
     ConflictError,
@@ -667,16 +822,16 @@ ___
 
 ## Utils
 
-### BaseResponse `Pydantic` Squemas
+### _BaseResponse_ `Pydantic` Schemas
 
-```python title:backend/v1/core/presentation/schemas.py
+```python title:v1/core/presentation/schemas.py
 from typing import Any
 from uuid import uuid4
 
 from pydantic import BaseModel, Field
 
 
-class LokiLoggerResponse(BaseModel):
+class LoggerResponse(BaseModel):
     service: str = Field(
         min_length=1,
         max_length=64,
@@ -730,14 +885,14 @@ class BaseResponse(BaseModel):
 		"step" and "error" keys. False if no error occurred.
 		""",
     )
-    logger: LokiLoggerResponse = Field(
-        default_factory=LokiLoggerResponse,
-        description="Loki logger information.",
+    logger: LoggerResponse = Field(
+        default_factory=LoggerResponse,
+        description="Logger information.",
     )
 
 ```
 
-```python title:backend/v1/core/presentation/service.py
+```python title:v1/core/presentation/service.py
 from base64 import b64encode
 from json import dumps
 from logging import Logger, getLogger
@@ -748,8 +903,8 @@ from fastapi import status
 from fastapi.responses import JSONResponse, RedirectResponse
 from pydantic import BaseModel
 
-from backend.v2.core.config import DOTENV_ABSPATH, LOGGING_PROJECT_NAME
-from backend.v2.core.presentation.schemas import (
+from v1.core.config import DOTENV_ABSPATH, LOGGING_PROJECT_NAME
+from v1.core.presentation.schemas import (
     BaseResponse,
     ExecutionError,
     LokiLoggerResponse,
@@ -759,21 +914,20 @@ load_dotenv(DOTENV_ABSPATH)
 logger: Logger = getLogger(f"{LOGGING_PROJECT_NAME}.core.service")
 
 
-###############################################################################
-#################################### Docs #####################################
-###############################################################################
-def get_model_schema_for_docs(
-    model: BaseModel, responses: dict[int, str]
-) -> dict[int, dict[str, Any]]:
+#######################################################################################################################
+################################# Docs ################################################################################
+#######################################################################################################################
+def get_model_schema_for_docs(model: BaseModel, responses: dict[int, str]) -> dict[int, dict[str, Any]]:
     """
-    Utility function to get the JSON schema of a Pydantic response model for
-    documentation purposes.
+    Utility function to get the JSON schema of a Pydantic response model for documentation purposes.
 
     Args:
         model: The Pydantic model class.
+
     Returns:
         dict: The JSON schema of the model.
     """
+
     result: dict[int, dict[str, Any]] = {}
     example: dict[str, Any] = model.model_json_schema().get("properties", {})
 
@@ -790,9 +944,9 @@ def get_model_schema_for_docs(
     return result
 
 
-###############################################################################
-################################## Responses ##################################
-###############################################################################
+#######################################################################################################################
+################################# Responses ###########################################################################
+#######################################################################################################################
 def make_response(
     logger: Logger,
     status: str,
@@ -802,7 +956,6 @@ def make_response(
     error: dict[str, Any] | None = None,
     show_logger: bool = True,
 ) -> JSONResponse:
-
     response: BaseResponse = BaseResponse(
         success=success,
         message=message,
@@ -810,9 +963,7 @@ def make_response(
         error=None if not error else ExecutionError(**error),
         logger=LokiLoggerResponse(service=LOGGING_PROJECT_NAME),
     )
-    response_message: str = (
-        f"Returning response: [{status}] {response.model_dump_json(indent=2)}"
-    )
+    response_message: str = f"Returning response: [{status}] {response.model_dump_json(indent=2)}"
     if show_logger:
         logger.info(response_message)
     return JSONResponse(status_code=status, content=response.model_dump())
@@ -845,24 +996,15 @@ def make_error_response(
         ),
         logger=LokiLoggerResponse(service=LOGGING_PROJECT_NAME),
     )
-    logger.error(
-        f"Returning exception response: [{status}] {
-            response.model_dump_json(indent=2)
-        }"
-    )
+    logger.error(f"Returning exception response: [{status}] {response.model_dump_json(indent=2)}")
     return JSONResponse(status_code=status, content=response.model_dump())
 
 
-def make_redirection_response(
-    logger: Logger, data: dict[str, Any], base_url: str
-) -> RedirectResponse:
-
+def make_redirection_response(logger: Logger, data: dict[str, Any], base_url: str) -> RedirectResponse:
     data: str = b64encode(dumps(data).encode("utf-8")).decode("utf-8")
     redirect_url: str = f"{base_url}?data={data}"
     logger.info(f"Redirecting to URL: {redirect_url}")
-    return RedirectResponse(
-        url=redirect_url, status_code=status.HTTP_302_FOUND
-    )
+    return RedirectResponse(url=redirect_url, status_code=status.HTTP_302_FOUND)
 
 ```
 
@@ -994,7 +1136,7 @@ from v1.config import DOTENV_ABSPATH
 load_dotenv(DOTENV_ABSPATH)
 
 
-class SecurityClient:
+class Security:
     def __init__(self) -> None:
         self.context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -1042,8 +1184,139 @@ class SecurityClient:
 ```
 
 
-### `Database` Repository (for `MongoDB`)
+### `MongoDB` integration
 
+#### Connection Keys
+```txt title:.env
+#######################################################################################################################
+############################ Infrastructure ###########################################################################
+#######################################################################################################################
+# Mongo connection
+MONGO_HOST=localhost
+MONGO_PORT=27017
+MONGO_USER=root
+MONGO_PASSWORD="my_password"
+MONGO_DB="mongo_db"
+MONGO_CERTIFICATE_PEM_FILE="certs/data/mongodb.pem"
+MONGO_CERTIFICATE_CRT_FILE="certs/data/mongodb.crt"
+```
+
+#### `Beanie` Models
+```python title:v1/core/infrastructure/models.py
+from datetime import UTC, datetime
+
+from beanie import Document, PydanticObjectId
+from bson import ObjectId
+from pydantic import BaseModel, EmailStr, Field
+from pymongo import ASCENDING, IndexModel
+
+
+class UserDetails(BaseModel):
+    email: EmailStr
+    mobile: str | None = None
+
+
+class User(Document):
+    id: PydanticObjectId | None = Field(default_factory=ObjectId, alias="_id")
+    username: str
+    password: str
+    roles: list[str]
+    user_details: DataUserDetails
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+
+    class Settings:
+        name: str = "users"  # Name of the collection in MongoDB
+        
+        indexes = [
+            IndexModel([("expires_at", ASCENDING)], expireAfterSeconds=0),
+            IndexModel([("username", ASCENDING)], unique=True),
+        ]
+
+    class Config:
+        arbitrary_types_allowed = True
+
+```
+
+#### Connection
+```python title:v1/core/infrastructure/mongo_conn.py
+from os import getenv
+from os.path import join
+from urllib.parse import quote_plus
+
+from beanie import init_beanie
+from dotenv import load_dotenv
+from motor.motor_asyncio import AsyncIOMotorClient
+
+from v1.apikeys.infrastructure.models import ApiKey
+from v1.core.application.config import (DOTENV_ABSPATH, V1_ABSPATH)
+from v1.core.infrastructure.models import User
+
+load_dotenv(DOTENV_ABSPATH)
+
+
+class Mongo:
+    def __init__(self) -> None:
+        self._config = {
+            # Connection settings
+            "host": getenv("MONGO_HOST"),
+            "port": getenv("MONGO_PORT"),
+            "user": quote_plus(getenv("MONGO_USER")),
+            "password": quote_plus(getenv("MONGO_PASSWORD")),
+            # Databases
+            "db": getenv("MONGO_DB"),
+        }
+        self._certificate_pem_path = join(V1_ABSPATH, getenv("MONGO_PRODUCT_CERTIFICATE_PEM_FILE"))
+        self._certificate_crt_path = join(V1_ABSPATH, getenv("MONGO_PRODUCT_CERTIFICATE_CRT_FILE"))
+        self._db_uri = self.format_uri(self._config["security_db"])
+
+    def format_uri(self, db: str) -> str:
+        return (
+            f"mongodb://{self._config['user']}:{self._config['password']}@"
+            f"{self._config['host']}:{self._config['port']}/"
+            f"{db}?"
+            #! Danger: Allow invalid certificates to tests only
+            f"authSource=admin&tls=true" # &tlsAllowInvalidCertificates=true
+        )
+
+    async def init_db(self) -> None:
+        client = AsyncIOMotorClient(
+            self._security_db_uri,
+            tls=True,
+            tlsCertificateKeyFile=self._certificate_pem_path,
+            tlsCAFile=self._certificate_crt_path,
+        )
+        db = client.get_default_database()
+        await init_beanie(
+            database=db,
+            document_models=[User],
+        )
+
+```
+
+#### Initializing in API Execution
+```python title:main.py
+from v1.core.infrastructure.mongo_conn import Mongo
+
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
+    # ON STARTUP
+    ...
+    app.mongodb = Mongo()
+
+    await app.mongodb.init_db()
+
+    try:
+        yield
+    except Exception as exc:
+        logger.error(exc)
+
+    finally:
+        # ON SHUTDOWN
+        ...
+
+```
+
+#### `Repository` for `DDD` Queries
 ```python title:repository.py
 from __future__ import annotations
 
@@ -1051,8 +1324,11 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 from logging import Logger, getLogger
 
+from beanie import PydanticObjectId
+
 from v1.config import LOGGING_PROJECT_NAME
-from v1.models import User
+from v1.core.infrastructure.models import User
+from v1.core.infrastructure.mongo_conn import Mongo
 
 logger: Logger = getLogger(f"{LOGGING_PROJECT_NAME}.user.repository")
 
@@ -1068,6 +1344,51 @@ class UserRepositoryInterface(ABC):
 
     @abstractmethod
     async def get_user_by_id(self, user_id: str) -> User | None: ...
+
+    @abstractmethod
+    async def create(self, token: RefreshToken) -> RefreshToken: ...
+
+    @abstractmethod
+    async def delete(self, token: RefreshToken) -> None: ...
+
+
+class UserRepository(UserRepositoryInterface):
+    def __init__(self, session: Mongo, user_model: type[User]) -> None:
+        self.session = session
+        self.user_model = user_model
+
+    async def get_user_by_username(self, username: str) -> User | None:
+        logger.info("Getting user by username")
+        if username.startswith("@"):
+            user = await self.user_model.find_one(self.user_model.user == username)
+        else:
+            user = await self.user_model.find_one(self.user_model.user_details.email == username)
+        return user
+
+    async def get_user_by_email(self, email: str) -> User | None:
+        logger.info("Getting user by email")
+        user = await self.user_model.find_one(self.user_model.email == email)
+        return user
+
+    async def get_user_by_id(self, user_id: str) -> User | None:
+        logger.info("Getting user by id")
+        return await self.user_model.get(PydanticObjectId(user_id))
+
+    async def create(self, name: str, email: str, password: str, expires_at: datetime) -> User:
+        logger.info("Creating refresh token in MongoDB")
+        user = User(
+	        name=name,
+            email=email,
+            password=password,
+            expires_at=expires_at
+        )
+        await user.insert()
+        logger.info(f"User created: {user.id} in MongoDB")
+        return user
+
+    async def delete(self, user: User) -> None:
+        logger.info("Deleting user in MongoDB")
+        await user.delete()
 
 ```
 
