@@ -4,7 +4,7 @@ aliases:
 tags:
   - learning
   - dev/backend
-date: 2026-07-08
+date: 2026-07-09
 ---
 **Sources**: [FastAPI](https://fastapi.tiangolo.com/) [docs](https://fastapi.tiangolo.com/tutorial/), [FastAPI with layered architecture](https://dev.to/markoulis/layered-architecture-dependency-injection-a-recipe-for-clean-and-testable-fastapi-code-3ioo)
 
@@ -38,55 +38,83 @@ Installing _FastAPI_ is as simple as: _pip install "FastAPI[standard]"_
 
 ### `DDD` and `Layer` `architecture` file tree
 
-```
-my_api/
-├── v1/
-│   ├── core/
-│   │   ├── application/
-│   │   │   ├── __init__.py
-│   │   │   ├── emails.py
-│   │   │   ├── config.py
-│   │   │   └── logging.py
-│   │   ├── domain/
-│   │   │   ├── __init__.py
-│   │   │   ├── error_handlers.py
-│   │   │   └── exceptions.py
-│   │   ├── infrastructure/
-│   │   │   ├── __init__.py
-│   │   │   ├── models.py
-│   │   │   ├── mongo_conn.py
-│   │   │   ├── odoo_conn.py
-│   │   │   └── redis_conn.py
-│   │   ├── presentation/
-│   │   │   ├── __init__.py
-│   │   │   ├── schemas.py
-│   │   │   └── service.py
-│   │   └── __init__.py
-│   │
-│   └── my_function/
-│       ├── application/
-│       │   ├── __init__.py
-│       │   ├── dtos.py
-│       │   ├── config.py
-│       │   └── use_cases.py
-│       ├── infrastructure/
-│       │   ├── __init__.py
-│       │   ├── models.py
-│       │   └── repository.py
-│       ├── presentation/
-│       │   ├── __init__.py
-│       │   ├── router.py
-│       │   └── schemas.py
-│       └── __init__.py
+The API's Python package lives under a `backend/` folder at the repo root — siblings of `backend/` are repo-level concerns (tooling, CI config, optionally a `frontend/`), not part of the API itself. Inside `backend/`, `v1/` (and later `v2/`, ...) hosts one folder per **bounded context** (a business capability: `users`, `subscriptions`, `chat`, ...) plus a `core/` folder for cross-cutting concerns shared by every context.
+
+```plaintext
+my_api/                                    # repo root
+├── backend/
+│   ├── v1/
+│   │   ├── core/                          # cross-cutting concerns — NOT a bounded context, no "domain" here
+│   │   │   ├── application/
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── config.py
+│   │   │   │   ├── emails.py
+│   │   │   │   ├── logging.py
+│   │   │   │   └── security.py
+│   │   │   ├── errors/                    # shared exception taxonomy + FastAPI exception handlers
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── error_handlers.py
+│   │   │   │   └── exceptions.py
+│   │   │   ├── infrastructure/
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── mongo_conn.py
+│   │   │   │   ├── odoo_conn.py
+│   │   │   │   └── redis_conn.py
+│   │   │   ├── presentation/
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── schemas.py             # BaseResponse, ExecutionError, LoggerResponse
+│   │   │   │   └── service.py             # make_response, make_error_response, get_model_schema_for_docs
+│   │   │   └── __init__.py
+│   │   │
+│   │   └── my_context/                    # one bounded context = one business capability
+│   │       ├── domain/                    # framework-agnostic business rules — no FastAPI/Beanie/httpx imports
+│   │       │   ├── __init__.py
+│   │       │   ├── entities.py            # business objects with identity + behavior
+│   │       │   ├── exceptions.py          # context-specific errors, subclass core.errors.exceptions
+│   │       │   └── repositories.py        # ABCs — the contract infrastructure must fulfill
+│   │       ├── application/
+│   │       │   ├── __init__.py
+│   │       │   ├── config.py
+│   │       │   ├── dtos.py
+│   │       │   └── use_cases.py           # depends on domain.repositories, never on infrastructure directly
+│   │       ├── infrastructure/
+│   │       │   ├── __init__.py
+│   │       │   ├── models.py              # persistence model (e.g. Beanie Document) — not the domain entity
+│   │       │   └── repository.py          # implements domain.repositories.*Interface
+│   │       ├── presentation/
+│   │       │   ├── __init__.py
+│   │       │   ├── dependencies.py        # FastAPI Depends() wiring: builds use cases with an injected repo
+│   │       │   ├── router.py
+│   │       │   └── schemas.py
+│   │       └── __init__.py
+│   │
+│   ├── .env
+│   ├── .env.dev
+│   ├── .env.master
+│   └── main.py
 │
-├── .env
-├── .env.dev
-├── .env.main
-├── main.py
 ├── pyproject.toml
+├── ruff.toml
+├── uv.lock
+├── .python-version
 ├── README.md
-└── requirements.txt
+└── .gitignore
 ```
+
+> [!tip] Why `core/errors/` and not `core/domain/`
+> `core/` is infrastructure shared by the whole API, not a bounded context — it has no business rules of its own, so calling its exception module "domain" is a misnomer. Reserve `domain/` for folders that actually model business rules (inside each context). Only `errors/` (exceptions + handlers) and the generic `BaseResponse` envelope belong in `core/`.
+
+### Layer responsibilities
+
+| Layer | Owns | Must never contain |
+|---|---|---|
+| `domain/` | Entities, value objects, business invariants, repository interfaces (`ABC`) | Any framework import (FastAPI, Beanie, httpx), I/O, persistence details |
+| `application/` | Use cases: orchestrate domain objects through repository interfaces; DTOs | Direct DB/HTTP client calls, response-building, framework objects beyond `Request` when unavoidable |
+| `infrastructure/` | Concrete repository implementations, persistence models, external service clients | Business rules or validation of business invariants |
+| `presentation/` | Routers, request/response schemas, `Depends()` wiring | Business logic, direct repository/DB calls |
+| `core/` | Config, logging, security, shared exception taxonomy + handlers, base response envelope | Anything specific to a single bounded context |
+
+The dependency rule flows one way: `presentation → application → domain ← infrastructure`. `domain` depends on nothing; everything else depends on `domain` (through interfaces), never the reverse.
 
 
 ### Global absolute paths
@@ -318,7 +346,7 @@ from uvicorn import run
 from v1.core.application.config import PROJECT_V1_PATHS_PREFIX
 from v1.core.application.logging import setup_logging
 from v1.core.application.security import Security
-from v1.core.domain.error_handlers import (
+from v1.core.errors.error_handlers import (
     bad_gateway_error_handler,
     bad_request_error_handler,
     conflict_error_handler,
@@ -334,7 +362,7 @@ from v1.core.domain.error_handlers import (
     unprocessable_entity_error_handler,
     validation_exception_handler,
 )
-from v1.core.domain.exceptions import (
+from v1.core.errors.exceptions import (
     BadGatewayError,
     BadRequestError,
     ConflictError,
@@ -521,7 +549,7 @@ async def get_todos(request: Request) -> JSONResponse:
 ### Error Handling
 
 #### Custom Error Classes
-```python title:v1/core/domain/exceptions.py
+```python title:v1/core/errors/exceptions.py
 class CustomError(Exception):
     def __init__(self, msg: str) -> None:
         self.msg = msg
@@ -545,7 +573,7 @@ class BadGatewayError(CustomError): ...  # 502
 ```
 
 #### Error Handler Functions
-```python title:v1/core/domain/error_handlers.py
+```python title:v1/core/errors/error_handlers.py
 from logging import Logger, getLogger
 
 from cryptography.fernet import InvalidToken
@@ -557,8 +585,8 @@ from pydantic import ValidationError
 from pydantic_core import ValidationError as CoreValidationError
 from pymongo.errors import PyMongoError
 
-from v1.core.config import LOGGING_PROJECT_NAME
-from v1.core.domain.exceptions import (
+from v1.core.application.config import LOGGING_PROJECT_NAME
+from v1.core.errors.exceptions import (
     BadGatewayError,
     BadRequestError,
     ConflictError,
@@ -758,7 +786,7 @@ from pydantic import ValidationError
 from pydantic_core import ValidationError as CoreValidationError
 from pymongo.errors import PyMongoError
 
-from v2.core.domain.error_handlers import (
+from v2.core.errors.error_handlers import (
     bad_gateway_error_handler,
     bad_request_error_handler,
     conflict_error_handler,
@@ -772,7 +800,7 @@ from v2.core.domain.error_handlers import (
     unprocessable_entity_error_handler,
     validation_exception_handler,
 )
-from v2.core.domain.exceptions import (
+from v2.core.errors.exceptions import (
     BadGatewayError,
     BadRequestError,
     ConflictError,
@@ -903,7 +931,7 @@ from fastapi import status
 from fastapi.responses import JSONResponse, RedirectResponse
 from pydantic import BaseModel
 
-from v1.core.config import DOTENV_ABSPATH, LOGGING_PROJECT_NAME
+from v1.core.application.config import DOTENV_ABSPATH, LOGGING_PROJECT_NAME
 from v1.core.presentation.schemas import (
     BaseResponse,
     ExecutionError,
@@ -1018,7 +1046,7 @@ EMAIL="example@gmail.com"
 PASSWORD="hsjd tudh ahfk etfi"
 ```
 
-```python title:emails.py
+```python title:v1/core/application/emails.py
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from logging import Logger, getLogger
@@ -1028,7 +1056,7 @@ from typing import Any
 
 from dotenv import load_dotenv
 
-from v1.config import DOTENV_ABSPATH, LOGGING_PROJECT_NAME
+from v1.core.application.config import DOTENV_ABSPATH, LOGGING_PROJECT_NAME
 
 load_dotenv(DOTENV_ABSPATH)
 logger: Logger = getLogger(f"{LOGGING_PROJECT_NAME}.{__name__.split('.')[-1]}")
@@ -1120,7 +1148,7 @@ class EmailClient:
 
 ### Security class
 
-```python title:security.py
+```python title:v1/core/application/security.py
 from asyncio import get_event_loop
 from hashlib import sha256
 from json import dumps, loads
@@ -1131,7 +1159,7 @@ from cryptography.fernet import Fernet
 from dotenv import load_dotenv
 from passlib.context import CryptContext
 
-from v1.config import DOTENV_ABSPATH
+from v1.core.application.config import DOTENV_ABSPATH
 
 load_dotenv(DOTENV_ABSPATH)
 
@@ -1202,7 +1230,10 @@ MONGO_CERTIFICATE_CRT_FILE="certs/data/mongodb.crt"
 ```
 
 #### `Beanie` Models
-```python title:v1/core/infrastructure/models.py
+
+Persistence models are owned by their bounded context, not by `core/`. Only the DB *connection* class lives in `core/infrastructure/` — it imports every context's `Document` classes to register them with Beanie in one place.
+
+```python title:v1/users/infrastructure/models.py
 from datetime import UTC, datetime
 
 from beanie import Document, PydanticObjectId
@@ -1216,17 +1247,17 @@ class UserDetails(BaseModel):
     mobile: str | None = None
 
 
-class User(Document):
+class UserModel(Document):
     id: PydanticObjectId | None = Field(default_factory=ObjectId, alias="_id")
     username: str
     password: str
     roles: list[str]
-    user_details: DataUserDetails
+    user_details: UserDetails
     created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
     class Settings:
         name: str = "users"  # Name of the collection in MongoDB
-        
+
         indexes = [
             IndexModel([("expires_at", ASCENDING)], expireAfterSeconds=0),
             IndexModel([("username", ASCENDING)], unique=True),
@@ -1236,6 +1267,9 @@ class User(Document):
         arbitrary_types_allowed = True
 
 ```
+
+> [!warning] Naming: `UserModel`, not `User`
+> Suffix persistence models (`UserModel`) to keep them visually distinct from the domain entity (`User`) defined in `domain/entities.py` below. Reusing the same name for both makes it easy to accidentally leak a Beanie `Document` into the application/domain layers.
 
 #### Connection
 ```python title:v1/core/infrastructure/mongo_conn.py
@@ -1247,9 +1281,8 @@ from beanie import init_beanie
 from dotenv import load_dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from v1.apikeys.infrastructure.models import ApiKey
-from v1.core.application.config import (DOTENV_ABSPATH, V1_ABSPATH)
-from v1.core.infrastructure.models import User
+from v1.core.application.config import DOTENV_ABSPATH, V1_ABSPATH
+from v1.users.infrastructure.models import UserModel
 
 load_dotenv(DOTENV_ABSPATH)
 
@@ -1265,22 +1298,22 @@ class Mongo:
             # Databases
             "db": getenv("MONGO_DB"),
         }
-        self._certificate_pem_path = join(V1_ABSPATH, getenv("MONGO_PRODUCT_CERTIFICATE_PEM_FILE"))
-        self._certificate_crt_path = join(V1_ABSPATH, getenv("MONGO_PRODUCT_CERTIFICATE_CRT_FILE"))
-        self._db_uri = self.format_uri(self._config["security_db"])
+        self._certificate_pem_path = join(V1_ABSPATH, getenv("MONGO_CERTIFICATE_PEM_FILE"))
+        self._certificate_crt_path = join(V1_ABSPATH, getenv("MONGO_CERTIFICATE_CRT_FILE"))
+        self._db_uri = self.format_uri(self._config["db"])
 
     def format_uri(self, db: str) -> str:
         return (
             f"mongodb://{self._config['user']}:{self._config['password']}@"
             f"{self._config['host']}:{self._config['port']}/"
             f"{db}?"
-            #! Danger: Allow invalid certificates to tests only
-            f"authSource=admin&tls=true" # &tlsAllowInvalidCertificates=true
+            #! Danger: Allow invalid certificates for tests only
+            f"authSource=admin&tls=true"  # &tlsAllowInvalidCertificates=true
         )
 
     async def init_db(self) -> None:
         client = AsyncIOMotorClient(
-            self._security_db_uri,
+            self._db_uri,
             tls=True,
             tlsCertificateKeyFile=self._certificate_pem_path,
             tlsCAFile=self._certificate_crt_path,
@@ -1288,7 +1321,8 @@ class Mongo:
         db = client.get_default_database()
         await init_beanie(
             database=db,
-            document_models=[User],
+            # Register every context's Document classes here, one call site for the whole API
+            document_models=[UserModel],
         )
 
 ```
@@ -1316,81 +1350,189 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 
 ```
 
-#### `Repository` for `DDD` Queries
-```python title:repository.py
-from __future__ import annotations
+### `Repository` Pattern & Dependency Inversion
 
-from abc import ABC, abstractmethod
+The `application/` layer must depend on an abstract repository (`domain/repositories.py`), never on Beanie/Mongo directly. `infrastructure/repository.py` fulfills that contract and translates between the persistence model and the domain entity. This is what actually makes a use case unit-testable without a live database: swap the concrete `UserRepository` for an in-memory fake that implements the same interface.
+
+```python title:v1/users/domain/entities.py
+from dataclasses import dataclass
 from datetime import datetime
+
+
+@dataclass(frozen=True)
+class User:
+    """Domain entity — framework-agnostic, carries business behavior."""
+
+    id: str
+    username: str
+    email: str
+    roles: list[str]
+    created_at: datetime
+
+    def has_role(self, role: str) -> bool:
+        return role in self.roles
+
+```
+
+```python title:v1/users/domain/repositories.py
+from abc import ABC, abstractmethod
+
+from v1.users.domain.entities import User
+
+
+class UserRepositoryInterface(ABC):
+    """Contract the domain depends on. Infrastructure must fulfill it."""
+
+    @abstractmethod
+    async def get_by_username(self, username: str) -> User | None: ...
+
+    @abstractmethod
+    async def get_by_email(self, email: str) -> User | None: ...
+
+    @abstractmethod
+    async def get_by_id(self, user_id: str) -> User | None: ...
+
+    @abstractmethod
+    async def create(self, username: str, email: str, password: str) -> User: ...
+
+    @abstractmethod
+    async def delete(self, user: User) -> None: ...
+
+```
+
+```python title:v1/users/infrastructure/repository.py
 from logging import Logger, getLogger
 
 from beanie import PydanticObjectId
 
-from v1.config import LOGGING_PROJECT_NAME
-from v1.core.infrastructure.models import User
-from v1.core.infrastructure.mongo_conn import Mongo
+from v1.core.application.config import LOGGING_PROJECT_NAME
+from v1.users.domain.entities import User
+from v1.users.domain.repositories import UserRepositoryInterface
+from v1.users.infrastructure.models import UserModel
 
-logger: Logger = getLogger(f"{LOGGING_PROJECT_NAME}.user.repository")
-
-
-class UserRepositoryInterface(ABC):
-    """Abstract repository for User entity persistence."""
-
-    @abstractmethod
-    async def get_user_by_username(self, username: str) -> User | None: ...
-
-    @abstractmethod
-    async def get_user_by_email(self, email: str) -> User | None: ...
-
-    @abstractmethod
-    async def get_user_by_id(self, user_id: str) -> User | None: ...
-
-    @abstractmethod
-    async def create(self, token: RefreshToken) -> RefreshToken: ...
-
-    @abstractmethod
-    async def delete(self, token: RefreshToken) -> None: ...
+logger: Logger = getLogger(f"{LOGGING_PROJECT_NAME}.users.infrastructure.repository")
 
 
 class UserRepository(UserRepositoryInterface):
-    def __init__(self, session: Mongo, user_model: type[User]) -> None:
-        self.session = session
-        self.user_model = user_model
+    """Beanie implementation of UserRepositoryInterface. Translates persistence <-> domain."""
 
-    async def get_user_by_username(self, username: str) -> User | None:
-        logger.info("Getting user by username")
-        if username.startswith("@"):
-            user = await self.user_model.find_one(self.user_model.user == username)
-        else:
-            user = await self.user_model.find_one(self.user_model.user_details.email == username)
-        return user
-
-    async def get_user_by_email(self, email: str) -> User | None:
-        logger.info("Getting user by email")
-        user = await self.user_model.find_one(self.user_model.email == email)
-        return user
-
-    async def get_user_by_id(self, user_id: str) -> User | None:
-        logger.info("Getting user by id")
-        return await self.user_model.get(PydanticObjectId(user_id))
-
-    async def create(self, name: str, email: str, password: str, expires_at: datetime) -> User:
-        logger.info("Creating refresh token in MongoDB")
-        user = User(
-	        name=name,
-            email=email,
-            password=password,
-            expires_at=expires_at
+    def _to_entity(self, model: UserModel) -> User:
+        return User(
+            id=str(model.id),
+            username=model.username,
+            email=model.user_details.email,
+            roles=model.roles,
+            created_at=model.created_at,
         )
-        await user.insert()
-        logger.info(f"User created: {user.id} in MongoDB")
-        return user
+
+    async def get_by_username(self, username: str) -> User | None:
+        model = await UserModel.find_one(UserModel.username == username)
+        return self._to_entity(model) if model else None
+
+    async def get_by_email(self, email: str) -> User | None:
+        model = await UserModel.find_one(UserModel.user_details.email == email)
+        return self._to_entity(model) if model else None
+
+    async def get_by_id(self, user_id: str) -> User | None:
+        model = await UserModel.get(PydanticObjectId(user_id))
+        return self._to_entity(model) if model else None
+
+    async def create(self, username: str, email: str, password: str) -> User:
+        model = UserModel(username=username, password=password, user_details={"email": email}, roles=[])
+        await model.insert()
+        logger.info(f"User created: {model.id}")
+        return self._to_entity(model)
 
     async def delete(self, user: User) -> None:
-        logger.info("Deleting user in MongoDB")
-        await user.delete()
+        model = await UserModel.get(PydanticObjectId(user.id))
+        if model:
+            await model.delete()
 
 ```
+
+```python title:v1/users/application/use_cases.py
+from v1.core.errors.exceptions import ConflictError
+from v1.users.domain.entities import User
+from v1.users.domain.repositories import UserRepositoryInterface
+
+
+class CreateUserUseCase:
+    """Depends on the abstract repository — never on Beanie or Mongo directly."""
+
+    def __init__(self, repository: UserRepositoryInterface) -> None:
+        self._repository: UserRepositoryInterface = repository
+
+    async def execute(self, username: str, email: str, password: str) -> User:
+        if await self._repository.get_by_username(username):
+            raise ConflictError(f"Username '{username}' already exists")
+        return await self._repository.create(username, email, password)
+
+```
+
+```python title:v1/users/presentation/dependencies.py
+from fastapi import Depends
+
+from v1.users.application.use_cases import CreateUserUseCase
+from v1.users.infrastructure.repository import UserRepository
+
+
+def get_user_repository() -> UserRepository:
+    return UserRepository()
+
+
+def get_create_user_use_case(
+    repository: UserRepository = Depends(get_user_repository),
+) -> CreateUserUseCase:
+    return CreateUserUseCase(repository)
+
+```
+
+```python title:v1/users/presentation/router.py
+from logging import Logger, getLogger
+
+from fastapi import APIRouter, Depends, status
+from fastapi.responses import JSONResponse
+
+from v1.core.application.config import LOGGING_PROJECT_NAME
+from v1.core.presentation.service import make_response
+from v1.users.application.use_cases import CreateUserUseCase
+from v1.users.presentation.dependencies import get_create_user_use_case
+from v1.users.presentation.schemas import CreateUserRequest
+
+router = APIRouter()
+logger: Logger = getLogger(f"{LOGGING_PROJECT_NAME}.users.presentation.router")
+
+
+@router.post(path="/users", status_code=status.HTTP_201_CREATED)
+async def create_user(
+    body: CreateUserRequest,
+    use_case: CreateUserUseCase = Depends(get_create_user_use_case),
+) -> JSONResponse:
+    user = await use_case.execute(body.username, body.email, body.password)
+    return make_response(
+        logger=logger,
+        status=status.HTTP_201_CREATED,
+        message="User created successfully",
+        data={"id": user.id, "username": user.username},
+    )
+
+```
+
+> [!tip] Testing without a database
+> Because `CreateUserUseCase` only knows about `UserRepositoryInterface`, tests can override `get_create_user_use_case` (or just instantiate the use case with a hand-written fake repository) and never touch Mongo. This is the payoff of the dependency inversion — without it, every use-case test needs a live database or heavy mocking of Beanie internals.
+
+___
+
+## Common anti-patterns to avoid
+
+Observed across real projects migrating toward this structure — worth naming explicitly since they defeat the purpose of the layered/DDD split:
+
+- **Business logic inside the router function.** External API calls, token generation, or sending emails written directly in a `@router.post(...)` handler. The presentation layer should only translate HTTP ↔ use case; extract everything else into `application/use_cases.py`.
+- **Data-access functions that build HTTP responses.** A "repository" or "crud" function that returns `JSONResponse`-shaped dicts with status codes couples persistence to the web framework. Repositories return domain entities (or `None`, or raise a domain exception) — never a response.
+- **All persistence models dumped under `core/infrastructure/models/`.** Centralizing every bounded context's models in `core` breaks module boundaries and makes every feature a hidden dependency of `core`. Each context owns its `infrastructure/models.py`; `core` only wires the shared DB connection and registers the models context by context.
+- **Use cases importing concrete infrastructure directly** (a Beanie `Document`, a module-level singleton API client) instead of depending on a `domain/repositories.py` interface. This makes unit testing impossible without a live dependency and violates the Dependency Inversion Principle — the entire point of the `domain/` layer.
+- **No `Depends()` wiring for use cases/repositories.** Constructing dependencies by hand inside every router instead of a `presentation/dependencies.py` forces monkeypatching in tests instead of overriding a FastAPI dependency.
+
 
 ___
 
