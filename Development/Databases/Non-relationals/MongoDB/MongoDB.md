@@ -8,7 +8,7 @@ date: 2026-05-09
 ---
 **Sources**: [MongoDB Docs](https://www.mongodb.com/docs/), [BSON](http://bsonspec.org/), [BSON data types](https://www.mongodb.com/docs/manual/reference/bson-types/#std-label-bson-types), [MongoDB databases](https://www.mongodb.com/docs/manual/reference/glossary/#std-term-database)
 
-**Related:** [[Non-Relational Database]], [[Relational Database]], [[Array]]
+**Related:** [[Non-Relational Database]], [[Relational Database]], [[Array]], [[Docker]]
 
 ---
 
@@ -70,21 +70,12 @@ _MongoDB_ stores ``documents`` in ``collections``. **Collections are analogous t
 
 ---
 
-## Examples
-
-Write here...
-
----
-
 ## Utils
 
-### Use case
+### `Docker` Execution
 
-Write here...
-
-```python title:main.py
-print("Hello world!")
-
+```bash title:bash
+docker run --name mongo -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=root -d mongo:latest
 ```
 
 ---

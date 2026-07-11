@@ -8,7 +8,7 @@ date: 2026-03-15
 ---
 **Sources**: [PostgreSQL](https://www.postgresql.org/)
 
-**Related:** [[Relational Database]]
+**Related:** [[Relational Database]], [[Docker]]
 
 ---
 
@@ -67,6 +67,16 @@ SELECT
 FROM information_schema.columns
 WHERE table_schema = 'public'
   AND table_name   = 'table';
+```
+
+___
+
+## Utils
+
+### `Docker` Execution
+
+```bash title:bash
+docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=root -d postgres:latest
 ```
 
 ---

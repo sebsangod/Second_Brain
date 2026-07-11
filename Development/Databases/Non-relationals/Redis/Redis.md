@@ -54,4 +54,19 @@ Some of the most common use cases in data engineering include: 
 
 ___
 
+## Utils
+
+### `Docker` Execution
+
+```bash title:bash
+docker run --name redis -p 6379:6379 --network redis-network -d redis:latest
+```
+
+
+```bash title:bash
+docker run --name redis-insight -p 5540:5540 --network redis-network -d redis/redisinsight:latest
+```
+
+___
+
 ## Claude Sessions
