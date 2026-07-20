@@ -6,11 +6,11 @@
     "emojiStyle": "native",
     "iconColor": null,
     "recentlyUsedIcons": [
+      "LiFunctionSquare",
       "SiGit",
       "LiTriangleDashed",
       "LiBrainCog",
-      "LiList",
-      "SiMatrix"
+      "LiList"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -164,5 +164,6 @@
   "Mathematics/Algebra/Linear Algebra": "LiList",
   "Development/AI/Machine Learning": "LiBrainCog",
   "Mathematics/Geometry": "LiTriangleDashed",
-  "Development/Version Control/Git": "SiGit"
+  "Development/Version Control/Git": "SiGit",
+  "Mathematics/Differential Calculus": "LiFunctionSquare"
 }
