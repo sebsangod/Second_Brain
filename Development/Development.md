@@ -4,6 +4,7 @@ aliases:
   - Dev Index
 tags:
   - MOC
+  - dev
 date: 2026-04-15
 ---
 **Related:** [[Home]]

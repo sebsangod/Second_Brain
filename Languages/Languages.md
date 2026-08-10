@@ -4,6 +4,7 @@ aliases:
   - Languages Index
 tags:
   - MOC
+  - languages
 date: 2026-04-15
 ---
 
