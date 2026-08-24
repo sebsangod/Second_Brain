@@ -4,7 +4,7 @@ aliases:
 tags:
   - learning
   - math/statistics
-date: 2026-07-19
+date: 2026-08-17
 ---
 **Sources**: [Curso de Estadística y Probabilidad](https://platzi.com/cursos/estadistica-probabilidad/)
 
@@ -20,7 +20,7 @@ _Statistics_ is the **science of interpreting data to answer real-world question
 
 _Descriptive statistics_ collects, organizes, and presents data using tables and graphs to visually identify the most important aspects of a dataset. This is the type of statistics you’ll use most often in everyday analysis.
 
-_Inferential statistics_ uses a representative sample to draw conclusions about an entire population. If you want to learn about a characteristic of an entire country, you don’t survey every resident—you take a sample and use it to make inferences.
+_Inferential statistics_ uses a representative sample to draw conclusions about an entire population. If you want to learn about a characteristic of an entire country, you don’t survey every resident, you take a sample and use it to make inferences or **predictions**.
 
 ---
 
