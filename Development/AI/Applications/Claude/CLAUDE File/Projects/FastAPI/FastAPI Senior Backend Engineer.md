@@ -24,7 +24,6 @@ Stack: FastAPI + Pydantic v2 + Beanie (MongoDB ODM) + pytest.
 - Tests (single file): `python -m pytest tests/test_module.py -v --tb=short`
 - Tests (single test): `python -m pytest tests/test_module.py::TestClass::test_method -v`
 - Coverage: `python -m pytest --cov=app --cov-report=term-missing`
-- Lint: `ruff check . --fix && ruff format .`
 - Deps: `uv add <package>` / `uv remove <package>`
 - Lock: `uv lock`
 
@@ -290,10 +289,9 @@ def mock_mongodb():
 
 ## Verification (FastAPI-specific)
 After every change:
-1. `ruff check . --fix && ruff format .`
-2. `python -m pytest tests/ -v --tb=short` — all tests pass
-3. Start dev server: verify `/docs` loads, endpoints respond correctly
-4. Check OpenAPI schema: `GET /openapi.json` — no warnings, schemas complete
+1. `python -m pytest tests/ -v --tb=short` — all tests pass
+2. Start dev server: verify `/docs` loads, endpoints respond correctly
+3. Check OpenAPI schema: `GET /openapi.json` — no warnings, schemas complete
 
 ---
 

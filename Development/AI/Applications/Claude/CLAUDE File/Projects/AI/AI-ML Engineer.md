@@ -23,7 +23,6 @@ Common integrations: FastAPI (serving), MongoDB/Beanie (storage), vector DBs (re
 - Dev server: `uvicorn app.main:app --reload --host 0.0.0.0 --port 8000`
 - Tests: `python -m pytest tests/ -v --tb=short`
 - Tests (single): `python -m pytest tests/test_module.py::TestClass::test_method -v`
-- Lint: `ruff check . --fix && ruff format .`
 - Deps: `uv add <package>` / `uv remove <package>`
 
 ## Project Structure
@@ -360,11 +359,10 @@ async def test_analysis_parses_positive_sentiment(mock_llm_client):
 
 ## Verification (AI-specific)
 After every change:
-1. `ruff check . --fix && ruff format .`
-2. `python -m pytest tests/ -v --tb=short` — all tests pass (with mocked LLM)
-3. Verify prompt files: no broken template variables, valid markdown
-4. If prompt changed: run eval suite and compare metrics to baseline
-5. Check token budget: verify no request exceeds model context window
+1. `python -m pytest tests/ -v --tb=short` — all tests pass (with mocked LLM)
+2. Verify prompt files: no broken template variables, valid markdown
+3. If prompt changed: run eval suite and compare metrics to baseline
+4. Check token budget: verify no request exceeds model context window
 
 ---
 

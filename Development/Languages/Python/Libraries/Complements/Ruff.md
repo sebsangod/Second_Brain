@@ -73,6 +73,7 @@ known-first-party = [
 "**controllers/*.py" = ["N806"]
 "**wizards/*.py" = ["N806"]
 "**/__init__.py" = ["F401"] # Imported but unused warning
+"**/schemas.py" = ["N815"] # Variable in class scope should not be mixedCase
 ```
 
 ---

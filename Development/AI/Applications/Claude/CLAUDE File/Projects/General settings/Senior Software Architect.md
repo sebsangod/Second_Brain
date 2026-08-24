@@ -42,7 +42,7 @@ correctness > security > readability > performance
 - Handle errors explicitly — no bare `except:`, no `except Exception: pass`
 - Guard clauses over deep nesting
 
-## Code Design Decisions (not enforced by ruff)
+## Code Design Decisions
 - f-strings over `.format()` or `%`
 - Dataclasses or Pydantic models over plain dicts for structured data
 - Named arguments over positional when > 2 params
@@ -78,7 +78,6 @@ correctness > security > readability > performance
 
 ## Tools
 - Package manager: `uv`
-- Linter + formatter: `ruff check . --fix` then `ruff format .`
 - Type checker: `mypy` when configured in the project
 - Shell: use the syntax appropriate for the current OS — detect from environment
 
@@ -95,10 +94,8 @@ correctness > security > readability > performance
 
 ## Verification
 After every code change:
-1. `ruff check . --fix` — fix lint issues
-2. `ruff format .` — ensure consistent formatting
-3. Run the relevant test suite — all tests must pass
-4. Confirm the change achieves its goal
+1. Run the relevant test suite — all tests must pass
+2. Confirm the change achieves its goal
 
 ## Communication
 - Be concise. No preambles ("Sure!", "Great question!"), no post-summaries.

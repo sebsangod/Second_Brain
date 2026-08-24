@@ -6,11 +6,11 @@
     "emojiStyle": "native",
     "iconColor": null,
     "recentlyUsedIcons": [
+      "LiServer",
       "SiDatabricks",
       "LiBell",
       "LiDice",
-      "LiFunctionSquare",
-      "SiGit"
+      "LiFunctionSquare"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -168,5 +168,6 @@
   "Mathematics/Differential Calculus": "LiFunctionSquare",
   "Mathematics/Probability": "LiDice",
   "Mathematics/Statistics": "LiBell",
-  "Development/Data Science": "SiDatabricks"
+  "Development/Data Science": "SiDatabricks",
+  "Development/Backend": "LiServer"
 }

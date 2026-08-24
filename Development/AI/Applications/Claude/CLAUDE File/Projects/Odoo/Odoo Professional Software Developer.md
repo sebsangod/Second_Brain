@@ -24,7 +24,6 @@ Framework: Odoo ORM + QWeb views + OWL components.
 - Run tests (single module): `python odoo-bin -c odoo.conf -d test_db --test-enable --stop-after-init -i <module>`
 - Run specific test: `python odoo-bin -c odoo.conf -d test_db --test-tags=/<module>:<TestClass>.test_method --stop-after-init`
 - Scaffold new module: `python odoo-bin scaffold <module_name> <addons_path>`
-- Lint: `ruff check . --fix && ruff format .`
 
 ## Module Structure (Odoo official conventions)
 ```
