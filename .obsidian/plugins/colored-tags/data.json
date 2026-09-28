@@ -37,6 +37,7 @@
     "dev/testing": 10,
     "dev/version-control": 14,
     "journal/claude-session": 1,
+    "lang/en": 1,
     "languages/vocabulary": 1,
     "math/algebra": 1,
     "math/differential-calculus": 4,
@@ -46,6 +47,7 @@
     "math/statistics": 6,
     "project/idea": 1,
     "template/components": 1,
+    "dev/ai/automatizations": 3,
     "dev/ai/llm": 1,
     "dev/ai/visualization": 2,
     "dev/data/validation": 1,
@@ -58,6 +60,7 @@
     "dev/lang/rust": 2,
     "dev/lang/toml": 6,
     "dev/lang/ts": 4,
+    "lang/en/vocabulary": 1,
     "math/algebra/linear": 1
   },
   "tagColors": {},

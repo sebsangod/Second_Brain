@@ -2,7 +2,8 @@
 aliases:
   - Vocabulary
 tags:
-  - languages/vocabulary
+  - learning
+  - lang/en/vocabulary
 date: 2026-08-04
 ---
 **Related:** [[English]]

@@ -2,7 +2,8 @@
 aliases:
   - English
 tags:
-  - languages
+  - learning
+  - lang/en
 date: 2026-08-04
 ---
 **Related:** [[Templates/Languages|Languages]]
