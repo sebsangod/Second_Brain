@@ -50,10 +50,10 @@ select = [
 	"UP",   # Modernize syntax
 	"B",    # Bugbear
 	"N",    # Naming conventions
-	"C90", # Cyclomatic complexity
+	"C90",  # Cyclomatic complexity
 	"C901", # Complexity
 	"ANN",  # Type hints
-	"S",   # Security
+	"S",    # Security
 ]
 ignore = [
 	"S311",  # Predictable random numbers

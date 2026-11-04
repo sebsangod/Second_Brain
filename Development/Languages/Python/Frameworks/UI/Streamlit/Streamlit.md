@@ -4,37 +4,19 @@ aliases:
 tags:
   - learning
   - dev/frontend
-date: 2026-05-08
+date: 2026-09-27
 ---
-**Sources**: [streamlit.io](https://streamlit.io/), [docs](https://docs.streamlit.io/)
+**Sources**: [streamlit.io](https://streamlit.io/), [Docs](https://docs.streamlit.io/)
 
-**Related:** [[Python]]
+**Related:** [[Python]], [[Frontend]]
 
 ---
 
 ## Description
 
-Write here...
+_Streamlit_ is an **open-source** ``Python`` **framework for data scientists and** ``AI``/``ML`` engineers to deliver dynamic data apps with only a few lines of code. **Build and deploy powerful data apps in minutes.**
 
----
-
-## Key concepts
-
-Write here...
-
----
-
-## Details
-
-Write here...
-
----
-
-## Examples
-
-Write here...
-
----
+___
 
 ## Utils
 
@@ -43,8 +25,14 @@ Write here...
 Write here...
 
 ```python title:main.py
-print("Hello world!")
+import streamlit as st
 
+st.title("Hello world!")
+
+```
+
+```bash title:bash
+streamlit run main.py
 ```
 
 ---

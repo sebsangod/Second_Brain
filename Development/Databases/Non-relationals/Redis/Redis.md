@@ -6,7 +6,7 @@ tags:
   - dev/database/nosql
 date: 2026-05-09
 ---
-**Sources**: [Redis](https://redis.io/), [Docker Hub Image](https://hub.docker.com/_/redis?xk=ShowRecommendedBadge&xt=Disabled), [Redis Insight GUI Docker Hub Image](https://hub.docker.com/r/redis/redisinsight)
+**Sources**: [Redis](https://redis.io/), [Datacamp](https://www.datacamp.com/tutorial/python-redis-beginner-guide) [Docker Hub Image](https://hub.docker.com/_/redis?xk=ShowRecommendedBadge&xt=Disabled), [Redis Insight GUI Docker Hub Image](https://hub.docker.com/r/redis/redisinsight)
 
 **Related:** [[Non-Relational Database]], [[Vector Database]], [[Python]], [[Pub-Sub]], [[Lua]], [[Docker]]
 

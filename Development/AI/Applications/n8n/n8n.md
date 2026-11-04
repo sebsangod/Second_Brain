@@ -26,9 +26,11 @@ Write here...
 
 ## Details
 
-### Subtopic
+### Environment Variables
 
-Write here...
+#### WEBHOOK_URL
+
+URL where OAuth systems like Google's will call to authorize the usage of its API services.
 
 ---
 
@@ -45,7 +47,7 @@ Write here...
 ```bash title:bash
 docker volume create n8n_data
 
-docker run --name n8n -p 5678:5678 -e GENERIC_TIMEZONE="America/Mexico_City" -e TZ="America/Mexico_City" -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true -e N8N_RUNNERS_ENABLED=true -v n8n_data:/home/node/.n8n -d n8nio/n8n
+docker run --name n8n -p 5678:5678 -e GENERIC_TIMEZONE="America/Mexico_City" -e TZ="America/Mexico_City" -e N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true -e N8N_RUNNERS_ENABLED=true -e WEBHOOK_URL="https://my-domain.com" -v n8n_data:/home/node/.n8n -d n8nio/n8n
 ```
 
 ---

@@ -8,7 +8,7 @@ date: 2026-05-09
 ---
 **Sources**: [Logfire](https://pydantic.dev/logfire)
 
-**Related:** [[Python]], [[Artificial Intelligence]], [[Large Language Models]], [[API Rest]], [[Database]], [[JavaScript]], [[TypeScript]], [[Rust]]
+**Related:** [[Python]], [[Artificial Intelligence]], [[Development/AI/LLMs/Large Language Model]], [[API Rest]], [[Database]], [[JavaScript]], [[TypeScript]], [[Rust]]
 
 ---
 

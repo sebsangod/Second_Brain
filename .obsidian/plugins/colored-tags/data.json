@@ -49,6 +49,7 @@
     "template/components": 1,
     "dev/ai/automatizations": 3,
     "dev/ai/llm": 1,
+    "dev/ai/systems": 4,
     "dev/ai/visualization": 2,
     "dev/data/validation": 1,
     "dev/database/graph": 3,

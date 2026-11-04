@@ -22,35 +22,4 @@ If we have a **good initial** ``dataset``, one that is diverse and relevant to t
 
 ---
 
-## Key concepts
-
-Write here...
-
----
-
-## Details
-
-Write here...
-
----
-
-## Examples
-
-Write here...
-
----
-
-## Utils
-
-### Use case
-
-Write here...
-
-```python title:main.py
-print("Hello world!")
-
-```
-
----
-
 ## Claude Sessions

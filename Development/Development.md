@@ -20,7 +20,7 @@ ___
 
 ### Fundamentals
 - [[Artificial intelligence]] - What it is, how it works, types and categories
-- [[Large Language Models]] — What they are, how they work, advantages, and limitations
+- [[Development/AI/LLMs/Large Language Model]] — What they are, how they work, advantages, and limitations
 
 
 ### Sub areas

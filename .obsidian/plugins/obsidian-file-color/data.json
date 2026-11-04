@@ -200,7 +200,7 @@
       "color": "ljWJaKa6JJQDv3K8BNJbO"
     },
     {
-      "path": "Development/AI/Applications/Claude",
+      "path": "Development/AI/LLMs/Claude",
       "color": "iXQ7Jfnv61l_PNLJUuG5t"
     },
     {
@@ -220,11 +220,11 @@
       "color": "sNNlSfJuA4R7XHADLAs0k"
     },
     {
-      "path": "Development/AI/Applications/Claude/Claude Code",
+      "path": "Development/AI/LLMs/Claude/Claude Code",
       "color": "iXQ7Jfnv61l_PNLJUuG5t"
     },
     {
-      "path": "Development/AI/Applications/Claude/Claude Code/Claude Code.md",
+      "path": "Development/AI/LLMs/Claude/Claude Code/Claude Code.md",
       "color": "iXQ7Jfnv61l_PNLJUuG5t"
     },
     {
@@ -232,11 +232,11 @@
       "color": "iXQ7Jfnv61l_PNLJUuG5t"
     },
     {
-      "path": "Development/AI/Applications/Claude/Claude.md",
+      "path": "Development/AI/LLMs/Claude/Claude.md",
       "color": "iXQ7Jfnv61l_PNLJUuG5t"
     },
     {
-      "path": "Development/AI/Applications/Claude/Claude API.md",
+      "path": "Development/AI/LLMs/Claude/Claude API/Claude API.md",
       "color": "iXQ7Jfnv61l_PNLJUuG5t"
     },
     {
@@ -300,103 +300,39 @@
       "color": "7hlC2usxSoebWybV1Uxof"
     },
     {
-      "path": "Development/AI/Applications/Claude/CLAUDE File",
+      "path": "Development/AI/LLMs/Claude/CLAUDE File",
       "color": "iXQ7Jfnv61l_PNLJUuG5t"
     },
     {
-      "path": "Development/AI/Applications/Claude/Claude Code/Commands",
+      "path": "Development/AI/LLMs/Claude/Claude API/SDK.md",
       "color": "iXQ7Jfnv61l_PNLJUuG5t"
     },
     {
-      "path": "Development/AI/Applications/Claude/Claude Code/Commands/Commands.md",
-      "color": "iXQ7Jfnv61l_PNLJUuG5t"
-    },
-    {
-      "path": "Development/AI/Applications/Claude/Claude Code/Hooks",
-      "color": "iXQ7Jfnv61l_PNLJUuG5t"
-    },
-    {
-      "path": "Development/AI/Applications/Claude/Claude Code/Hooks/Hooks.md",
-      "color": "iXQ7Jfnv61l_PNLJUuG5t"
-    },
-    {
-      "path": "Development/AI/Applications/Claude/Claude Code/Plugins",
-      "color": "iXQ7Jfnv61l_PNLJUuG5t"
-    },
-    {
-      "path": "Development/AI/Applications/Claude/Claude Code/Plugins/Vault.md",
-      "color": "iXQ7Jfnv61l_PNLJUuG5t"
-    },
-    {
-      "path": "Development/AI/Applications/Claude/Claude Code/Skills",
-      "color": "iXQ7Jfnv61l_PNLJUuG5t"
-    },
-    {
-      "path": "Development/AI/Applications/Claude/Claude Code/Skills/Skills.md",
-      "color": "iXQ7Jfnv61l_PNLJUuG5t"
-    },
-    {
-      "path": "Development/AI/Applications/Claude/Claude Code/Skills/Vault.md",
-      "color": "iXQ7Jfnv61l_PNLJUuG5t"
-    },
-    {
-      "path": "Development/AI/Applications/Claude/Claude Code/Subagents",
-      "color": "iXQ7Jfnv61l_PNLJUuG5t"
-    },
-    {
-      "path": "Development/AI/Applications/Claude/Claude Code/Subagents/Subagents.md",
-      "color": "iXQ7Jfnv61l_PNLJUuG5t"
-    },
-    {
-      "path": "Development/AI/Applications/Claude/Claude Code/SDKs.md",
-      "color": "iXQ7Jfnv61l_PNLJUuG5t"
-    },
-    {
-      "path": "Development/AI/Applications/Claude/CLAUDE File/Projects",
+      "path": "Development/AI/LLMs/Claude/CLAUDE File/Projects",
       "color": "ljWJaKa6JJQDv3K8BNJbO"
     },
     {
-      "path": "Development/AI/Applications/Claude/CLAUDE File/Projects/FastAPI",
+      "path": "Development/AI/LLMs/Claude/CLAUDE File/Projects/FastAPI",
       "color": "vtynbs1pT6oB-52hk5mjm"
     },
     {
-      "path": "Development/AI/Applications/Claude/CLAUDE File/Projects/FastAPI/FastAPI Senior Backend Engineer.md",
+      "path": "Development/AI/LLMs/Claude/CLAUDE File/Projects/FastAPI/FastAPI Senior Backend Engineer.md",
       "color": "vtynbs1pT6oB-52hk5mjm"
     },
     {
-      "path": "Development/AI/Applications/Claude/CLAUDE File/Projects/Odoo",
+      "path": "Development/AI/LLMs/Claude/CLAUDE File/Projects/Odoo",
       "color": "sNNlSfJuA4R7XHADLAs0k"
     },
     {
-      "path": "Development/AI/Applications/Claude/CLAUDE File/Projects/Odoo/Odoo Professional Software Developer.md",
+      "path": "Development/AI/LLMs/Claude/CLAUDE File/Projects/Odoo/Odoo Professional Software Developer.md",
       "color": "sNNlSfJuA4R7XHADLAs0k"
     },
     {
-      "path": "Development/AI/Applications/Claude/CLAUDE File/CLAUDE File.md",
+      "path": "Development/AI/LLMs/Claude/CLAUDE File/CLAUDE File.md",
       "color": "iXQ7Jfnv61l_PNLJUuG5t"
     },
     {
-      "path": "Development/AI/Applications/Claude/Claude Code/Commands/Personal",
-      "color": "ljWJaKa6JJQDv3K8BNJbO"
-    },
-    {
-      "path": "Development/AI/Applications/Claude/Claude Code/Hooks/Personal",
-      "color": "ljWJaKa6JJQDv3K8BNJbO"
-    },
-    {
-      "path": "Development/AI/Applications/Claude/Claude Code/Hooks/Personal/Block env Files Access.md",
-      "color": "ljWJaKa6JJQDv3K8BNJbO"
-    },
-    {
-      "path": "Development/AI/Applications/Claude/Claude Code/Hooks/Personal/Obsidian Syncing.md",
-      "color": "ljWJaKa6JJQDv3K8BNJbO"
-    },
-    {
-      "path": "Development/AI/Applications/Claude/Claude Code/Commands/Personal/Distribute.md",
-      "color": "ljWJaKa6JJQDv3K8BNJbO"
-    },
-    {
-      "path": "Development/AI/Applications/Claude/CLAUDE File/Analysis.md",
+      "path": "Development/AI/LLMs/Claude/CLAUDE File/Analysis.md",
       "color": "iXQ7Jfnv61l_PNLJUuG5t"
     },
     {
@@ -516,10 +452,6 @@
       "color": "dHgxMchJcKsniIEkUln-s"
     },
     {
-      "path": "Development/AI/Applications/Claude/Claude Code/Plugins/Plugins.md",
-      "color": "iXQ7Jfnv61l_PNLJUuG5t"
-    },
-    {
       "path": "Development/Version Control/Git",
       "color": "AQm9k90Y7P0v9NjLynB2q"
     },
@@ -530,6 +462,18 @@
     {
       "path": "Development/DevOPS/Docker/Docker Cheatsheet.pdf",
       "color": "7hlC2usxSoebWybV1Uxof"
+    },
+    {
+      "path": "Development/AI/LLMs/Claude/Claude Code/Commands.md",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/LLMs/Claude/Claude API",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
+    },
+    {
+      "path": "Development/AI/LLMs/Claude/Resources",
+      "color": "iXQ7Jfnv61l_PNLJUuG5t"
     }
   ]
 }

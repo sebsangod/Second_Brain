@@ -8,7 +8,7 @@ date: 2026-05-08
 ---
 **Sources**: [Agno](https://www.agno.com/agent-framework), [docs](https://docs.agno.com/), [sdk](https://docs.agno.com/sdk/introduction)
 
-**Related:** [[Artificial Intelligence]], [[Python]], [[FastAPI]], [[AI Agent]], [[RBAC]], [[WebSocket]], [[Database]], [[PostgreSQL]], [[Clickhouse]], [[OLAP]], [[Development/AI/Applications/MCP/MCP|MCP]], [[Multi-tenant]], [[Image]], [[Claude Code]], [[LangGraph]]
+**Related:** [[Artificial Intelligence]], [[Python]], [[FastAPI]], [[Agent]], [[RBAC]], [[WebSocket]], [[Database]], [[PostgreSQL]], [[Clickhouse]], [[OLAP]], [[Development/AI/LLMs/MCP/MCP|MCP]], [[Multi-tenant]], [[Image]], [[Claude Code]], [[LangGraph]]
 
 ---
 

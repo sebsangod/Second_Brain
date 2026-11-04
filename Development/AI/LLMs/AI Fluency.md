@@ -1,0 +1,39 @@
+---
+aliases:
+  - AI Fluency
+tags:
+  - learning
+  - dev/ai
+date: 2026-10-07
+---
+**Sources**: [Claude 101](https://anthropic.skilljar.com/claude-101)
+
+**Related:** [[Artificial Intelligence]]
+
+---
+
+## Description
+
+_AI Fluency_ is the ability to collaborate effectively with `AI` tools—not just knowing which buttons to click, but developing the judgment to use `AI` well across different situations.
+
+The **4D Framework for AI Fluency**, developed through research collaboration between Professor Rick Dakan (Ringling College of Art and Design) and Professor Joseph Feller (University College Cork), identifies four core competencies that, when combined, can help you make the most of your AI interactions:
+
+---
+
+## Key concepts
+
+### Delegation
+**Deciding on what work should be done by humans, what work should be done by** `AI`**, and how to distribute tasks between them.** Includes understanding your goals, AI capabilities, and making strategic choices about collaboration.
+
+### Description
+Effectively communicating with `AI` systems. Includes clearly defining outputs, guiding `AI` processes, and specifying desired `AI` behaviors and interactions.
+
+### Discernment
+Thoughtfully and critically evaluating `AI` outputs, processes, behaviors and interactions. Includes assessing quality, accuracy, appropriateness, and determining areas for improvement.
+
+### Diligence
+Using `AI` responsibly and ethically. Includes making thoughtful choices `AI` AI systems and interactions, maintaining transparency, and taking accountability for `AI-assisted` work.
+
+---
+
+## Claude Sessions
